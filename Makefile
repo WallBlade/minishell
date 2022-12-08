@@ -1,4 +1,5 @@
 SRC	=	$(wildcard lexer/*.c) \
+		$(wildcard utils/*.c) \
 
 OBJ = $(SRC:.c=.o)
 
@@ -6,12 +7,15 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -I./includes
+CFLAGS = -Wall -Wextra -Werror -g -I./includes
 
 NAME = minishell
 all	:	$(NAME)
 $(NAME):	$(OBJ)
-			$(CC) $(CFLAGS) $(OBJ) -o  $(NAME) -lreadline
+			make -C libft
+			ar -rcs libft/libft.a
+			cp libft/libft.a libft.a
+			$(CC) $(CFLAGS) $(OBJ) libft.a -o  $(NAME) -lreadline
 
 clean:
 	$(RM) $(OBJ)
