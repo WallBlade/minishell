@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:12:13 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/08 20:54:31 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/08 23:20:22 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ void    lstaddback(t_cmd **list, t_cmd *new)
 {
     t_cmd   *temp;
 
-    if (!list)
+    if (!*list)
     {
-        list = &new;
+        *list = new;
         return ;
     }
     temp = *list;
-    while (temp && temp->next)
+    while (temp->next)
         temp = temp->next;
     temp->next = new;
-    new->next = NULL;
-    
 }

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/08 20:42:05 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/09 02:15:07 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,33 @@
 
 typedef struct s_cmd
 {
-    char    **full;
-    void    *next;
+	char    **brut;
+	void    *next;
 }               t_cmd;
 
+typedef struct s_tokens
+{
+	int *q_pos;
+	int *dq_pos;
+	int *p_pos;
+}				t_tokens;
+
+	
 typedef struct s_file
 {
-    char    *file;
-    char    *operator;
+	char    *file;
+	char    *operator;
 }       t_file;
 
 typedef struct s_lexer
 {
-    struct s_file in;
-    struct s_file out;
-    char    del;
-    char    *cmd;
-    char    *opt;
-    struct s_lexer *child;
-    struct s_lexer *next;
+	struct s_file in;
+	struct s_file out;
+	char    del;
+	char    *cmd;
+	char    *opt;
+	struct s_lexer *child;
+	struct s_lexer *next;
 }       t_lexer;
 
 /*------------------------------------UTILS----------------*/
@@ -56,5 +64,6 @@ int ft_tablen(char **tab);
 t_cmd   *lstnew(void);
 void    lstaddback(t_cmd **list, t_cmd *new);
 void    free_tab(char **tab);
+t_cmd	*epur_str(char **str);
 
 #endif

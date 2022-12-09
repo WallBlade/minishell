@@ -19,9 +19,12 @@ $(NAME):	$(OBJ)
 
 clean:
 	$(RM) $(OBJ)
+	@make clean -sC libft
 
 fclean:	clean
 		$(RM) $(NAME)
+		$(RM) libft.a
+		@make fclean -sC libft
 
 re:			fclean $(NAME)
 
