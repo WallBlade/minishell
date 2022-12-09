@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/09 02:14:25 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/09 14:52:54 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,53 @@
 // 	return (brut);	
 // }
 
+void	get_dquotes(char *line, t_tokens *tks)
+{
+	int			i;
+	int			j;
 
+	i = 0;
+	j = 0;
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			tks->dq_pos[j] = i;
+			j++;
+		}
+		i++;	
+	}
+	while (tks->dq_pos[i])
+	{
+		printf("dq = %d\n", tks->dq_pos[i]);
+		i++;
+	}
+}
 
 int main()
 {
 	char    *test;
 	char	**str;
-	t_cmd	*cmd;
+	// t_cmd	*cmd;
 	int		i;
 
 	test = readline("minishell> ");
-	cmd = NULL;
+	str = NULL;
+	i = 0;
+	// cmd = NULL;
 	while (ft_strncmp(test, "exit", 4))
 	{
 		test = readline("minishell> ");
 		str = ft_split(test, '|');
-		cmd = epur_str(str);
+		while (str && str[i])
+		{
+			printf("%s\n", str[i]);
+			i++;
+		}
+		// cmd = epur_str(str);
 		add_history(test);
+		free(test);
+		free_tab(str);
 	}
 	rl_clear_history();
 }

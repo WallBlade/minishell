@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/09 02:15:07 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/09 14:50:39 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ t_cmd   *lstnew(void);
 void    lstaddback(t_cmd **list, t_cmd *new);
 void    free_tab(char **tab);
 t_cmd	*epur_str(char **str);
+void    free_tab(char **tab);
 
 #endif
