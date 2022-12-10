@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/09 14:52:54 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/10 01:25:44 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,53 +36,75 @@
 // 	return (brut);	
 // }
 
-void	get_dquotes(char *line, t_tokens *tks)
+int	count_elem(char *str, char c)
 {
-	int			i;
-	int			j;
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (str && str[i])
+	{
+		if ((c == '<' || c == '>') && str[i + 1] && str[i] == c && str[i + 1] == c)
+			i++;
+		else if (str[i] && str[i] == c)
+			len++;
+		i++;
+	}	
+	return (len);
+}
+
+int	is_token(char c)
+{
+	char	*tok;
+	int		i;
+
+	i = 0;
+	tok = "<>|\"'$?";
+	while (tok[i])
+	{
+		if (tok[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	get_tokens(char *line, t_tok *tks)
+{
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	while (line[i])
 	{
 		if (line[i] == '"')
 		{
-			tks->dq_pos[j] = i;
-			j++;
+			tks->dq[j++] = i;
+			// printf("l = %d\n", tks);
 		}
-		i++;	
-	}
-	while (tks->dq_pos[i])
-	{
-		printf("dq = %d\n", tks->dq_pos[i]);
+		else if (line[i] == '\'')
+			tks->q[k++] = i;
 		i++;
 	}
 }
 
 int main()
 {
-	char    *test;
-	char	**str;
-	// t_cmd	*cmd;
-	int		i;
+	t_tok	*tok;
+	char    *prompt;
 
-	test = readline("minishell> ");
-	str = NULL;
-	i = 0;
-	// cmd = NULL;
-	while (ft_strncmp(test, "exit", 4))
+	while (1)
 	{
-		test = readline("minishell> ");
-		str = ft_split(test, '|');
-		while (str && str[i])
-		{
-			printf("%s\n", str[i]);
-			i++;
-		}
-		// cmd = epur_str(str);
-		add_history(test);
-		free(test);
-		free_tab(str);
+		prompt = readline("minishell> ");
+		tok = init_tokens(prompt);
+		get_tokens(prompt, tok);
+		for (int i = 0; i < count_elem(prompt, '\''); i++)
+			printf("%d\n", tok->q[i]);
+		add_history(prompt);
 	}
 	rl_clear_history();
 }

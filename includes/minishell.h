@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/09 14:50:39 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/10 00:42:27 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,19 @@ typedef struct s_cmd
 	void    *next;
 }               t_cmd;
 
-typedef struct s_tokens
+typedef struct s_tok
 {
-	int *q_pos;
-	int *dq_pos;
-	int *p_pos;
-}				t_tokens;
+	int *q;
+	int *dq;
+	int *p;
+	int	*in;
+	int	*out;
+	int	*ap;
+	int	*d_in;
+	int	*dol;
+	int	*qst;
+}				t_tok;
 
-	
 typedef struct s_file
 {
 	char    *file;
@@ -60,11 +65,13 @@ typedef struct s_lexer
 }       t_lexer;
 
 /*------------------------------------UTILS----------------*/
-int ft_tablen(char **tab);
+int 	ft_tablen(char **tab);
 t_cmd   *lstnew(void);
 void    lstaddback(t_cmd **list, t_cmd *new);
 void    free_tab(char **tab);
 t_cmd	*epur_str(char **str);
 void    free_tab(char **tab);
+int		count_elem(char *str, char c);
+t_tok	*init_tokens(char *str);
 
 #endif
