@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/10 00:42:27 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/11 21:18:06 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,16 @@ void    free_tab(char **tab);
 t_cmd	*epur_str(char **str);
 void    free_tab(char **tab);
 int		count_elem(char *str, char c);
+int		count_d_elem(char *str, char *sub);
+/*------------------------------------INIT------------------*/
 t_tok	*init_tokens(char *str);
+void	init_active_tokens(t_tok **tks, char *line);
+/*------------------------------------GET_TOKENS------------*/
+void	get_quotes(char *line, t_tok *tks);
+int		between_quotes(t_tok *tks,int i, char c);
+void	fill_tks(t_tok **tks, char c, int active, int j);
+void	active_s_tokens(char *line, t_tok *tks, char c);
+void	active_d_tokens(char *line, t_tok *tks, char *dc);
+void	active_dol_token(char *line, t_tok *tks);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/10 01:25:44 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/11 21:22:17 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,25 @@ int	count_elem(char *str, char c)
 	return (len);
 }
 
+int	count_d_elem(char *str, char *sub)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str && str[i] && str[i + 1])
+	{
+		if (!ft_strncmp(&str[i], sub, 2))
+		{
+			count++;
+			i++;
+		}
+		i++;
+	}
+	return (count);
+}
+
 int	is_token(char c)
 {
 	char	*tok;
@@ -70,28 +89,6 @@ int	is_token(char c)
 	return (0);
 }
 
-void	get_tokens(char *line, t_tok *tks)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (line[i])
-	{
-		if (line[i] == '"')
-		{
-			tks->dq[j++] = i;
-			// printf("l = %d\n", tks);
-		}
-		else if (line[i] == '\'')
-			tks->q[k++] = i;
-		i++;
-	}
-}
-
 int main()
 {
 	t_tok	*tok;
@@ -101,9 +98,9 @@ int main()
 	{
 		prompt = readline("minishell> ");
 		tok = init_tokens(prompt);
-		get_tokens(prompt, tok);
-		for (int i = 0; i < count_elem(prompt, '\''); i++)
-			printf("%d\n", tok->q[i]);
+		init_active_tokens(&tok, prompt);
+		for (int i = 0; i < count_elem(prompt, '$'); i++)
+			printf("%d\n", tok->dol[i]);
 		add_history(prompt);
 	}
 	rl_clear_history();
