@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:13:18 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/12 22:51:16 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/12 23:05:31 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	active_dol_token(char *line, t_tok *tks)
+void	active_dol_token(char *line, t_tks *tks)
 {
 	int	i;
 	int	j;
@@ -35,7 +35,7 @@ void	active_dol_token(char *line, t_tok *tks)
 	}
 }
 
-int	count_pipes(char *str, t_tok *tks)
+int	count_pipes(char *str, t_tks *tks)
 {
 	int	i;
 	int	j;
@@ -53,7 +53,7 @@ int	count_pipes(char *str, t_tok *tks)
 	return (count + 1);
 }
 
-int	*pipe_strlen(char *str, t_tok *tks)
+int	*pipe_strlen(char *str, t_tks *tks)
 {
 	int	i;
 	int	j;
@@ -81,7 +81,7 @@ int	*pipe_strlen(char *str, t_tok *tks)
 	return (lens);
 }
 
-char	**split_2_ouf(char *str, t_tok *tks)
+char	**split_2_ouf(char *str, t_tks *tks)
 {
 	int		i;
 	int		j;

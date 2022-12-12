@@ -6,17 +6,17 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:40 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/11 21:21:55 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/12 23:08:03 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tok    *init_tokens(char *str)
+t_tks    *init_tokens(char *str)
 {
-    t_tok *tks;
+    t_tks *tks;
 
-    tks = malloc(sizeof(t_tok));
+    tks = malloc(sizeof(t_tks));
     if (!tks)
         return (NULL);
     tks->q = malloc(sizeof(int) * (count_elem(str, '\'')));
@@ -31,7 +31,7 @@ t_tok    *init_tokens(char *str)
     return (tks);
 }
 
-void	init_active_tokens(t_tok **tks, char *line)
+void	init_active_tokens(t_tks **tks, char *line)
 {
 	char	*tokens;
 	int		i;

@@ -6,13 +6,13 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/11 21:20:55 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/12 23:06:29 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_quotes(char *line, t_tok *tks)
+void	get_quotes(char *line, t_tks *tks)
 {
 	int	i;
 	int	j;
@@ -31,7 +31,7 @@ void	get_quotes(char *line, t_tok *tks)
 	}
 }
 
-int	between_quotes(t_tok *tks, int i, char c)
+int	between_quotes(t_tks *tks, int i, char c)
 {
 	int	j;
 	int	*positions;
@@ -50,7 +50,7 @@ int	between_quotes(t_tok *tks, int i, char c)
 	return (1);
 }
 
-void	fill_tks(t_tok **tks, char c, int active, int j)
+void	fill_tks(t_tks **tks, char c, int active, int j)
 {
     if (c == '|')
         (*tks)->p[j] = active;
@@ -68,7 +68,7 @@ void	fill_tks(t_tok **tks, char c, int active, int j)
         (*tks)->d_in[j] = active; 
 }
 
-void	active_s_tokens(char *line, t_tok *tks, char c)
+void	active_s_tokens(char *line, t_tks *tks, char c)
 {
 	int	i;
 	int	j;
@@ -92,7 +92,7 @@ void	active_s_tokens(char *line, t_tok *tks, char c)
 	}
 }
 
-void	active_d_tokens(char *line, t_tok *tks, char *dc)
+void	active_d_tokens(char *line, t_tks *tks, char *dc)
 {
 	int	i;
 	int	j;

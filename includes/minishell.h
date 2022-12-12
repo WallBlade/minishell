@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/12 22:46:00 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/12 23:07:14 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_cmd
 	void    *next;
 }               t_cmd;
 
-typedef struct s_tok
+typedef struct s_tks
 {
 	int *q;
 	int *dq;
@@ -45,7 +45,7 @@ typedef struct s_tok
 	int	*d_in;
 	int	*dol;
 	int	*qst;
-}				t_tok;
+}				t_tks;
 
 typedef struct s_file
 {
@@ -77,19 +77,19 @@ int		count_d_elem(char *str, char *sub);
 
 /*------------------------------------INIT------------------*/
 
-t_tok	*init_tokens(char *str);
-void	init_active_tokens(t_tok **tks, char *line);
+t_tks	*init_tokens(char *str);
+void	init_active_tokens(t_tks **tks, char *line);
 
 /*------------------------------------GET_TOKENS------------*/
 
-void	get_quotes(char *line, t_tok *tks);
-int		between_quotes(t_tok *tks,int i, char c);
-void	fill_tks(t_tok **tks, char c, int active, int j);
-void	active_s_tokens(char *line, t_tok *tks, char c);
-void	active_d_tokens(char *line, t_tok *tks, char *dc);
-void	active_dol_token(char *line, t_tok *tks);
-int		count_pipes(char *str, t_tok *tks);
-int		*pipe_strlen(char *str, t_tok *tks);
-char	**split_2_ouf(char *str, t_tok *tks);
+void	get_quotes(char *line, t_tks *tks);
+int		between_quotes(t_tks *tks,int i, char c);
+void	fill_tks(t_tks **tks, char c, int active, int j);
+void	active_s_tokens(char *line, t_tks *tks, char c);
+void	active_d_tokens(char *line, t_tks *tks, char *dc);
+void	active_dol_token(char *line, t_tks *tks);
+int		count_pipes(char *str, t_tks *tks);
+int		*pipe_strlen(char *str, t_tks *tks);
+char	**split_2_ouf(char *str, t_tks *tks);
 
 #endif
