@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:21:16 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/09 01:44:39 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/12 21:47:04 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-// int	*find_single_quotes(char *s)
-// {
-// 	int	count;
-// 	int	j;
-// 	int	*positions;
-
-// 	count = 0;
-// 	j = 0;
-// 	while (s && s[j])
-// 	{
-// 		if (s[j] == '\'')
-// 			count++;
-// 		j++;
-// 	}
-// 	positions = malloc(sizeof(int) * (count + 1));
-// 	if (!positions)
-// 		return (NULL);
-// 	j = 0;
-// 	count = 0;
-// 	while (s && s[j])
-// 	{
-// 		if (s[j] == '\'')
-// 			positions[count++] = j;
-// 		j++;
-// 	}
-// 	positions[count] = 0;
-// 	return (positions);
-// }
-
-// int	between_quotes(char *s, int i)
-// {
-// 	int	j;
-// 	int	*positions;
-
-// 	j = 0;
-// 	positions = find_single_quotes(s);
-// 	if (!positions)
-// 		return (0);
-// 	while (positions && positions[j] && positions[j + 1])
-// 	{
-// 		if (i > positions[j] && i < positions[j + 1])
-// 			return (free(positions), 1);
-// 		j++;
-// 	}
-// 	return (free(positions), 0);
-// }
 
 static size_t	ft_cwords(char const *s, char c)
 {

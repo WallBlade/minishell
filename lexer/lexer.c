@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/11 21:22:17 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/12 22:49:46 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,22 @@ int	is_token(char c)
 
 int main()
 {
-	t_tok	*tok;
+	t_tok	*tks;
 	char    *prompt;
 
 	while (1)
 	{
 		prompt = readline("minishell> ");
-		tok = init_tokens(prompt);
-		init_active_tokens(&tok, prompt);
-		for (int i = 0; i < count_elem(prompt, '$'); i++)
-			printf("%d\n", tok->dol[i]);
+		tks = init_tokens(prompt);
+		init_active_tokens(&tks, prompt);
+		printf("pipes = %d\n", count_pipes(prompt, tks));
+		pipe_strlen(prompt, tks);
+		int *len = pipe_strlen(prompt, tks);
+		for (int i = 0; len[i]; i++)
+			printf("len[%d] = %d\n", i, len[i]);
+		split_2_ouf(prompt, tks);
+		// for (int i = 0; sdf[i]; i++)
+		// 	printf("sdf[%d] = %s\n", i, sdf[i]);
 		add_history(prompt);
 	}
 	rl_clear_history();
