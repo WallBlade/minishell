@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/12 23:07:14 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/13 22:11:18 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	init_active_tokens(t_tks **tks, char *line);
 
 /*------------------------------------GET_TOKENS------------*/
 
-void	get_quotes(char *line, t_tks *tks);
+// void	get_quotes(char *line, t_tks *tks);
+void	get_squotes(char *line, int *q);
+void	get_dquotes(char *line, int *dq);
 int		between_quotes(t_tks *tks,int i, char c);
 void	fill_tks(t_tks **tks, char c, int active, int j);
 void	active_s_tokens(char *line, t_tks *tks, char c);
@@ -91,5 +93,8 @@ void	active_dol_token(char *line, t_tks *tks);
 int		count_pipes(char *str, t_tks *tks);
 int		*pipe_strlen(char *str, t_tks *tks);
 char	**split_2_ouf(char *str, t_tks *tks);
+char	**split(char *s, char c, t_tks *tks);
+int		between_squotes(int *q, int i);
+int		between_dquotes(int *dq, int i);
 
 #endif

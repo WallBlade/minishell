@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:21:16 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/12 21:47:04 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:11:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**ft_split(char *s, char c)
 	while (j < ft_cwords(s, c))
 	{
 		k = 0;
-		while (s[i] && s[i] == c)
+		while (s[i] && s[i] == c && !)
 			i++;
 		big[j] = malloc(sizeof(char) * (ft_wdlen(s, c, i) + 1));
 		if (!big[j])
