@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/15 17:28:58 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/15 21:01:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_lexer
 int 	ft_tablen(char **tab);
 t_cmd   *lstnew(void);
 void    lstaddback(t_cmd **list, t_cmd *new);
-void    free_tab(char **tab);
 t_cmd	*epur_str(char **str);
 void    free_tab(char **tab);
 int		count_elem(char *str, char c);
@@ -102,5 +101,12 @@ char	**split(char *str);
 int		between_squotes(int *q, int i);
 int		between_dquotes(int *dq, int i);
 int		in_quotes(int *q, int *dq, int i);
+int		count_pipes(char *str, t_tks *tks);
+int		*pipe_strlen(char *str, t_tks *tks);
+int		cwords(char *str);
+int		wdlen(char *str, int i);
+char	*fill_wrd(char *str, int i);
+char	**split(char *str);
+char	**split_2_ouf(char *str, t_tks *tks);
 
 #endif

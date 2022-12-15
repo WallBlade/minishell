@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/15 17:18:16 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 21:05:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	count_elem(char *str, char c)
 	len = 0;
 	while (str && str[i])
 	{
-		if ((c == '<' || c == '>') && str[i + 1]
-			&& str[i] == c && str[i + 1] == c)
+		if ((c == '<' || c == '>') && str[i + 1] &&
+			str[i] == c && str[i + 1] == c)
 			i++;
 		else if (str[i] && str[i] == c)
 			len++;
@@ -76,8 +76,15 @@ int	main()
 		prompt = readline("minishell> ");
 		tks = init_tokens(prompt);
 		init_active_tokens(&tks, prompt);
-		// char **test = split_2_ouf(prompt, tks);
-		// char **sdf = split(test[1], ' ', tks);
+		char **test = split_2_ouf(prompt, tks);
+		for (int i = 0; test[i]; i++)
+		{
+			printf("test = %s\n", test[i]);
+			char **sdf = split(test[i]);
+			for (int j = 0; sdf[j]; j++)
+				printf("sdf = %s\n", sdf[j]);
+			printf("\n");
+		}
 		add_history(prompt);
 	}
 	rl_clear_history();
