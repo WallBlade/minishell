@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:40 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/15 16:17:15 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:22:19 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_tks	*init_tokens(char *str)
 		return (NULL);
 	tks->q = malloc(sizeof(int) * (count_elem(str, '\'')));
 	tks->dq = malloc(sizeof(int) * (count_elem(str, '"')));
+	tks->q_on = malloc(sizeof(int) * (count_elem(str, '\'')));
+    tks->dq_on = malloc(sizeof(int) * (count_elem(str, '\'')));
 	tks->p = malloc(sizeof(int) * (count_elem(str, '|')));
 	tks->in = malloc(sizeof(int) * count_elem(str, '<'));
 	tks->out = malloc(sizeof(int) * count_elem(str, '>'));
@@ -40,6 +42,7 @@ void	init_active_tokens(t_tks **tks, char *line)
 	i = 0;
 	get_squotes(line, (*tks)->q);
 	get_dquotes(line, (*tks)->dq);
+	active_quotes(line, (*tks));
 	while (tokens[i])
 		active_s_tokens(line, (*tks), tokens[i++]);
 	active_dol_token(line, (*tks));

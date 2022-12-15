@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/13 23:05:26 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:28:58 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_tks
 {
 	int *q;
 	int *dq;
+	int	*q_on;
+	int	*dq_on;
 	int *p;
 	int	*in;
 	int	*out;
@@ -87,6 +89,9 @@ void	get_squotes(char *line, int *q);
 void	get_dquotes(char *line, int *dq);
 int		not_quotes(t_tks *tks,int i, char c);
 void	fill_tks(t_tks **tks, char c, int active, int j);
+void	conditions_quotes(int *dominant, int *tab, int index);
+void	conditions_dquotes(int *dominant, int *tab, int index);
+void	active_quotes(char *line, t_tks *tks);
 void	active_s_tokens(char *line, t_tks *tks, char c);
 void	active_d_tokens(char *line, t_tks *tks, char *dc);
 void	active_dol_token(char *line, t_tks *tks);
