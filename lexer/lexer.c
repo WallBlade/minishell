@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/13 22:01:50 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:18:16 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	main()
 		prompt = readline("minishell> ");
 		tks = init_tokens(prompt);
 		init_active_tokens(&tks, prompt);
-		char **test = split_2_ouf(prompt, tks);
-		char **sdf = split(test[1], ' ', tks);
+		// char **test = split_2_ouf(prompt, tks);
+		// char **sdf = split(test[1], ' ', tks);
 		add_history(prompt);
 	}
 	rl_clear_history();

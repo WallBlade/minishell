@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:40 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/13 20:43:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:17:15 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_active_tokens(t_tks **tks, char *line)
 	tokens = "<>|?";
 	i = 0;
 	get_squotes(line, (*tks)->q);
-	get_squotes(line, (*tks)->dq);
+	get_dquotes(line, (*tks)->dq);
 	while (tokens[i])
 		active_s_tokens(line, (*tks), tokens[i++]);
 	active_dol_token(line, (*tks));

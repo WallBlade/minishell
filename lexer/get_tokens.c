@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/13 22:10:01 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/13 23:01:21 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	get_squotes(char *line, int *q)
 			q[j++] = i;
 		i++;
 	}
-	return (q);
 }
 
 void	get_dquotes(char *line, int *dq)
@@ -43,7 +42,7 @@ void	get_dquotes(char *line, int *dq)
 	}
 }
 
-int	between_quotes(t_tks *tks, int i, char c)
+int	not_quotes(t_tks *tks, int i, char c)
 {
 	int	j;
 	int	*positions;
@@ -62,6 +61,13 @@ int	between_quotes(t_tks *tks, int i, char c)
 	return (1);
 }
 
+int	in_quotes(int *q, int *dq, int i)
+{
+	if (between_squotes(q, i) || between_dquotes(dq, i))
+		return (1);
+	return (0);
+}
+
 int	between_squotes(int *q, int i)
 {
 	int	j;
@@ -70,10 +76,10 @@ int	between_squotes(int *q, int i)
 	while (q && q[j] >= 0 && q[j + 1])
 	{
 		if (i > q[j] && i < q[j + 1])
-			return (0);
-		j++;
+			return (1);
+		j += 2;
 	}
-	return (1);
+	return (0);
 }
 
 int	between_dquotes(int *dq, int i)
@@ -84,10 +90,10 @@ int	between_dquotes(int *dq, int i)
 	while (dq && dq[j] >= 0 && dq[j + 1])
 	{
 		if (i > dq[j] && i < dq[j + 1])
-			return (0);
-		j++;
+			return (1);
+		j += 2;
 	}
-	return (1);
+	return (0);
 }
 
 void	fill_tks(t_tks **tks, char c, int active, int j)
@@ -117,8 +123,8 @@ void	active_s_tokens(char *line, t_tks *tks, char c)
 	j = 0;
 	while (line && line[i])
 	{
-		if (line[i] == c && (between_quotes(tks, i, '"') && 
-			between_quotes(tks, i, '\'')))
+		if (line[i] == c && (not_quotes(tks, i, '"') && 
+			not_quotes(tks, i, '\'')))
 		{
 			fill_tks(&tks, c, 1, j);
 			j++;
@@ -131,4 +137,3 @@ void	active_s_tokens(char *line, t_tks *tks, char c)
 		i++;
 	}
 }
-

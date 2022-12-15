@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:13:18 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/13 20:40:57 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:30:37 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	active_dol_token(char *line, t_tks *tks)
 	j = 0;
 	while (line && line[i])
 	{
-		if (line[i] == '$' && between_quotes(tks, i, '\''))
+		if (line[i] == '$' && not_quotes(tks, i, '\''))
 		{
 			fill_tks(&tks, '$', 1, j);
 			j++;
@@ -50,8 +50,8 @@ void	active_d_tokens(char *line, t_tks *tks, char *dc)
 		k = 2;
 	while (line && line[i])
 	{
-		if (!ft_strncmp(&line[i], dc, 2) && (between_quotes(tks, i, '"') && 
-			between_quotes(tks, i, '\'')))
+		if (!ft_strncmp(&line[i], dc, 2) && (not_quotes(tks, i, '"') && 
+			not_quotes(tks, i, '\'')))
 		{
 			fill_tks(&tks, k, 1, j);
 			j++;
