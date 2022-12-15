@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/15 23:07:09 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/15 23:10:30 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	*pipe_strlen(char *str, t_tks *tks)
 	{
 		if (str[i] == '|' && tks->p[j++] == 1)
 		{
-			lens[k] = count;
+			lens[k++] = count;
 			count = -1;
-			k++;
 		}
 		i++;
 		count++;
