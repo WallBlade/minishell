@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/15 22:30:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/15 23:07:09 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,29 @@ int	*pipe_strlen(char *str, t_tks *tks)
 {
 	int	i;
 	int	j;
+	int	k;
 	int	count;
 	int	*lens;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	count = 0;
 	lens = malloc(sizeof(int) * (count_pipes(str, tks)));
 	if (!lens)
 		return (0);
 	while (str && str[i])
 	{
-		if (str[i] == '|' && tks->p && tks->p[j] == 1)
+		if (str[i] == '|' && tks->p[j++] == 1)
 		{
-			lens[j] = count;
-			count = 0;
-			j++;
+			lens[k] = count;
+			count = -1;
+			k++;
 		}
 		i++;
 		count++;
 	}
-	lens[j] = count;
+	lens[k] = count;
 	return (lens);
 }
 
