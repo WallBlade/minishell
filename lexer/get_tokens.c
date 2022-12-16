@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/13 23:01:21 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:58:01 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	not_quotes(t_tks *tks, int i, char c)
 		positions = tks->dq;
 	else
 		positions = tks->q;
-	while (positions && positions[j] >= 0 && positions[j + 1])
+	while (positions && j < count_elem(tks->prompt, c))
 	{
 		if (i > positions[j] && i < positions[j + 1])
 			return (0);

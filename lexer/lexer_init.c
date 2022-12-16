@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:40 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/12/15 17:22:19 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/16 12:57:16 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_tks	*init_tokens(char *str)
 	tks->q = malloc(sizeof(int) * (count_elem(str, '\'')));
 	tks->dq = malloc(sizeof(int) * (count_elem(str, '"')));
 	tks->q_on = malloc(sizeof(int) * (count_elem(str, '\'')));
-    tks->dq_on = malloc(sizeof(int) * (count_elem(str, '\'')));
+    tks->dq_on = malloc(sizeof(int) * (count_elem(str, '"')));
 	tks->p = malloc(sizeof(int) * (count_elem(str, '|')));
 	tks->in = malloc(sizeof(int) * count_elem(str, '<'));
 	tks->out = malloc(sizeof(int) * count_elem(str, '>'));
@@ -30,6 +30,7 @@ t_tks	*init_tokens(char *str)
 	tks->d_in = malloc(sizeof(int) * count_d_elem(str, "<<"));
 	tks->dol = malloc(sizeof(int) * count_elem(str, '$'));
 	tks->qst = malloc(sizeof(int) * count_elem(str, '?'));
+	tks->prompt = ft_strdup(str);
 	return (tks);
 }
 
