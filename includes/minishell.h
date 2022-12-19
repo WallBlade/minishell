@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/16 12:56:37 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:51:20 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ typedef struct s_cmd
 
 typedef struct s_tks
 {
-	int *q;
-	int *dq;
-	int	*q_on;
-	int	*dq_on;
-	int *p;
-	int	*in;
-	int	*out;
-	int	*ap;
-	int	*d_in;
-	int	*dol;
-	int	*qst;
+	int		*q;
+	int		*dq;
+	int		*q_on;
+	int		*dq_on;
+	int		*p;
+	int		*in;
+	int		*out;
+	int		*ap;
+	int		*d_in;
+	int		*dol;
+	int		*qst;
 	char	*prompt;
 }				t_tks;
 
@@ -56,16 +56,19 @@ typedef struct s_file
 	char    *operator;
 }       t_file;
 
-typedef struct s_lexer
+typedef struct s_parser
 {
 	struct s_file in;
 	struct s_file out;
 	char    del;
 	char    *cmd;
 	char    *opt;
+	int		index;
+	int		len_pip;
 	struct s_lexer *child;
+	struct s_lexer	*prev;
 	struct s_lexer *next;
-}       t_lexer;
+}       t_parser;
 
 /*------------------------------------UTILS----------------*/
 
