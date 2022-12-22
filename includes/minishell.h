@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/19 16:51:20 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/22 17:32:26 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ int		count_pipes(char *str, t_tks *tks);
 int		*pipe_strlen(char *str, t_tks *tks);
 int		cwords(char *str);
 int		wdlen(char *str, int i);
-char	*fill_wrd(char *str, int i);
+char	*fill_wrd(char *str, int *i);
 char	**split(char *str);
 char	**split_2_ouf(char *str, t_tks *tks);
+char	*clean_2_ouf(char *prompt, t_tks *tks);
 
 #endif

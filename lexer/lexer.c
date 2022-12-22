@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/15 21:05:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:34:11 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main()
 		prompt = readline("minishell> ");
 		tks = init_tokens(prompt);
 		init_active_tokens(&tks, prompt);
-		char **test = split_2_ouf(prompt, tks);
+		char **test = split_2_ouf(clean_2_ouf(prompt, tks), tks);
 		for (int i = 0; test[i]; i++)
 		{
 			printf("test = %s\n", test[i]);
