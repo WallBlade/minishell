@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/19 16:51:20 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/22 17:45:28 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
 /*-------------------------------Struct---------------------------------------*/
 
@@ -56,13 +56,19 @@ typedef struct s_file
 	char    *operator;
 }       t_file;
 
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**options;
+}				t_cmd;
+
 typedef struct s_parser
 {
 	struct s_file in;
 	struct s_file out;
 	char    del;
 	char    *cmd;
-	char    *opt;
+	char    **opt;
 	int		index;
 	int		len_pip;
 	struct s_lexer *child;
