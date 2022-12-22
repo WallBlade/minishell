@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 18:05:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/22 20:01:41 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <fcntl.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -54,26 +55,23 @@ typedef struct s_file
 {
 	char    *file;
 	char    *operator;
+	int		fd;
 }       t_file;
 
-typedef struct s_cmd
+typedef struct s_com
 {
 	char	*cmd;
 	char	**options;
-}				t_cmd;
+}				t_com;
 
 typedef struct s_parser
 {
 	struct s_file in;
 	struct s_file out;
-	char    del;
 	char    *cmd;
 	char    **opt;
-	int		index;
-	int		len_pip;
-	struct s_lexer *child;
-	struct s_lexer	*prev;
-	struct s_lexer *next;
+	struct s_parser	*prev;
+	struct s_parser *next;
 }       t_parser;
 
 /*------------------------------------UTILS----------------*/
@@ -119,5 +117,16 @@ char	*fill_wrd(char *str, int *i);
 char	**split(char *str);
 char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
+
+/*----------------------PARSER---------------------*/
+
+char    *here_doc(char **split, int i);
+void    fill_in(t_parser **par, char **split);
+void    fill_out(t_parser *par, char **split);
+int 	is_redir(char *arg);
+char	**get_paths(void);
+int 	len_cmd(char **split);
+char    **get_opt(char **split);
+char    *get_abs_path(char **paths, char **opt);
 
 #endif

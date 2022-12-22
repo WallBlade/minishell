@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 17:34:11 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/12/22 20:01:48 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ int	is_token(char c)
 
 int	main()
 {
-	t_tks	*tks;
+	t_tks		*tks;
+	t_parser	*par;
 	char	*prompt;
 
+	par = malloc(sizeof(t_parser));
 	while (1)
 	{
 		prompt = readline("minishell> ");
@@ -81,8 +83,14 @@ int	main()
 		{
 			printf("test = %s\n", test[i]);
 			char **sdf = split(test[i]);
+			par->in.fd = 0;
+			fill_in(&par, sdf);
+			fill_out(par, sdf);
+			char **paths = get_paths();
+			par->opt = get_opt(sdf);
+			par->cmd = get_abs_path(paths, par->opt);
 			for (int j = 0; sdf[j]; j++)
-				printf("sdf = %s\n", sdf[j]);
+				printf("sdf = %s\n", par->in.file);
 			printf("\n");
 		}
 		add_history(prompt);

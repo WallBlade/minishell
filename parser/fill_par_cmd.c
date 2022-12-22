@@ -6,30 +6,20 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 17:46:39 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/22 19:45:31 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_paths(char **envp)
+char	**get_paths(void)
 {
 	int		i;
 	char	*path_var;
 	char	**env_path;
 
-	i = 0;
-	env_path = NULL;
-	while (envp[i])
-	{
-		path_var = ft_strnstr(envp[i], "PATH=", 6);
-		if (path_var)
-		{
-			env_path = ft_split(path_var, ':');
-			break ;
-		}
-		i++;
-	}
+    path_var = getenv("PATH");
+	env_path = ft_split(path_var, ':');
 	i = -1;
 	while (env_path[++i])
 		env_path[i] = ft_strjoin(env_path[i], "/");
@@ -56,7 +46,7 @@ int len_cmd(char **split)
     return (len);
 }
 
-char    **get_opt(char **paths, char **split)
+char    **get_opt(char **split)
 {
     int     i;
     int     j;
