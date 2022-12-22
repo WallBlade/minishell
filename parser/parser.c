@@ -6,112 +6,11 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/19 20:41:05 by smessal          ###   ########.fr       */
+/*   Updated: 2022/12/20 22:33:49 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int check_active(int *token)
-{
-    int i;
-    
-    i = 0;
-    while (token && token[i] >= 0)
-    {
-        if (token[i] == 1)
-            return (1);
-        i++;
-    }
-    return (0);
-}
-/* 
-    Il faut gerer le cas ou les chevrons sont colles au filename 
-    comme: <infile au lieu de < infile;
-*/
-
-char    *here_doc(t_parser *par, char **split, t_tks *tks_pipe)
-{
-    char    *stack;
-    char    *prompt;
-    int     i;
-
-    i = 0;
-    while (split && split[i])
-    {
-        if (split[i] && split[i + 1] && !ft_strncmp(split[i], "<<", 2))
-            break;
-        i++;
-    }        
-    prompt = NULL;
-    stack = NULL;
-    while (1)
-    {
-        prompt = readline(">");
-        if (!ft_strncmp(prompt, split[i + 1], ft_strlen(split[i + 1])))
-            break;
-        stack = ft_strjoin(stack, prompt);
-    }
-    return (stack);
-}
-
-void    fill_in(t_parser *par, char **split, t_tks *tks_pipe)
-{
-    int i;
-
-    i = -1;
-    if (check_active(tks_pipe->d_in))
-    {
-        while (split && split[i++])
-        {
-            if (split[i] && split[i + 1] && !ft_strncmp(split[i], "<<", 2))
-            {
-                par->in.file = split[i + 1];
-                par->in.operator = "<<";
-            }
-        }
-    }
-    else if (check_active(tks_pipe->in))
-    {
-        while (split && split[i++])
-        {
-            if (split[i][0] == '<' && split[i + 1])
-            {
-                par->in.file = split[i + 1];
-                par->in.operator = "<";
-            }
-        }
-    }
-}
-
-void    fill_out(t_parser *par, char **split, t_tks *tks_pipe)
-{
-    int i;
-
-    i = -1;
-    if (check_active(tks_pipe->ap))
-    {
-        while (split && split[i++])
-        {
-            if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", 2))
-            {
-                par->out.file = split[i + 1];
-                par->out.operator = ">>";
-            }
-        }
-    }
-    else if (check_active(tks_pipe->out))
-    {
-        while (split && split[i++])
-        {
-            if (split[i][0] == '>' && split[i + 1])
-            {
-                par->out.file = split[i + 1];
-                par->out.operator = ">";
-            }
-        }
-    }
-}
 
 t_parser    *init_par_index(int len)
 {
