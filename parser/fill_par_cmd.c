@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 19:45:31 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 11:52:06 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char    **get_opt(char **split)
             i++;
         }
     }
+    opt[j] = NULL;
     return (opt);
 }
 
@@ -78,7 +79,7 @@ char    *get_abs_path(char **paths, char **opt)
 
     i = 0;
     abs = NULL;
-    while (paths && paths[i])
+    while (paths && paths[i] && opt[0])
     {
         if (!access(opt[0], X_OK))
             return (opt[0]);
