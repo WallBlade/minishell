@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 20:04:36 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:03:03 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,19 @@ int	is_token(char c)
 	return (0);
 }
 
-char	**lexer(char *prompt)
+char	**lexer(char *prompt, char **env)
 {
 	t_tks		*tks;
+	char		*expanded;
 	
 	tks = init_tokens(prompt);
 	init_active_tokens(&tks, prompt);
-	char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
+	expanded = expand(prompt, env, tks);
+	/*
+		Expand applique ici, OPERATIONEL sans norm
+		Reste a voir pourquoi le '$' donne le pwd quand expand est applique
+	*/
+	char **sdf = split_2_ouf(clean_2_ouf(expanded, tks), tks);
 	return (sdf);
 }
 

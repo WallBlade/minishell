@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 16:21:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 20:34:33 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,15 @@ char	*fill_wrd(char *str, int *i);
 char	**split(char *str);
 char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
-char	**lexer(char *prompt);
+int		is_token(char c);
+char	**lexer(char *prompt, char **env);
+
+/*----------------------EXPAND---------------------*/
+
+char	*get_varname(char *prompt, int start, int end);
+char	*get_var(char *prompt, char **env, int start, int end);
+int		len_expand(char *prompt, t_tks *tks, char **env);
+char	*expand(char *prompt, char **env, t_tks *tks);
 
 /*----------------------PARSER---------------------*/
 
