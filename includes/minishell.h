@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 13:50:41 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 16:21:29 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_cmdtab    *lstnew_par(char *pipe);
 void    	lst_addback_par(t_cmdtab **tab, t_cmdtab *new);
 char    	*here_doc(char **split, int i);
 void    	fill_in(t_cmdtab **par, char **split);
-void    	fill_out(t_cmdtab *par, char **split);
+void    	fill_out(t_cmdtab **par, char **split);
 int 		is_redir(char *arg);
 char		**get_paths(void);
 int 		len_cmd(char **split);

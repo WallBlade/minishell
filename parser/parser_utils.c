@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 16:05:25 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 16:21:54 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmdtab    *lstnew_par(char *pipe)
     tab->out.fd = 0;
     spl = split(pipe);
     fill_in(&tab, spl);
-    fill_out(tab, spl);
+    fill_out(&tab, spl);
     tab->opt = get_opt(spl);
     tab->cmd = get_abs_path(get_paths(), tab->opt);
     tab->prev = NULL;
@@ -36,9 +36,9 @@ void    lst_addback_par(t_cmdtab **tab, t_cmdtab *new)
 {
     t_cmdtab    *temp;
 
-    if (!tab || !new)
-        return ;
     temp = *tab;
+    if (!new)
+        return ;
     if (!temp)
     {
         *tab = new;

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 14:09:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 16:23:24 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,30 @@ void    fill_in(t_cmdtab **par, char **split)
     }
 }
 
-void    fill_out(t_cmdtab *par, char **split)
+void    fill_out(t_cmdtab **par, char **split)
 {
     int i;
 
     i = -1;
     while (split && split[++i])
     {
-        if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", ft_strlen(split[i])))
+        if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", 2))
         {
-            par->out.file = split[i + 1];
-            par->out.operator = ">>";
-            if (par->out.fd > 0)
-                close(par->out.fd);
-            par->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
+            (*par)->out.file = split[i + 1];
+            (*par)->out.operator = ">>";
+            if ((*par)->out.fd > 0)
+                close((*par)->out.fd);
+            (*par)->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
         }
         else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
         {
-            par->out.file = split[i + 1];
-            par->out.operator = ">";
-            if (par->out.fd > 0)
-                close(par->out.fd > 0);
-            par->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
+            (*par)->out.file = split[i + 1];
+            (*par)->out.operator = ">";
+            if ((*par)->out.fd > 0)
+                close((*par)->out.fd > 0);
+            (*par)->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
         }
-        if (par->out.fd < 0)
+        if ((*par)->out.fd < 0)
             return ;
     }
 }
