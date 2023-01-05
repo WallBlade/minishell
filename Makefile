@@ -1,6 +1,7 @@
 SRC	=	$(wildcard lexer/*.c) \
 		$(wildcard utils/*.c) \
 		$(wildcard parser/*.c) \
+		$(wildcard builtins/*.c) \
 
 OBJ = $(SRC:.c=.o)
 
