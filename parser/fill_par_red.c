@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 11:41:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:09:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* 
-    Il faut gerer le cas ou les chevrons sont colles au filename 
-    comme: <infile au lieu de < infile;
-	C'est fait. Le here doc se lance, probleme lorsque
-	l'on ecrit le delimiteur, SEGFAULT;
-*/
 char    *here_doc(char **split, int i)
 {
     char    *stack;
@@ -37,12 +31,12 @@ char    *here_doc(char **split, int i)
     return (stack);
 }
 
-void    fill_in(t_parser **par, char **split)
+void    fill_in(t_cmdtab **par, char **split)
 {
     int i;
 
     i = -1;
-    while (split && split[i++])
+    while (split && split[++i])
     {
         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
@@ -67,12 +61,12 @@ void    fill_in(t_parser **par, char **split)
     }
 }
 
-void    fill_out(t_parser *par, char **split)
+void    fill_out(t_cmdtab *par, char **split)
 {
     int i;
 
     i = -1;
-    while (split && split[i++])
+    while (split && split[++i])
     {
         if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", ft_strlen(split[i])))
         {

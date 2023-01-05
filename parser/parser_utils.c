@@ -1,38 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_list.c                                       :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 20:12:13 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/08 23:20:22 by smessal          ###   ########.fr       */
+/*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
+/*   Updated: 2023/01/05 14:12:17 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd   *lstnew(void)
+t_cmdtab    *lstnew_par(char *pipe)
 {
-    t_cmd   *new;
+    t_cmdtab    *tab;
+    char        **spl;
 
-    new = malloc(sizeof(t_cmd) * 1);
-    if (!new)
+    tab = malloc(sizeof(t_cmdtab));
+    if (!tab)
         return (NULL);
-    new->next = NULL;
-    return (new);
+    tab->in.fd = 0;
+    tab->out.fd = 0;
+    spl = split(pipe);
+    fill_in(&tab, spl);
+    fill_out(tab, spl);
+    tab->opt = get_opt(spl);
+    tab->cmd = get_abs_path(get_paths(), tab->opt);
+    tab->prev = NULL;
+    tab->next = NULL;
+    return (tab);
 }
 
-void    lstaddback(t_cmd **list, t_cmd *new)
+void    lst_addback_par(t_cmdtab **tab, t_cmdtab *new)
 {
-    t_cmd   *temp;
+    t_cmdtab    *temp;
 
-    if (!*list)
+    if (!tab || !(*tab))
     {
-        *list = new;
+        *tab = new;
         return ;
     }
-    temp = *list;
+    temp = *tab;
     while (temp->next)
         temp = temp->next;
     temp->next = new;

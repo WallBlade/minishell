@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 11:42:01 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:41:16 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,40 @@ int	is_token(char c)
 	return (0);
 }
 
-int	main()
+char	**lexer(char *prompt)
 {
 	t_tks		*tks;
-	t_parser	*par;
-	char	*prompt;
-
-	par = malloc(sizeof(t_parser));
-	while (1)
-	{
-		prompt = readline("minishell> ");
-		tks = init_tokens(prompt);
-		init_active_tokens(&tks, prompt);
-		char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
-		for (int i = 0; sdf[i]; i++)
-		{
-			printf("sdf[%d] = %s\n", i, sdf[i]);
-			char **spl = split(sdf[i]);
-			par->in.fd = 0;
-			fill_in(&par, spl);
-			fill_out(par, spl);
-			char **paths = get_paths();
-			par->opt = get_opt(spl);
-			par->cmd = get_abs_path(paths, par->opt);
-			printf("\n");
-		}
-		add_history(prompt);
-	}
-	rl_clear_history();
+	
+	tks = init_tokens(prompt);
+	init_active_tokens(&tks, prompt);
+	char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
+	return (sdf);
 }
+
+// int	main()
+// {
+// 	t_tks		*tks;
+// 	t_cmdtab	*par;
+// 	char	*prompt;
+
+// 	par = malloc(sizeof(t_cmdtab));
+// 	while (1)
+// 	{
+// 		prompt = readline("minishell> ");
+// 		tks = init_tokens(prompt);
+// 		init_active_tokens(&tks, prompt);
+// 		char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
+// 		for (int i = 0; sdf[i]; i++)
+// 		{
+// 			char **spl = split(sdf[i]);
+// 			par->in.fd = 0;
+// 			fill_in(&par, spl);
+// 			fill_out(par, spl);
+// 			char **paths = get_paths();
+// 			par->opt = get_opt(spl);
+// 			par->cmd = get_abs_path(paths, par->opt);
+// 		}
+// 		add_history(prompt);
+// 	}
+// 	rl_clear_history();
+// }

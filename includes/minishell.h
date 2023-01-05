@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 20:01:41 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 13:50:41 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@
 # include "../libft/libft.h"
 
 /*-------------------------------Struct---------------------------------------*/
-
-typedef struct s_cmd
-{
-	char    **brut;
-	void    *next;
-}               t_cmd;
 
 typedef struct s_tks
 {
@@ -58,28 +52,19 @@ typedef struct s_file
 	int		fd;
 }       t_file;
 
-typedef struct s_com
-{
-	char	*cmd;
-	char	**options;
-}				t_com;
-
-typedef struct s_parser
+typedef struct s_cmdtab
 {
 	struct s_file in;
 	struct s_file out;
 	char    *cmd;
 	char    **opt;
-	struct s_parser	*prev;
-	struct s_parser *next;
-}       t_parser;
+	struct s_cmdtab	*prev;
+	struct s_cmdtab *next;
+}				t_cmdtab;
 
 /*------------------------------------UTILS----------------*/
 
 int 	ft_tablen(char **tab);
-t_cmd   *lstnew(void);
-void    lstaddback(t_cmd **list, t_cmd *new);
-t_cmd	*epur_str(char **str);
 void    free_tab(char **tab);
 int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
@@ -89,9 +74,8 @@ int		count_d_elem(char *str, char *sub);
 t_tks	*init_tokens(char *str);
 void	init_active_tokens(t_tks **tks, char *line);
 
-/*------------------------------------GET_TOKENS------------*/
+/*------------------------------------LEXER------------*/
 
-// void	get_quotes(char *line, t_tks *tks);
 void	get_squotes(char *line, int *q);
 void	get_dquotes(char *line, int *dq);
 int		not_quotes(t_tks *tks,int i, char c);
@@ -117,16 +101,19 @@ char	*fill_wrd(char *str, int *i);
 char	**split(char *str);
 char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
+char	**lexer(char *prompt);
 
 /*----------------------PARSER---------------------*/
 
-char    *here_doc(char **split, int i);
-void    fill_in(t_parser **par, char **split);
-void    fill_out(t_parser *par, char **split);
-int 	is_redir(char *arg);
-char	**get_paths(void);
-int 	len_cmd(char **split);
-char    **get_opt(char **split);
-char    *get_abs_path(char **paths, char **opt);
+t_cmdtab    *lstnew_par(char *pipe);
+void    	lst_addback_par(t_cmdtab **tab, t_cmdtab *new);
+char    	*here_doc(char **split, int i);
+void    	fill_in(t_cmdtab **par, char **split);
+void    	fill_out(t_cmdtab *par, char **split);
+int 		is_redir(char *arg);
+char		**get_paths(void);
+int 		len_cmd(char **split);
+char    	**get_opt(char **split);
+char    	*get_abs_path(char **paths, char **opt);
 
 #endif
