@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/05 23:11:54 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 23:28:01 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int len_tab(char **tab)
 
 char    **export(char **env, char *var_exp)
 {
-    int i;
+    int     i;
     char    **exported;
 
     i = 0;

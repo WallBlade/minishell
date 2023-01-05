@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 20:34:33 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 23:26:49 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,9 @@ char		**get_paths(void);
 int 		len_cmd(char **split);
 char    	**get_opt(char **split);
 char    	*get_abs_path(char **paths, char **opt);
+
+/*-----------------------BUILT-INS------------------*/
+int 		len_tab(char **tab);
+char    	**export(char **env, char *var_exp);
 
 #endif
