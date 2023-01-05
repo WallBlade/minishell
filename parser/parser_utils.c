@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 14:12:17 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 16:05:25 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void    lst_addback_par(t_cmdtab **tab, t_cmdtab *new)
 {
     t_cmdtab    *temp;
 
-    if (!tab || !(*tab))
+    if (!tab || !new)
+        return ;
+    temp = *tab;
+    if (!temp)
     {
         *tab = new;
         return ;
     }
-    temp = *tab;
     while (temp->next)
         temp = temp->next;
     temp->next = new;
