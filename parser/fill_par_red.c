@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 20:01:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 11:41:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /* 
     Il faut gerer le cas ou les chevrons sont colles au filename 
     comme: <infile au lieu de < infile;
+	C'est fait. Le here doc se lance, probleme lorsque
+	l'on ecrit le delimiteur, SEGFAULT;
 */
 char    *here_doc(char **split, int i)
 {
@@ -26,7 +28,7 @@ char    *here_doc(char **split, int i)
     while (1)
     {
         prompt = readline(">");
-        if (!ft_strncmp(prompt, split[i + 1], ft_strlen(split[i + 1])))
+        if (!ft_strcmp(prompt, split[i + 1]))
             break;
         /*Reste a check si necessaire de free s2 sur strjoin*/
         stack = ft_strjoin(stack, prompt);
@@ -42,7 +44,7 @@ void    fill_in(t_parser **par, char **split)
     i = -1;
     while (split && split[i++])
     {
-        if (split[i] && split[i + 1] && !ft_strncmp(split[i], "<<", ft_strlen(split[i])))
+        if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
             if ((*par)->in.fd > 0)
                 close((*par)->in.fd);
@@ -52,7 +54,7 @@ void    fill_in(t_parser **par, char **split)
             (*par)->in.file = "tmp";
             (*par)->in.operator = "<<";
         }
-        else if (split[i] && split[i + 1] && !ft_strncmp(split[i], "<", ft_strlen(split[i])))
+        else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
         {
             (*par)->in.file = split[i + 1];
             (*par)->in.operator = "<";
@@ -83,7 +85,6 @@ void    fill_out(t_parser *par, char **split)
         else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
         {
             par->out.file = split[i + 1];
-            printf("test\n");
             par->out.operator = ">";
             if (par->out.fd > 0)
                 close(par->out.fd > 0);

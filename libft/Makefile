@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smessal <smessal@student.42.fr>            +#+  +:+       +#+         #
+#    By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/12 15:23:51 by smessal           #+#    #+#              #
-#    Updated: 2022/09/08 20:45:55 by smessal          ###   ########.fr        #
+#    Updated: 2023/01/05 09:33:20 by zel-kass         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS			=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
 					ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
 					ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
 					ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
-					ft_putchar_fd.c ft_putstr_fd.c \
+					ft_putchar_fd.c ft_putstr_fd.c ft_strcmp.c \
 					ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c \
 
 OBJS			= $(SRCS:.c=.o)

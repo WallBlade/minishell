@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 20:01:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 11:42:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,17 @@ int	main()
 		prompt = readline("minishell> ");
 		tks = init_tokens(prompt);
 		init_active_tokens(&tks, prompt);
-		char **test = split_2_ouf(clean_2_ouf(prompt, tks), tks);
-		for (int i = 0; test[i]; i++)
+		char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
+		for (int i = 0; sdf[i]; i++)
 		{
-			printf("test = %s\n", test[i]);
-			char **sdf = split(test[i]);
+			printf("sdf[%d] = %s\n", i, sdf[i]);
+			char **spl = split(sdf[i]);
 			par->in.fd = 0;
-			fill_in(&par, sdf);
-			fill_out(par, sdf);
+			fill_in(&par, spl);
+			fill_out(par, spl);
 			char **paths = get_paths();
-			par->opt = get_opt(sdf);
+			par->opt = get_opt(spl);
 			par->cmd = get_abs_path(paths, par->opt);
-			for (int j = 0; sdf[j]; j++)
-				printf("sdf = %s\n", par->in.file);
 			printf("\n");
 		}
 		add_history(prompt);

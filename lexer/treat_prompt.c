@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/22 17:56:03 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/05 08:51:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	compute_new_len(char *prompt, t_tks *tks)
 	len = 0;
 	while (prompt && prompt[i])
 	{
-		if ((prompt[i] == '>' || prompt[i] == '<')
+		if ((prompt[i] == '>' || prompt[i] == '<') && (prompt[i + 1] != '<' && prompt[i + 1] != '>')
 			&& (!in_quotes(tks->q, tks->dq, i)))
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')
 				len++;
@@ -63,7 +63,7 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 		return (NULL);
 	while (prompt[i])
 	{
-		if ((prompt[i] == '<' || prompt[i] == '>')
+		if ((prompt[i] == '<' || prompt[i] == '>') && (prompt[i + 1] != '<' && prompt[i + 1] != '>')
 			&& (!in_quotes(tks->q, tks->dq, i)))
 		{
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')

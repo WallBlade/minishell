@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 11:56:25 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/15 20:52:49 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/05 09:53:42 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -31,6 +32,7 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t size);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_memcmp(const void *ptr1, const void *ptr2, size_t size);
 int		ft_atoi(const char *str);
 int		ft_strchr(const char *str);
