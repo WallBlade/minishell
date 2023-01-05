@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 13:41:16 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/05 18:15:10 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,54 @@ int	is_token(char c)
 		i++;
 	}
 	return (0);
+}
+
+char	*get_var(char *prompt, char **env)
+{
+	int	
+}
+
+int	len_expand(char *prompt, t_tks *tks, char **env)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (prompt && prompt[i])
+	{
+		if (prompt[i] == '$' && tks->dol[j++])
+		{
+			while (prompt[i] != ' ' && !is_token(prompt[i]))
+				i++;
+			len += 
+		}
+	}
+}
+
+char	*str_expand(char *prompt, char **env)
+{
+	
+}
+
+char	*expand(char *prompt, t_tks *tks, char **env)
+{
+	int		i;
+	int		j;
+	char	*expd;
+	
+	i = 0;
+	j = 0;
+	while (prompt[i])
+	{
+		if (prompt[i] == '$' && tks->dol[j++])
+		{
+			
+		}
+			
+	}
 }
 
 char	**lexer(char *prompt)
