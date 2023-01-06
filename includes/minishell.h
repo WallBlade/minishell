@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 23:35:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/06 12:31:22 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char    	*get_abs_path(char **paths, char **opt);
 int 		len_tab(char **tab);
 char    	**export(char **env, char *var_exp);
 char    	**unset(char **env, char *varname);
+void    	env_print(char **env, int fd);
 void		pwd();
 
 #endif
