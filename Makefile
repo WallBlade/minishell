@@ -5,29 +5,35 @@ SRC	=	$(wildcard lexer/*.c) \
 
 OBJ = $(SRC:.c=.o)
 
-CC = cc
+CC = @cc
 
 RM = rm -rf
 
 CFLAGS = -Wall -Wextra -Werror -g -I./includes
 
 NAME = minishell
+
 all	:	$(NAME)
+
 $(NAME):	$(OBJ)
-			make -C libft
-			ar -rcs libft/libft.a
-			cp libft/libft.a libft.a
-			$(CC) $(CFLAGS) $(OBJ) libft.a -o  $(NAME) -lreadline
+			@echo "\n---------------------Compiling Minishell---------------------\n"
+			@make -C libft
+			@ar -rcs libft/libft.a
+			@cp libft/libft.a libft.a
+			@$(CC) $(CFLAGS) $(OBJ) libft.a -o $(NAME) -lreadline
 
 clean:
-	$(RM) $(OBJ)
+	@$(RM) $(OBJ)
 	@make clean -sC libft
 
 fclean:	clean
-		$(RM) $(NAME)
-		$(RM) libft.a
+		@echo "\n---------------------Cleaning Minishell---------------------\n"
+		@$(RM) $(NAME)
+		@$(RM) libft.a
 		@make fclean -sC libft
 
 re:			fclean $(NAME)
+
+.SILENT:	all
 
 .PHONY:		all clean fclean re

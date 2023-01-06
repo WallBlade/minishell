@@ -6,7 +6,7 @@
 #    By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/12 15:23:51 by smessal           #+#    #+#              #
-#    Updated: 2023/01/05 09:33:20 by zel-kass         ###   ########.fr        #
+#    Updated: 2023/01/06 16:17:48 by zel-kass         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ BONUS			=	ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 
 BONUS_OBJS		= $(BONUS:.c=.o)
 
-CC				= gcc
+CC				= @cc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror
 
@@ -39,7 +39,7 @@ NAME			= libft.a
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+				@ar rcs $(NAME) $(OBJS)
 
 clean:
 				$(RM) $(OBJS) $(BONUS_OBJS)
