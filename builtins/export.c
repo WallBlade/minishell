@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/05 23:28:01 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/06 11:32:16 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char    **export(char **env, char *var_exp)
     while (env && env[i])
     {
         exported[i] = ft_strdup(env[i]);
-        i++;
+        free(env[i++]);
     }
     exported[i++] = ft_strdup(var_exp);
     exported[i] = NULL;
-    return (exported);
+    return (free(env), exported);
 }
