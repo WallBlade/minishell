@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 21:00:04 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/06 13:57:04 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*get_varname(char *prompt, int start, int end)
 			i++;
 			start++;
 		}
+		varname[i] = '\0';
 	}
 	return (varname);
 }
@@ -108,6 +109,7 @@ char	*expand(char *prompt, char **env, t_tks *tks)
         return (NULL);
     while (prompt && prompt[i])
 	{
+		k = 0;
 		if (prompt[i] == '$' && tks->dol[l++])
 		{
 			start = ++i;
@@ -118,7 +120,9 @@ char	*expand(char *prompt, char **env, t_tks *tks)
                 expanded[j++] = var[k++];
 			free(var);		
 		}
-        expanded[j++] = prompt[i++];
+		else
+        	expanded[j++] = prompt[i++];
     }
+	expanded[j] = '\0';
     return (expanded);
 }
