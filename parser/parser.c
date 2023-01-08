@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 20:31:35 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/08 13:09:08 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,4 @@ t_cmdtab    *parser(char **lexer)
         i++;
     }
     return (tab);
-}
-
-int main(int ac, char **av, char **env)
-{
-    char        *prompt;
-    char        **lex;
-    t_cmdtab    *tab;
-
-    (void)ac;
-    (void)av;
-    tab = NULL;
-    while (1)
-    {
-        prompt = readline("minishell> ");
-        lex = lexer(prompt, env);
-        tab = parser(lex);
-        printer(tab);
-        add_history(prompt);
-    }
-    rl_clear_history();
 }

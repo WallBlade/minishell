@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/06 12:31:22 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/08 13:59:59 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,10 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "lexer.h"
 # include "../libft/libft.h"
 
 /*-------------------------------Struct---------------------------------------*/
-
-typedef struct s_tks
-{
-	int		*q;
-	int		*dq;
-	int		*q_on;
-	int		*dq_on;
-	int		*p;
-	int		*in;
-	int		*out;
-	int		*ap;
-	int		*d_in;
-	int		*dol;
-	int		*qst;
-	char	*prompt;
-}				t_tks;
 
 typedef struct s_file
 {
@@ -51,6 +36,14 @@ typedef struct s_file
 	char    *operator;
 	int		fd;
 }       t_file;
+
+typedef	struct s_data
+{
+	int		fd[2];
+	int		wpid;
+	int		p_count;
+	pid_t	*pid;
+}		t_data;
 
 typedef struct s_cmdtab
 {
@@ -62,47 +55,10 @@ typedef struct s_cmdtab
 	struct s_cmdtab *next;
 }				t_cmdtab;
 
-/*------------------------------------UTILS----------------*/
-
-int 	ft_tablen(char **tab);
-void    free_tab(char **tab);
-int		count_elem(char *str, char c);
-int		count_d_elem(char *str, char *sub);
-
 /*------------------------------------INIT------------------*/
 
 t_tks	*init_tokens(char *str);
 void	init_active_tokens(t_tks **tks, char *line);
-
-/*------------------------------------LEXER------------*/
-
-void	get_squotes(char *line, int *q);
-void	get_dquotes(char *line, int *dq);
-int		not_quotes(t_tks *tks,int i, char c);
-void	fill_tks(t_tks **tks, char c, int active, int j);
-void	conditions_quotes(int *dominant, int *tab, int index);
-void	conditions_dquotes(int *dominant, int *tab, int index);
-void	active_quotes(char *line, t_tks *tks);
-void	active_s_tokens(char *line, t_tks *tks, char c);
-void	active_d_tokens(char *line, t_tks *tks, char *dc);
-void	active_dol_token(char *line, t_tks *tks);
-int		count_pipes(char *str, t_tks *tks);
-int		*pipe_strlen(char *str, t_tks *tks);
-char	**split_2_ouf(char *str, t_tks *tks);
-char	**split(char *str);
-int		between_squotes(int *q, int i);
-int		between_dquotes(int *dq, int i);
-int		in_quotes(int *q, int *dq, int i);
-int		count_pipes(char *str, t_tks *tks);
-int		*pipe_strlen(char *str, t_tks *tks);
-int		cwords(char *str);
-int		wdlen(char *str, int i);
-char	*fill_wrd(char *str, int *i);
-char	**split(char *str);
-char	**split_2_ouf(char *str, t_tks *tks);
-char	*clean_2_ouf(char *prompt, t_tks *tks);
-int		is_token(char c);
-char	**lexer(char *prompt, char **env);
 
 /*----------------------EXPAND---------------------*/
 
@@ -123,8 +79,12 @@ char		**get_paths(void);
 int 		len_cmd(char **split);
 char    	**get_opt(char **split);
 char    	*get_abs_path(char **paths, char **opt);
+t_cmdtab    *parser(char **lexer);
+void    	printer(t_cmdtab *tab);
+int			lstsize(t_cmdtab *lst);
 
 /*-----------------------BUILT-INS------------------*/
+
 int 		len_tab(char **tab);
 char    	**export(char **env, char *var_exp);
 char    	**unset(char **env, char *varname);
