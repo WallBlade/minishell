@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 15:11:37 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:13:28 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,23 @@ void	exec(t_cmdtab *tab, t_data *data)
 	i = 0;
 	while (tab && i < data->p_count)
 	{
-		if (pipe(data->fd) == -1)
+		if (i < data->p_count - 1 && pipe(data->fd) == -1)
 			return ;
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
 		else if (data->pid[i] == 0)
 		{
-			if (i == 0)
+			if (i == 0 && data->p_count > 1)
 				dup2(data->fd[1], STDOUT_FILENO);
-			// else if (i > 0 && i < data->p_count - 1)
-			// {
-			// 	dup2(data->fd[0], STDIN_FILENO);
-			// 	dup2(data->fd[1], STDOUT_FILENO);
-			// 	close(data->fd[0]);
-			// 	close(data->fd[1]);
-			// }
+			else
+				dup2(data->fd[0], STDIN_FILENO);
 			if (tab->cmd)
+			{
+				close(data->fd[0]);
+				close(data->fd[1]);
 				execve(tab->cmd, tab->opt, NULL);
+			}
 		}
 		tab = tab->next;
 		i++;
