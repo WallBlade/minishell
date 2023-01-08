@@ -34,6 +34,4 @@ fclean:	clean
 
 re:			fclean $(NAME)
 
-.SILENT:	all
-
 .PHONY:		all clean fclean re
