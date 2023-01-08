@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 16:13:28 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:36:48 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,30 @@ void	wait_all(t_data *data)
 	}
 }
 
+void	redir(t_cmdtab *tab, t_data *data, int index)
+{
+	if (index == 0 && data->p_count > 1)
+	{
+		if (tab->out.fd > 0)
+		{
+			dup2(data->fd[0], STDOUT_FILENO);
+			dup2(tab->out.fd, 1);
+		}
+		else
+			dup2(data->fd[1], STDOUT_FILENO);
+	}
+	else
+	{
+		if (tab->in.fd > 0)
+		{
+			dup2(tab->in.fd, STDIN_FILENO);
+			dup2(data->fd[0], tab->in.fd);
+		}
+		else
+			dup2(data->fd[0], STDIN_FILENO);
+	}
+}
+
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int	i;
@@ -53,10 +77,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 			return ;
 		else if (data->pid[i] == 0)
 		{
-			if (i == 0 && data->p_count > 1)
-				dup2(data->fd[1], STDOUT_FILENO);
-			else
-				dup2(data->fd[0], STDIN_FILENO);
+			redir(tab, data, i);
 			if (tab->cmd)
 			{
 				close(data->fd[0]);
