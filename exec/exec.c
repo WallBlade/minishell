@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 16:36:48 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:46:09 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,20 @@ void	wait_all(t_data *data)
 
 void	redir(t_cmdtab *tab, t_data *data, int index)
 {
-	if (index == 0 && data->p_count > 1)
+	if (tab->in.fd > 0)
 	{
-		if (tab->out.fd > 0)
-		{
-			dup2(data->fd[0], STDOUT_FILENO);
-			dup2(tab->out.fd, 1);
-		}
-		else
-			dup2(data->fd[1], STDOUT_FILENO);
+		dup2(tab->in.fd, STDIN_FILENO);
+		dup2(data->fd[0], tab->in.fd);
+	}
+	if (tab->out.fd > 0)
+	{
+		dup2(tab->out.fd, STDOUT_FILENO);
+		dup2(data->fd[1], tab->out.fd);
 	}
 	else
 	{
-		if (tab->in.fd > 0)
-		{
-			dup2(tab->in.fd, STDIN_FILENO);
-			dup2(data->fd[0], tab->in.fd);
-		}
+		if (index == 0 && data->p_count > 1)
+			dup2(data->fd[1], STDOUT_FILENO);
 		else
 			dup2(data->fd[0], STDIN_FILENO);
 	}
