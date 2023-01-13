@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/08 13:59:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:09:53 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_file
 
 typedef	struct s_data
 {
-	int		fd[2];
+	int		**fd;
 	int		wpid;
 	int		p_count;
 	pid_t	*pid;
@@ -82,6 +82,14 @@ char    	*get_abs_path(char **paths, char **opt);
 t_cmdtab    *parser(char **lexer);
 void    	printer(t_cmdtab *tab);
 int			lstsize(t_cmdtab *lst);
+
+/*---------------------EXEC-------------------------*/
+
+void		init_pipes(t_data *data);
+void		close_pipes(t_data *data);
+void		make_dup(int in, int out);
+void		redir(t_data *data, int	index);
+void		exec(t_cmdtab *tab, t_data *data);
 
 /*-----------------------BUILT-INS------------------*/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 16:46:09 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:04:46 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 t_data	*init_data_struct(t_cmdtab *tab)
 {
 	t_data	*data;
+	int		i;
 	
+	i = 0;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
@@ -24,6 +26,16 @@ t_data	*init_data_struct(t_cmdtab *tab)
 	if (!data->pid)
 		return (NULL);
 	data->wpid = 0;
+	data->fd = malloc(sizeof(int *) * data->p_count);
+	if (!data->fd)
+		return (NULL);
+	while (i < data->p_count)
+	{
+		data->fd[i] = malloc(sizeof(int) * 2);
+		if (!data->fd[i])
+			return (NULL);
+		i++;
+	}
 	return (data);
 }
 
@@ -39,54 +51,30 @@ void	wait_all(t_data *data)
 	}
 }
 
-void	redir(t_cmdtab *tab, t_data *data, int index)
-{
-	if (tab->in.fd > 0)
-	{
-		dup2(tab->in.fd, STDIN_FILENO);
-		dup2(data->fd[0], tab->in.fd);
-	}
-	if (tab->out.fd > 0)
-	{
-		dup2(tab->out.fd, STDOUT_FILENO);
-		dup2(data->fd[1], tab->out.fd);
-	}
-	else
-	{
-		if (index == 0 && data->p_count > 1)
-			dup2(data->fd[1], STDOUT_FILENO);
-		else
-			dup2(data->fd[0], STDIN_FILENO);
-	}
-}
-
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int	i;
 
 	i = 0;
+	init_pipes(data);
 	while (tab && i < data->p_count)
 	{
-		if (i < data->p_count - 1 && pipe(data->fd) == -1)
-			return ;
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
-		else if (data->pid[i] == 0)
+		if (data->pid[i] == 0)
 		{
-			redir(tab, data, i);
+			redir(data, i);
 			if (tab->cmd)
 			{
-				close(data->fd[0]);
-				close(data->fd[1]);
+				close_pipes(data);
 				execve(tab->cmd, tab->opt, NULL);
 			}
 		}
 		tab = tab->next;
 		i++;
 	}
-	close(data->fd[0]);
-	close(data->fd[1]);
+	close_pipes(data);
 	wait_all(data);
 }
 
