@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/13 16:09:53 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:36:13 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		close_pipes(t_data *data);
 void		make_dup(int in, int out);
 void		redir(t_data *data, int	index);
 void		exec(t_cmdtab *tab, t_data *data);
-
+void    	redir_cmd(t_data *data, t_cmdtab *tab, int index);
 /*-----------------------BUILT-INS------------------*/
 
 int 		len_tab(char **tab);
