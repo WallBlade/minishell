@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/13 18:36:31 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/14 14:54:06 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 			return ;
 		if (data->pid[i] == 0)
 		{
-			redir(data, i);
-			redir_cmd(data, tab, i);
+			redir(data, tab, i);
 			if (tab->cmd)
 			{
 				close_pipes(data);
