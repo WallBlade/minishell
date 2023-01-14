@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 16:23:24 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/14 15:18:43 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void    fill_in(t_cmdtab **par, char **split)
         {
             if ((*par)->in.fd > 0)
                 close((*par)->in.fd);
-            (*par)->in.fd = open("tmp", O_WRONLY | O_CREAT);
+            (*par)->in.fd = open("tmp", O_RDWR | O_CREAT, 0777);
             ft_putstr_fd(here_doc(split, i), (*par)->in.fd);
-            close((*par)->in.fd);
+            // close((*par)->in.fd);
             (*par)->in.file = "tmp";
             (*par)->in.operator = "<<";
         }
