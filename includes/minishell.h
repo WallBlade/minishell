@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/14 14:50:57 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:34:24 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ int 		len_tab(char **tab);
 char    	**export(char **env, char *var_exp);
 char    	**unset(char **env, char *varname);
 void    	env_print(char **env, int fd);
-void		pwd();
+void		pwd(int fd);
 
 #endif

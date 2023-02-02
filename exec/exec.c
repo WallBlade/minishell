@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/14 14:54:06 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:40:22 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ void	wait_all(t_data *data)
 	}
 }
 
+// int	check_builtin(t_cmdtab *tab)
+// {
+// 	if (tab->opt && tab->opt[0])
+// 	{
+// 		if (!ft_strcmp(tab->opt[0], "echo"))
+// 			echo(tab->opt, tab->out.fd);
+// 		else if (!ft_strcmp(tab->opt[0], "pwd"))
+// 			pwd(tab->out.fd);
+// 		else if (!ft_strcmp(tab->opt[0], "cd"))
+// 		{
+// 			if (tab->opt[1])
+// 				change_dir(tab->opt[1]);
+// 			else
+// 				change_dir("~");
+// 		}
+// 	}
+// }
+
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int	i;
@@ -94,7 +112,7 @@ int main(int argc, char **argv, char **envp)
         lex = lexer(prompt, envp);
         tab = parser(lex);
 		data = init_data_struct(tab);
-        // printer(tab);
+        printer(tab);
 		exec(tab, data);
         add_history(prompt);
     }

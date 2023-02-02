@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/08 13:59:24 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:27:15 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_cmdtab    *lstnew_par(char *pipe)
     if (!tab)
         return (NULL);
     tab->in.fd = 0;
-    tab->out.fd = 0;
+    tab->out.fd = 1;
     spl = split(pipe);
     fill_in(&tab, spl);
     fill_out(&tab, spl);

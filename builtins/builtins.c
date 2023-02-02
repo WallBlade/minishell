@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 11:48:18 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:34:49 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	pwd()
+void	pwd(int fd)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	ft_putstr_fd(pwd, 1);
-	free (pwd);
+	ft_putstr_fd(pwd, fd);
+	if (pwd)
+		free (pwd);
 }
 
 int    change_dir(char *path)
