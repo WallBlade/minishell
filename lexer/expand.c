@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/06 13:57:04 by smessal          ###   ########.fr       */
+/*   Updated: 2023/01/17 21:48:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,25 @@ int	len_expand(char *prompt, t_tks *tks, char **env)
 	return (len);
 }
 
+t_expand	*init_expand(char **env)
+{
+	t_expand	*exp;
+	
+	exp = malloc(sizeof(t_expand));
+	if (!exp)
+		return (NULL);
+	exp->env = env;
+	exp->i = 0;
+	exp->j = 0;
+	exp->k = 0;
+	exp->l = 0;
+	return (exp);
+}
+
 char	*expand(char *prompt, char **env, t_tks *tks)
 {
 	char    *expanded;
-    int     i;
+	int     i;
     int     j;
     int     k;
     int     l;

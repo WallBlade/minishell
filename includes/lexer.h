@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/08 13:08:02 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:06:33 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ typedef struct s_tks
 	int		*qst;
 	char	*prompt;
 }				t_tks;
+
+typedef	struct s_expand
+{
+	int		start;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	char	**env;
+}				t_expand;
 
 void	get_squotes(char *line, int *q);
 void	get_dquotes(char *line, int *dq);

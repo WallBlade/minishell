@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/02 17:34:24 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/03 20:47:07 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef	struct s_data
 	int		wpid;
 	int		p_count;
 	pid_t	*pid;
+	char	**env;
 }		t_data;
 
 typedef struct s_cmdtab
@@ -96,8 +97,19 @@ void    	redir_file(t_data *data, t_cmdtab *tab, int index);
 
 int 		len_tab(char **tab);
 char    	**export(char **env, char *var_exp);
+void    	print_export(t_cmdtab *tab, char **env);
+char    	**converted_env(char **env);
+char		*ft_strdup_quote(char *env);
+int			is_builtin(t_cmdtab *tab);
 char    	**unset(char **env, char *varname);
 void    	env_print(char **env, int fd);
 void		pwd(int fd);
+int			change_dir(char *path);
+void    	env_print(char **env, int fd);
+int			is_there_n(char **cmd);
+void		echo(char **cmd, int fd);
+char		**ft_strdup_tab(char **tab);
+
+
 
 #endif
