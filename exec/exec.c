@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/06 14:16:45 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:26:59 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	check_builtin(t_cmdtab *tab, t_data *data)
 			pwd(tab->out.fd);
 		else if (!ft_strcmp(tab->opt[0], "cd"))
 		{
-			if (tab->opt[1])
-				change_dir(tab->opt[1]);
-			else
+			if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
 				change_dir(getenv("HOME"));
+			else if (tab->opt[1])
+				change_dir(tab->opt[1]);
 		}
 		else if (!ft_strcmp(tab->opt[0], "export"))
 		{
@@ -111,11 +111,16 @@ void	exec(t_cmdtab *tab, t_data *data)
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
-        check_builtin(tab, data);
 		if (data->pid[i] == 0)
 		{
 			redir(data, tab, i);
-			if (tab->cmd)
+			if (is_builtin(tab))
+			{
+				close_pipes(data);
+				check_builtin(tab, data);
+				exit(0);
+			}
+			else if (tab->cmd)
 			{
 				close_pipes(data);
 				execve(tab->cmd, tab->opt, NULL);
@@ -147,7 +152,10 @@ int main(int argc, char **argv, char **envp)
         tab = parser(lex);
 		data = init_data_struct(tab, env);
         // printer(tab);
-		exec(tab, data);
+		if (is_builtin(tab) && data->p_count == 1)
+			check_builtin(tab, data);
+		else
+			exec(tab, data);
 		env = ft_strdup_tab(data->env);
         add_history(prompt);
     }

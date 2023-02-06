@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/14 15:18:43 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 16:18:30 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void    fill_out(t_cmdtab **par, char **split)
         {
             (*par)->out.file = split[i + 1];
             (*par)->out.operator = ">>";
-            if ((*par)->out.fd > 0)
+            if ((*par)->out.fd > 1)
                 close((*par)->out.fd);
             (*par)->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
         }
@@ -80,8 +80,8 @@ void    fill_out(t_cmdtab **par, char **split)
         {
             (*par)->out.file = split[i + 1];
             (*par)->out.operator = ">";
-            if ((*par)->out.fd > 0)
-                close((*par)->out.fd > 0);
+            if ((*par)->out.fd > 1)
+                close((*par)->out.fd);
             (*par)->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
         }
         if ((*par)->out.fd < 0)

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/02 17:34:49 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 14:28:02 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	pwd(int fd)
 
 	pwd = getcwd(NULL, 0);
 	ft_putstr_fd(pwd, fd);
+  ft_putstr_fd("\n", fd);
 	if (pwd)
 		free (pwd);
 }
