@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/03 20:48:06 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 14:16:45 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
+        check_builtin(tab, data);
 		if (data->pid[i] == 0)
 		{
 			redir(data, tab, i);
