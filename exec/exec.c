@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/06 16:26:59 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 18:42:57 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,53 +53,6 @@ void	wait_all(t_data *data)
 	}
 }
 
-int	is_builtin(t_cmdtab *tab)
-{
-	if (tab->opt && tab->opt[0])
-	{
-		if (!ft_strcmp(tab->opt[0], "echo"))
-			return (1);
-		else if (!ft_strcmp(tab->opt[0], "pwd"))
-			return (1);
-		else if (!ft_strcmp(tab->opt[0], "cd"))
-			return (1);
-		else if (!ft_strcmp(tab->opt[0], "export"))
-			return (1);
-		else if (!ft_strcmp(tab->opt[0], "unset"))
-			return (1);
-		else
-			return (0);
-	}
-	else
-		return (0);
-}
-
-int	check_builtin(t_cmdtab *tab, t_data *data)
-{
-	if (tab->opt && tab->opt[0])
-	{
-		if (!ft_strcmp(tab->opt[0], "echo"))
-			echo(tab->opt, tab->out.fd);
-		else if (!ft_strcmp(tab->opt[0], "pwd"))
-			pwd(tab->out.fd);
-		else if (!ft_strcmp(tab->opt[0], "cd"))
-		{
-			if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
-				change_dir(getenv("HOME"));
-			else if (tab->opt[1])
-				change_dir(tab->opt[1]);
-		}
-		else if (!ft_strcmp(tab->opt[0], "export"))
-		{
-			if (tab->opt[1])
-				data->env = export(data->env, tab->opt[1]);
-			else
-				print_export(tab, data->env);
-		}
-	}
-	return (1);
-}
-
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int	i;
@@ -117,7 +70,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 			if (is_builtin(tab))
 			{
 				close_pipes(data);
-				check_builtin(tab, data);
+				launch_builtin(tab, data);
 				exit(0);
 			}
 			else if (tab->cmd)
@@ -153,7 +106,7 @@ int main(int argc, char **argv, char **envp)
 		data = init_data_struct(tab, env);
         // printer(tab);
 		if (is_builtin(tab) && data->p_count == 1)
-			check_builtin(tab, data);
+			launch_builtin(tab, data);
 		else
 			exec(tab, data);
 		env = ft_strdup_tab(data->env);

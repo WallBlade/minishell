@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/03 20:47:07 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 18:40:48 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void		make_dup(int in, int out);
 void		redir(t_data *data, t_cmdtab *tab, int index);
 void		exec(t_cmdtab *tab, t_data *data);
 void    	redir_file(t_data *data, t_cmdtab *tab, int index);
+int			launch_builtin(t_cmdtab *tab, t_data *data);
 
 /*-----------------------BUILT-INS------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/03 18:08:21 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 18:41:02 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char    *ft_strdup_quote(char *env)
         i++;
         j++;
     }
-    quote[j++] = '"';
+    if (!first)
+        quote[j++] = '"';
     quote[j] = '\0';
     return(quote);
 }

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/06 14:28:02 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 18:44:52 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,15 @@ int    change_dir(char *path)
 void    env_print(char **env, int fd)
 {
     int i;
-    int j;
 
     i = 0;
-    j = 0;
     while (env && env[i])
     {
-		j = 0;
-		while (env[i][j])
-			write(fd, &env[i][j++], 1);
-		write(fd, "\n", 1);
-		i++;
+      if (ft_strnstr(env[i], "=", ft_strlen(env[i])))
+      {
+        ft_putstr_fd(env[i], fd);
+		    write(fd, "\n", 1);
+      }
+      i++;
     }
 }
