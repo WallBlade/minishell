@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/06 18:40:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 19:28:57 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <readline/history.h>
 # include "lexer.h"
 # include "../libft/libft.h"
+
+extern int status;
 
 /*-------------------------------Struct---------------------------------------*/
 
@@ -111,6 +113,10 @@ int			is_there_n(char **cmd);
 void		echo(char **cmd, int fd);
 char		**ft_strdup_tab(char **tab);
 
+/*-------------------ERROR------------------*/
 
+void check_status(char *cmd, char *file);
+void cmd_error(char *cmd);
+void file_error(char *file);
 
 #endif

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/06 18:42:57 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 19:52:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int status;
 
 t_data	*init_data_struct(t_cmdtab *tab, char **env)
 {
@@ -41,23 +43,32 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 	return (data);
 }
 
-void	wait_all(t_data *data)
+void	wait_all(t_data *data, t_cmdtab *tab)
 {
-	int	i;
+	int     i;
+    char    *file;
 
 	i = 0;
 	while (i < data->p_count)
 	{
+        if (tab->in.fd)
+            file = tab->in.file;
+        else if (tab->out.fd)
+            file = tab->out.file;
 		waitpid(data->pid[i], &data->wpid, 0);
-		i++;
-	}
+        check_status(tab->opt[0], file);
+        tab = tab->next;
+        i++;
+    }
 }
 
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int	i;
+    t_cmdtab *tmp;
 
 	i = 0;
+    tmp = tab;
 	init_pipes(data);
 	while (tab && i < data->p_count)
 	{
@@ -83,7 +94,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 		i++;
 	}
 	close_pipes(data);
-	wait_all(data);
+	wait_all(data, tmp);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -110,6 +121,7 @@ int main(int argc, char **argv, char **envp)
 		else
 			exec(tab, data);
 		env = ft_strdup_tab(data->env);
+        printf("status = %d\n", status);
         add_history(prompt);
     }
     rl_clear_history();

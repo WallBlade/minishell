@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/06 16:18:30 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/06 19:27:58 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void    fill_in(t_cmdtab **par, char **split)
             (*par)->in.fd = open(split[i + 1], O_RDONLY);
         }
         if ((*par)->in.fd < 0)
-            return ;
+            file_error(ft_strdup((*par)->in.file));
     }
 }
 
@@ -85,7 +85,7 @@ void    fill_out(t_cmdtab **par, char **split)
             (*par)->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
         }
         if ((*par)->out.fd < 0)
-            return ;
+            file_error((*par)->in.file);
     }
 }
 
