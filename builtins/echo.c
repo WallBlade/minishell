@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/06 14:51:02 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:37:58 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int    is_there_n(char **cmd)
     i = 0;
     while (cmd && cmd[i])
     {
-        if (!ft_strcmp(cmd[i], "echo") && !ft_strcmp(cmd[i + 1], "-n"))
+        if (cmd[i + 1] && !ft_strcmp(cmd[i], "echo") 
+            && !ft_strcmp(cmd[i + 1], "-n"))
             return (1);
         i++;
     }

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 19:31:06 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/03 17:10:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:30:34 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,22 @@ char    **ft_strdup_tab(char **tab)
     }
     dupl[i] = NULL;
     return (dupl);
+}
+
+char	*allocate_str(char *str)
+{
+	int		i;
+	char	*allocated;
+	
+	i = 0;
+	allocated = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!allocated)
+		return (NULL);
+	while (str && str[i])
+	{
+		allocated[i] = str[i];
+		i++;
+	}
+	allocated[i] = '\0';
+	return (allocated);
 }

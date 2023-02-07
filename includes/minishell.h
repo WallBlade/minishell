@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 17:01:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 21:47:46 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ void	init_active_tokens(t_tks **tks, char *line);
 /*----------------------EXPAND---------------------*/
 
 char	*get_varname(char *prompt, int start, int end);
+int		find_varname_env(char *var, char *env_var);
 char	*get_var(char *prompt, char **env, int start, int end);
 int		len_expand(char *prompt, t_tks *tks, char **env);
 char	*expand(char *prompt, char **env, t_tks *tks);
+char 	*expand_err_code(char *prompt, int start, int end);
 
 /*----------------------PARSER---------------------*/
 
@@ -112,6 +114,10 @@ void    	env_print(char **env, int fd);
 int			is_there_n(char **cmd);
 void		echo(char **cmd, int fd);
 char		**ft_strdup_tab(char **tab);
+
+/*-------------------UTILS------------------*/
+
+char	*allocate_str(char *str);
 
 /*-------------------ERROR------------------*/
 
