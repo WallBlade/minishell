@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/06 19:52:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:24:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 	data->pid = malloc(sizeof(int) * data->p_count);
 	if (!data->pid)
 		return (NULL);
-	data->wpid = 0;
 	data->fd = malloc(sizeof(int *) * data->p_count);
 	if (!data->fd)
 		return (NULL);
@@ -55,8 +54,9 @@ void	wait_all(t_data *data, t_cmdtab *tab)
             file = tab->in.file;
         else if (tab->out.fd)
             file = tab->out.file;
-		waitpid(data->pid[i], &data->wpid, 0);
-        check_status(tab->opt[0], file);
+		waitpid(data->pid[i], &status, 0);
+		printf("statuuuuuuuuuuuuu = %d\n", status);
+        check_status(WEXITSTATUS(status), tab->opt[0], file);
         tab = tab->next;
         i++;
     }
@@ -121,7 +121,6 @@ int main(int argc, char **argv, char **envp)
 		else
 			exec(tab, data);
 		env = ft_strdup_tab(data->env);
-        printf("status = %d\n", status);
         add_history(prompt);
     }
     rl_clear_history();

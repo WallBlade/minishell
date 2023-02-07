@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 11:52:06 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/07 12:33:44 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,3 @@ char    *get_abs_path(char **paths, char **opt)
     }
     return (NULL);
 }
-
-/*Pour initialiser commande:
-
-    1- Get_paths;
-    2- Get_opt;
-    3- Get_abs_path
-    
-*/

@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/06 19:27:58 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:43:37 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char    *here_doc(char **split, int i)
         prompt = readline(">");
         if (!ft_strcmp(prompt, split[i + 1]))
             break;
-        /*Reste a check si necessaire de free s2 sur strjoin*/
         stack = ft_strjoin(stack, prompt);
         stack = ft_strjoin(stack, "\n");
     }
@@ -44,7 +43,6 @@ void    fill_in(t_cmdtab **par, char **split)
                 close((*par)->in.fd);
             (*par)->in.fd = open("tmp", O_RDWR | O_CREAT, 0777);
             ft_putstr_fd(here_doc(split, i), (*par)->in.fd);
-            // close((*par)->in.fd);
             (*par)->in.file = "tmp";
             (*par)->in.operator = "<<";
         }
@@ -56,9 +54,12 @@ void    fill_in(t_cmdtab **par, char **split)
                 close((*par)->in.fd);
             (*par)->in.fd = open(split[i + 1], O_RDONLY);
         }
-        if ((*par)->in.fd < 0)
-            file_error(ft_strdup((*par)->in.file));
-    }
+	}
+	if ((*par)->in.fd < 0)
+	{
+		file_error(ft_strdup((*par)->in.file));
+		check_status(status, (*par)->cmd, (*par)->in.file);
+	}
 }
 
 void    fill_out(t_cmdtab **par, char **split)
@@ -84,9 +85,12 @@ void    fill_out(t_cmdtab **par, char **split)
                 close((*par)->out.fd);
             (*par)->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
         }
-        if ((*par)->out.fd < 0)
-            file_error((*par)->in.file);
-    }
+	}
+	if ((*par)->out.fd < 0)
+	{
+		file_error((*par)->in.file);
+		check_status(status, (*par)->cmd, (*par)->out.file);
+	}
 }
 
 int is_redir(char *arg)

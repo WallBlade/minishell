@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 21:03:03 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/07 12:40:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,38 +74,7 @@ char	**lexer(char *prompt, char **env)
 	tks = init_tokens(prompt);
 	init_active_tokens(&tks, prompt);
 	expanded = expand(prompt, env, tks);
-	/*
-		Expand applique ici, OPERATIONEL sans norm
-		Reste a voir pourquoi le '$' donne le pwd quand expand est applique
-	*/
 	char **sdf = split_2_ouf(clean_2_ouf(expanded, tks), tks);
 	return (sdf);
 }
 
-// int	main()
-// {
-// 	t_tks		*tks;
-// 	t_cmdtab	*par;
-// 	char	*prompt;
-
-// 	par = malloc(sizeof(t_cmdtab));
-// 	while (1)
-// 	{
-// 		prompt = readline("minishell> ");
-// 		tks = init_tokens(prompt);
-// 		init_active_tokens(&tks, prompt);
-// 		char **sdf = split_2_ouf(clean_2_ouf(prompt, tks), tks);
-// 		for (int i = 0; sdf[i]; i++)
-// 		{
-// 			char **spl = split(sdf[i]);
-// 			par->in.fd = 0;
-// 			fill_in(&par, spl);
-// 			fill_out(par, spl);
-// 			char **paths = get_paths();
-// 			par->opt = get_opt(spl);
-// 			par->cmd = get_abs_path(paths, par->opt);
-// 		}
-// 		add_history(prompt);
-// 	}
-// 	rl_clear_history();
-// }
