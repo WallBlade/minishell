@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 21:47:38 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/07 21:49:51 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char *get_varname(char *prompt, int start, int end)
 
 int find_varname_env(char *var, char *env_var)
 {
-	if (env_var[ft_strlen(var)] && env_var[ft_strlen(var)] == '=' 
+	if (env_var && var && env_var[ft_strlen(var)] && env_var[ft_strlen(var)] == '=' 
 		&& !ft_strncmp(var, env_var, ft_strlen(var)))
 		return (1);
 	else
