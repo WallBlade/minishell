@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 12:22:49 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:01:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_file
 typedef	struct s_data
 {
 	int		**fd;
+	int		is_abs;
 	int		p_count;
 	pid_t	*pid;
 	char	**env;
@@ -117,5 +118,6 @@ char		**ft_strdup_tab(char **tab);
 void	check_status(int stat, char *cmd, char *file);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
+int		check_access(t_data *data, t_cmdtab *tab);
 
 #endif

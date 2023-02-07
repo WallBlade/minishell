@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 12:33:44 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:15:21 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,12 @@ char    *get_abs_path(char **paths, char **opt)
     abs = NULL;
     while (paths && paths[i] && opt[0])
     {
-        if (!access(opt[0], X_OK))
-            return (opt[0]);
-        abs = ft_strjoin(paths[i], opt[0]);
-        if (!access(abs, X_OK))
-            return (abs);
-        free(abs);
-        i++;
+     	abs = ft_strjoin(ft_strdup(paths[i]), opt[0]);
+		if (access(abs, F_OK | X_OK) == 0)
+			break ;
+		free(abs);
+		abs = NULL;
+		i++;
     }
-    return (NULL);
+    return (abs);
 }

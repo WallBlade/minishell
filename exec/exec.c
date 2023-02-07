@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/07 12:24:43 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:01:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,16 @@ void	wait_all(t_data *data, t_cmdtab *tab)
         else if (tab->out.fd)
             file = tab->out.file;
 		waitpid(data->pid[i], &status, 0);
-		printf("statuuuuuuuuuuuuu = %d\n", status);
         check_status(WEXITSTATUS(status), tab->opt[0], file);
         tab = tab->next;
         i++;
     }
 }
+
+// void	minishell(t_data *data, t_cmdtab *tab)
+// {
+	
+// }
 
 void	exec(t_cmdtab *tab, t_data *data)
 {
@@ -84,8 +88,9 @@ void	exec(t_cmdtab *tab, t_data *data)
 				launch_builtin(tab, data);
 				exit(0);
 			}
-			else if (tab->cmd)
+			else
 			{
+				check_access(data, tab);
 				close_pipes(data);
 				execve(tab->cmd, tab->opt, NULL);
 			}

@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/07 12:24:24 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:01:30 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void cmd_error(char *cmd)
 
 void check_status(int stat, char *cmd, char *file)
 {
-	printf("status = %d\n", status);
-	printf("stat = %d\n", stat);
     if (stat == 127)
         cmd_error(cmd);
     if (stat == 126 && access(cmd, F_OK) == 0 && access(cmd, X_OK) == -1)
@@ -57,4 +55,23 @@ void check_status(int stat, char *cmd, char *file)
         ft_putstr_fd(file, 2);
         ft_putstr_fd(": permission denied\n", 2);
     }
+}
+
+int	check_access(t_data *data, t_cmdtab *tab)
+{
+	get_abs_path(data->env, tab->opt);
+	if (!data->env || !tab->cmd)
+	{
+		if (access(tab->opt[0], X_OK) == 0)
+		{
+			tab->cmd = tab->opt[0];
+			data->is_abs = 1;
+		}
+	}
+	if (access(tab->opt[0], F_OK) == 0
+		&& access(tab->opt[0], X_OK) == -1)
+		exit(126);
+	if (!tab->cmd)
+		exit(127);
+	return (0);
 }
