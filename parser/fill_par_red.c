@@ -6,28 +6,25 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 12:43:37 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:35:47 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *here_doc(char **split, int i)
+void	here_doc(char *split, int fd)
 {
-    char    *stack;
     char    *prompt;
       
     prompt = NULL;
-    stack = NULL;
     while (1)
     {
         prompt = readline(">");
-        if (!ft_strcmp(prompt, split[i + 1]))
-            break;
-        stack = ft_strjoin(stack, prompt);
-        stack = ft_strjoin(stack, "\n");
+		if (!ft_strcmp(prompt, split))
+            return ;
+		ft_putstr_fd(prompt, fd);
+		ft_putstr_fd("\n", fd);
     }
-    return (stack);
 }
 
 void    fill_in(t_cmdtab **par, char **split)
@@ -39,26 +36,20 @@ void    fill_in(t_cmdtab **par, char **split)
     {
         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
-            if ((*par)->in.fd > 0)
-                close((*par)->in.fd);
+            // if ((*par)->in.fd > 0)
+            //     close((*par)->in.fd);
             (*par)->in.fd = open("tmp", O_RDWR | O_CREAT, 0777);
-            ft_putstr_fd(here_doc(split, i), (*par)->in.fd);
-            (*par)->in.file = "tmp";
-            (*par)->in.operator = "<<";
+            here_doc(split[i + 1], (*par)->in.fd);
+            (*par)->in.file = allocate_str("tmp");
+            (*par)->in.operator = allocate_str("<<");
         }
         else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
         {
             (*par)->in.file = split[i + 1];
-            (*par)->in.operator = "<";
-            if ((*par)->in.fd > 0)
-                close((*par)->in.fd);
-            (*par)->in.fd = open(split[i + 1], O_RDONLY);
-        }
-	}
-	if ((*par)->in.fd < 0)
-	{
-		file_error(ft_strdup((*par)->in.file));
-		check_status(status, (*par)->cmd, (*par)->in.file);
+            (*par)->in.operator = allocate_str("<");
+            // if ((*par)->in.fd > 0)
+            //     close((*par)->in.fd);
+		}
 	}
 }
 
@@ -72,24 +63,18 @@ void    fill_out(t_cmdtab **par, char **split)
         if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", 2))
         {
             (*par)->out.file = split[i + 1];
-            (*par)->out.operator = ">>";
-            if ((*par)->out.fd > 1)
-                close((*par)->out.fd);
-            (*par)->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
+            (*par)->out.operator = allocate_str(">>");
+            // if ((*par)->out.fd > 1)
+            //     close((*par)->out.fd);
+            // (*par)->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
         }
         else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
         {
             (*par)->out.file = split[i + 1];
-            (*par)->out.operator = ">";
-            if ((*par)->out.fd > 1)
-                close((*par)->out.fd);
-            (*par)->out.fd = open(split[i + 1], O_RDWR| O_CREAT | O_TRUNC);
+            (*par)->out.operator = allocate_str(">");
+            // if ((*par)->out.fd > 1)
+            //     close((*par)->out.fd);
         }
-	}
-	if ((*par)->out.fd < 0)
-	{
-		file_error((*par)->in.file);
-		check_status(status, (*par)->cmd, (*par)->out.file);
 	}
 }
 

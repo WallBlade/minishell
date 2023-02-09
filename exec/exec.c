@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/07 17:01:43 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:45:17 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,52 @@ void	wait_all(t_data *data, t_cmdtab *tab)
         else if (tab->out.fd)
             file = tab->out.file;
 		waitpid(data->pid[i], &status, 0);
-        check_status(WEXITSTATUS(status), tab->opt[0], file);
+		status = WEXITSTATUS(status);
+        check_status(tab->opt[0], tab->in.file);
         tab = tab->next;
         i++;
     }
 }
 
-// void	minishell(t_data *data, t_cmdtab *tab)
-// {
-	
-// }
+void	minishell(t_data *data, t_cmdtab *tab, int i)
+{
+	if (tab->in.file)
+	{
+		if (!ft_strcmp(tab->in.operator, "<"))
+		{
+			tab->in.fd = open(tab->in.file, O_RDONLY);
+			if (tab->in.fd < 0)
+				file_error(tab->in.file);
+		}
+	}
+	if (tab->out.file)
+	{
+		if (!strcmp(tab->out.operator, ">"))
+		{
+			tab->out.fd = open(tab->out.file, O_RDWR| O_CREAT | O_TRUNC, 0664);
+			if (tab->out.fd < 0)
+				file_error(tab->in.file);
+		}
+		else if (!strcmp(tab->out.operator, ">>"))
+		{
+			tab->out.fd = open(tab->out.file, O_RDWR | O_APPEND | O_CREAT);
+			if (tab->out.fd < 0)
+				file_error(tab->in.file);
+		}
+	}
+	redir(data, tab, i);
+	if (is_builtin(tab))
+	{
+		close_pipes(data);
+		launch_builtin(tab, data);
+		exit(0);
+	}
+	else
+	{
+		close_pipes(data);
+		execve(tab->cmd, tab->opt, NULL);
+	}
+}
 
 void	exec(t_cmdtab *tab, t_data *data)
 {
@@ -81,19 +117,8 @@ void	exec(t_cmdtab *tab, t_data *data)
 			return ;
 		if (data->pid[i] == 0)
 		{
-			redir(data, tab, i);
-			if (is_builtin(tab))
-			{
-				close_pipes(data);
-				launch_builtin(tab, data);
-				exit(0);
-			}
-			else
-			{
-				check_access(data, tab);
-				close_pipes(data);
-				execve(tab->cmd, tab->opt, NULL);
-			}
+			if (!check_access(data, tab))
+				minishell(data, tab, i);
 		}
 		tab = tab->next;
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 21:47:46 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/09 18:56:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char 	*expand_err_code(char *prompt, int start, int end);
 
 t_cmdtab    *lstnew_par(char *pipe);
 void    	lst_addback_par(t_cmdtab **tab, t_cmdtab *new);
-char    	*here_doc(char **split, int i);
+void		here_doc(char *split, int i);
 void    	fill_in(t_cmdtab **par, char **split);
 void    	fill_out(t_cmdtab **par, char **split);
 int 		is_redir(char *arg);
@@ -97,7 +97,7 @@ void		redir(t_data *data, t_cmdtab *tab, int index);
 void		exec(t_cmdtab *tab, t_data *data);
 void    	redir_file(t_data *data, t_cmdtab *tab, int index);
 int			launch_builtin(t_cmdtab *tab, t_data *data);
-
+void		minishell(t_data *data, t_cmdtab *tab, int i);
 /*-----------------------BUILT-INS------------------*/
 
 int 		len_tab(char **tab);
@@ -121,7 +121,7 @@ char	*allocate_str(char *str);
 
 /*-------------------ERROR------------------*/
 
-void	check_status(int stat, char *cmd, char *file);
+void	check_status(char *cmd, char *file);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
 int		check_access(t_data *data, t_cmdtab *tab);
