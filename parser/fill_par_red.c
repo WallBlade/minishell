@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/09 19:35:47 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:58:59 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void	here_doc(char *split, int fd)
     {
         prompt = readline(">");
 		if (!ft_strcmp(prompt, split))
-            return ;
-		ft_putstr_fd(prompt, fd);
+        {
+            close(fd);
+            exit(0);
+        }
+        ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
     }
 }
@@ -30,18 +33,30 @@ void	here_doc(char *split, int fd)
 void    fill_in(t_cmdtab **par, char **split)
 {
     int i;
+    int pid;
 
     i = -1;
     while (split && split[++i])
     {
         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
-            // if ((*par)->in.fd > 0)
-            //     close((*par)->in.fd);
-            (*par)->in.fd = open("tmp", O_RDWR | O_CREAT, 0777);
-            here_doc(split[i + 1], (*par)->in.fd);
-            (*par)->in.file = allocate_str("tmp");
+            if ((*par)->in.fd > 0)
+                close((*par)->in.fd);
+            // (*par)->in.fd = open("tmp", O_RDWR | O_CREAT);
+            (*par)->in.file = allocate_str("temp");
             (*par)->in.operator = allocate_str("<<");
+            pid = fork();
+            if (pid == 0)
+            {
+                (*par)->in.fd = open("temp", O_WRONLY | O_CREAT, 0777);
+                here_doc(split[i + 1], (*par)->in.fd);
+                if ((*par)->in.fd > 0)
+                    close((*par)->in.fd);
+                exit(0);
+            }
+            waitpid(pid, 0, 0);
+            (*par)->in.fd = open("temp", O_RDONLY, 0777);
+            
         }
         else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
         {

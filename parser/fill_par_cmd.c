@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 16:15:21 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:03:22 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char    **get_opt(char **split)
     {
         if (is_redir(split[i]))
             i += 2;
-        if (split[i])
+        else if (split[i])
         {
             opt[j] = ft_strdup(split[i]);
             j++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/09 19:45:17 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:05:16 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,10 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 void	wait_all(t_data *data, t_cmdtab *tab)
 {
 	int     i;
-    char    *file;
 
 	i = 0;
 	while (i < data->p_count)
 	{
-        if (tab->in.fd)
-            file = tab->in.file;
-        else if (tab->out.fd)
-            file = tab->out.file;
 		waitpid(data->pid[i], &status, 0);
 		status = WEXITSTATUS(status);
         check_status(tab->opt[0], tab->in.file);

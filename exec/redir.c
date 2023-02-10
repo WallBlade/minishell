@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/09 19:45:36 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:06:13 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ void	make_dup(int in, int out)
 
 void	redir(t_data *data, t_cmdtab *tab, int index)
 {
-	if (tab->in.fd > 0)
+	if (tab->in.fd > 0 && tab->opt[0])
+	{
 		make_dup(tab->in.fd, 1);
-	if (tab->out.fd > 1)
+		close(tab->in.fd);
+	}
+	if (tab->out.fd > 1 && tab->opt[0])
         make_dup(0, tab->out.fd);
 	if (index == 0 && data->p_count > 1)
 		make_dup(0, data->fd[index][1]);
