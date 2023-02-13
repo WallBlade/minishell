@@ -1,3 +1,0 @@
-CFLAGS = -Wall -Wextra -Werror -g -I./includes
-all	:	$(NAME)
-.PHONY:		all clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/09 19:50:05 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:55:32 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void check_status(char *cmd, char *file)
 
 int	check_access(t_data *data, t_cmdtab *tab)
 {
-	get_abs_path(data->env, tab->opt);
+	tab->cmd = get_abs_path(get_paths(data->env), tab->opt);
 	if (!data->env || !tab->cmd)
 	{
 		if (access(tab->opt[0], X_OK) == 0)
@@ -62,7 +62,12 @@ int	check_access(t_data *data, t_cmdtab *tab)
 			data->is_abs = 1;
 		}
 	}
-	if (access(tab->opt[0], F_OK) == 0
+    if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
+    {
+        tab->in.file = ft_strdup(tab->opt[0]);
+        file_error(tab->in.file);
+    }
+    if (access(tab->opt[0], F_OK) == 0
 		&& access(tab->opt[0], X_OK) == -1)
 		exit(126);
 	if (!tab->cmd && tab->opt[0]) /*Source problemes pipes consecutifs*/

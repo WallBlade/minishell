@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/09 18:56:43 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:23:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		here_doc(char *split, int i);
 void    	fill_in(t_cmdtab **par, char **split);
 void    	fill_out(t_cmdtab **par, char **split);
 int 		is_redir(char *arg);
-char		**get_paths(void);
+char		**get_paths(char **env);
 int 		len_cmd(char **split);
 char    	**get_opt(char **split);
 char    	*get_abs_path(char **paths, char **opt);

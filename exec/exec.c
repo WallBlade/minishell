@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/10 18:05:16 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:55:56 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 		i++;
 	}
 	if (env)
-		data->env = env;
+		data->env = ft_strdup_tab(env);
 	return (data);
 }
 
@@ -51,6 +51,8 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 	{
 		waitpid(data->pid[i], &status, 0);
 		status = WEXITSTATUS(status);
+		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
+			tab->in.file = ft_strdup(tab->opt[0]);
         check_status(tab->opt[0], tab->in.file);
         tab = tab->next;
         i++;
@@ -93,7 +95,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 	else
 	{
 		close_pipes(data);
-		execve(tab->cmd, tab->opt, NULL);
+		execve(tab->cmd, tab->opt, data->env);
 	}
 }
 
@@ -145,6 +147,8 @@ int main(int argc, char **argv, char **envp)
 			launch_builtin(tab, data);
 		else
 			exec(tab, data);
+		if (env)
+			free_tab(env);
 		env = ft_strdup_tab(data->env);
         add_history(prompt);
     }
