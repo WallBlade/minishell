@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/13 19:41:36 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 20:04:39 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_cmdtab    *lstnew_par(char *pipe)
     fill_out(&tab, spl);
     tab->opt = get_opt(spl);
     // tab->cmd = get_abs_path(get_paths(), tab->opt);
+    tab->cmd = NULL;
     tab->prev = NULL;
     tab->next = NULL;
     return (tab);

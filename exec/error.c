@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 19:55:32 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 20:07:04 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ int	check_access(t_data *data, t_cmdtab *tab)
 		}
 	}
     if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
-    {
-        tab->in.file = ft_strdup(tab->opt[0]);
-        file_error(tab->in.file);
-    }
+        file_error(tab->opt[0]);
     if (access(tab->opt[0], F_OK) == 0
 		&& access(tab->opt[0], X_OK) == -1)
 		exit(126);
