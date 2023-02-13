@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/13 22:04:01 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:11:59 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	is_syntax_tok(char *str)
 	j = 0;
 	tok = "<>|";
 	while (str && str[i])
-	{
+	{	
+		j = 0;
 		while (tok[j])
 		{
 			if (str[i] == tok[j])
@@ -114,13 +115,13 @@ int	scan_2_ouf(char **sdf)
 	i = 0;
 	while (sdf && sdf[i])
 	{
-		if (sdf[i + 1] && ft_strlen(sdf[i]) <= 2 && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
+		if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
 		{
 			status = 2;
 			print_syntax_error(sdf[i + 1]);
 			return(0);
 		}
-		else if (ft_strlen(sdf[i]) <= 2 && is_syntax_tok(sdf[i]) && !sdf[i + 1])
+		else if (is_syntax_tok(sdf[i]) && !sdf[i + 1])
 		{
 			status = 2;
 			print_syntax_error(sdf[i]);
