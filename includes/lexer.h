@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/03 18:06:33 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 21:41:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int 	ft_tablen(char **tab);
 void    free_tab(char **tab);
 int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
+int		scan_2_ouf(char **sdf);
 
 #endif

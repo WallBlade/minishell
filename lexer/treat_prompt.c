@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/05 12:53:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 22:04:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,59 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 	}
 	clean[j] = '\0';
 	return (clean);
+}
+
+int	is_syntax_tok(char *str)
+{
+	int		i;
+	int		j;
+	char	*tok;
+
+	i = 0;
+	j = 0;
+	tok = "<>|";
+	while (str && str[i])
+	{
+		while (tok[j])
+		{
+			if (str[i] == tok[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	print_syntax_error(char *tok)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+	ft_putstr_fd(tok, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+int	scan_2_ouf(char **sdf)
+{
+	int	i;
+
+	i = 0;
+	while (sdf && sdf[i])
+	{
+		if (sdf[i + 1] && ft_strlen(sdf[i]) <= 2 && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
+		{
+			status = 2;
+			print_syntax_error(sdf[i + 1]);
+			return(0);
+		}
+		else if (ft_strlen(sdf[i]) <= 2 && is_syntax_tok(sdf[i]) && !sdf[i + 1])
+		{
+			status = 2;
+			print_syntax_error(sdf[i]);
+			return(0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 char	**split_2_ouf(char *str, t_tks *tks)

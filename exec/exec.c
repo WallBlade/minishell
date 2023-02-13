@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 20:06:01 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 22:03:23 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,15 @@ int main(int argc, char **argv, char **envp)
     {
         prompt = readline("minishell> ");
         lex = lexer(prompt, env);
-        tab = parser(lex);
-		data = init_data_struct(tab, env);
-        // printer(tab);
-		if (is_builtin(tab) && data->p_count == 1)
+		if (lex)
+        {
+			tab = parser(lex);
+			data = init_data_struct(tab, env);
+		}
+		// printer(tab);
+		if (!lex)
+			continue ;
+		else if (is_builtin(tab) && data->p_count == 1)
 			launch_builtin(tab, data);
 		else
 			exec(tab, data);
@@ -153,4 +158,5 @@ int main(int argc, char **argv, char **envp)
         add_history(prompt);
     }
     rl_clear_history();
+	return (status);
 }
