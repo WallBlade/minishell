@@ -1,16 +1,3 @@
-Makefile
-builtins
-exec
-includes
-lexer
-libft
-libft.a
-minishell
-minishell.pdf
-outfile
-parser
-tmp
-utils
-y
-y
-y
+CFLAGS = -Wall -Wextra -Werror -g -I./includes
+all	:	$(NAME)
+.PHONY:		all clean fclean re

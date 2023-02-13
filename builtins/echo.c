@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/07 20:37:58 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:47:48 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void    echo(char **cmd, int fd)
     while (cmd && cmd[i])
     {
         ft_putstr_fd(cmd[i], fd);
+        if (cmd[i + 1])
+            ft_putstr_fd(" ", fd);
         i++;
     }
     if (flag == 0)
