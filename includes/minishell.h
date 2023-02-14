@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/13 21:40:52 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:58:39 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_cmdtab
 	struct s_file out;
 	char    *cmd;
 	char    **opt;
-	struct s_cmdtab	*prev;
 	struct s_cmdtab *next;
 }				t_cmdtab;
 
@@ -125,5 +124,15 @@ void	check_status(char *cmd, char *file);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
 int		check_access(t_data *data, t_cmdtab *tab);
+
+/*-------------------FREE---------------------*/
+
+/*Lexer*/
+void	free_tks(t_tks *tks);
+void	free_tks2(t_tks *tks);
+
+/*Parser*/
+void	free_cmdtab(t_cmdtab *tab);
+void	free_data_struct(t_data *data);
 
 #endif

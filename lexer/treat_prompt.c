@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 13:01:14 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:54:47 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,32 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 	return (clean);
 }
 
+int	rep_tok(char *str)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*tok;
+
+	i = 0;
+	len = 0;
+	tok = "<>()\\;";
+	while (tok && tok[i])
+	{
+		j = 0;
+		while (str && str[j])
+		{
+			if (tok[i] == str[j])
+				len++;
+			if (str[j] == ';' || str[j] == '\\')
+				return (5);
+			j++;
+		}
+		i++;
+	}
+	return (len);
+}
+
 int	is_syntax_tok(char *str)
 {
 	int		i;
@@ -86,7 +112,7 @@ int	is_syntax_tok(char *str)
 
 	i = 0;
 	j = 0;
-	tok = "<>|";
+	tok = "<>|()\\;";
 	if (str && str[i] && (str[i] == '"' || str[i] == '\''))
 		return (0);
 	while (str && str[i])
@@ -125,7 +151,7 @@ int	scan_2_ouf(char **sdf)
 				print_syntax_error(sdf[i + 1]);
 				return(free_tab(sdf), 0);
 			}
-			else if (is_syntax_tok(sdf[i]) && !sdf[i + 1])
+			else if ((is_syntax_tok(sdf[i]) && !sdf[i + 1]) || (rep_tok(sdf[i]) > 2))
 			{
 				status = 2;
 				print_syntax_error(sdf[i]);
@@ -139,10 +165,11 @@ int	scan_2_ouf(char **sdf)
 			ft_putstr_fd("minishell: syntax error, quotes not closed\n", 2);
 			return (free_tab(sdf), 0);
 		}
-			
 		i++;
 	}
-	return (free_tab(sdf), 1);
+	if (sdf)
+		free_tab(sdf);
+	return (1);
 }
 
 char	**split_2_ouf(char *str, t_tks *tks)
@@ -160,9 +187,11 @@ char	**split_2_ouf(char *str, t_tks *tks)
 	sdf = malloc(sizeof(char *) * (count_pipes(str, tks) + 1));
 	if (!sdf)
 		return (NULL);
-	while (++i < count_pipes(str, tks))
+	while (++i < count_pipes(str, tks) && len && len[i])
 		sdf[i] = fill_2_ouf(str, len[i], &k);
 	sdf[i] = 0;
+	if (len)
+		free(len);
 	return (sdf);
 }
 

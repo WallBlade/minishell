@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 23:17:28 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/06 16:40:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 18:13:27 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ char    **unset(char **env, char *varname)
         }
     }
     unseted[j] = NULL;
-    return (free(env), unseted);
+	if (env)
+		free_tab(env);
+    return (unseted);
 }

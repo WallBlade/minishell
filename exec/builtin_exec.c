@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/06 18:41:57 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:32:26 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_cmdtab *tab)
 {
-	if (tab->opt && tab->opt[0])
+	if (tab && tab->opt && tab->opt[0])
 	{
 		if (!ft_strcmp(tab->opt[0], "echo"))
 			return (1);
@@ -37,7 +37,7 @@ int	is_builtin(t_cmdtab *tab)
 
 int	launch_builtin(t_cmdtab *tab, t_data *data)
 {
-	if (tab->opt && tab->opt[0])
+	if (tab && tab->opt && tab->opt[0])
 	{
 		if (!ft_strcmp(tab->opt[0], "echo"))
 			echo(tab->opt, tab->out.fd);

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 21:49:51 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:48:56 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char *expand_err_code(char *prompt, int start, int end)
 	while (prompt && prompt[start] && start < end)
 		expanded[i++] = prompt[start++];
 	expanded[i] = '\0';
+	if (str_status)
+		free(str_status);
 	return (expanded);
 }
 
@@ -83,6 +85,8 @@ char *get_var(char *prompt, char **env, int start, int end)
 			var = ft_strdup(&env[i][ft_strlen(varname) + 1]);
 		i++;
 	}
+	if (varname)
+		free(varname);
 	return (var);
 }
 
@@ -106,7 +110,8 @@ int len_expand(char *prompt, t_tks *tks, char **env)
 				i++;
 			var = get_var(prompt, env, start, i);
 			len += ft_strlen(var);
-			free(var);
+			if (var)
+				free(var);
 		}
 		else
 		{
@@ -161,7 +166,8 @@ char *expand(char *prompt, char **env, t_tks *tks)
 			var = get_var(prompt, env, start, i);
 			while (var && var[k])
 				expanded[j++] = var[k++];
-			free(var);
+			if (var)
+				free(var);
 		}
 		else
 			expanded[j++] = prompt[i++];

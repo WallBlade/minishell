@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/14 12:47:52 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 18:17:23 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 	{
 		close_pipes(data);
 		execve(tab->cmd, tab->opt, data->env);
+		/*Appeler fonction free all au cas ou execve ne marche pas*/
 	}
 }
 
@@ -158,8 +159,11 @@ int main(int argc, char **argv, char **envp)
 		if (env)
 			free_tab(env);
 		env = ft_strdup_tab(data->env);
+		free_tab(lex);
+		free_cmdtab(tab);
         add_history(prompt);
     }
     rl_clear_history();
+	free_tab(env);
 	return (status);
 }

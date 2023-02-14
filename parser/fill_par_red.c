@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/10 17:58:59 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:55:36 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ void    fill_in(t_cmdtab **par, char **split)
     {
         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
-            if ((*par)->in.fd > 0)
-                close((*par)->in.fd);
-            // (*par)->in.fd = open("tmp", O_RDWR | O_CREAT);
+            // if ((*par)->in.fd > 0)
+            //     close((*par)->in.fd);
             (*par)->in.file = allocate_str("temp");
             (*par)->in.operator = allocate_str("<<");
             pid = fork();
@@ -60,7 +59,7 @@ void    fill_in(t_cmdtab **par, char **split)
         }
         else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
         {
-            (*par)->in.file = split[i + 1];
+            (*par)->in.file = ft_strdup(split[i + 1]);
             (*par)->in.operator = allocate_str("<");
             // if ((*par)->in.fd > 0)
             //     close((*par)->in.fd);
@@ -79,16 +78,15 @@ void    fill_out(t_cmdtab **par, char **split)
         {
             (*par)->out.file = split[i + 1];
             (*par)->out.operator = allocate_str(">>");
-            // if ((*par)->out.fd > 1)
-            //     close((*par)->out.fd);
-            // (*par)->out.fd = open(split[i + 1], O_RDWR | O_APPEND | O_CREAT);
+            if ((*par)->out.fd > 1)
+                close((*par)->out.fd);
         }
         else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
         {
             (*par)->out.file = split[i + 1];
             (*par)->out.operator = allocate_str(">");
-            // if ((*par)->out.fd > 1)
-            //     close((*par)->out.fd);
+            if ((*par)->out.fd > 1)
+                close((*par)->out.fd);
         }
 	}
 }

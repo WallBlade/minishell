@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 12:48:12 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:04:09 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ char	**lexer(char *prompt, char **env)
 		return (NULL);
 	else
 		sdf = split_2_ouf(cdo, tks);
+	if (cdo)
+		free(cdo);
+	free_tks(tks);
+	if (expanded)
+		free(expanded);
 	return (sdf);
 }
 

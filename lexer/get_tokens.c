@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/16 12:58:01 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:34:52 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	between_squotes(int *q, int i)
 	int	j;
 
 	j = 0;
-	while (q && q[j] >= 0 && q[j + 1])
+	while (q && q[j] && q[j] >= 0 && q[j + 1])
 	{
 		if (i > q[j] && i < q[j + 1])
 			return (1);
@@ -87,7 +87,7 @@ int	between_dquotes(int *dq, int i)
 	int	j;
 
 	j = 0;
-	while (dq && dq[j] >= 0 && dq[j + 1])
+	while (dq && dq[j] && dq[j] >= 0 && dq[j + 1])
 	{
 		if (i > dq[j] && i < dq[j + 1])
 			return (1);
