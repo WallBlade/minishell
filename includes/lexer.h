@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 21:41:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:10:27 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void    free_tab(char **tab);
 int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
 int		scan_2_ouf(char **sdf);
+char	**split_syn(char *str);
 
 #endif

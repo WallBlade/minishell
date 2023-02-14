@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 22:03:23 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:47:52 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,10 @@ int main(int argc, char **argv, char **envp)
 		}
 		// printer(tab);
 		if (!lex)
+		{
+			add_history(prompt);
 			continue ;
+		}
 		else if (is_builtin(tab) && data->p_count == 1)
 			launch_builtin(tab, data);
 		else

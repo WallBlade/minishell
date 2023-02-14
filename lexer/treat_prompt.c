@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/13 22:11:59 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:01:14 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	is_syntax_tok(char *str)
 	i = 0;
 	j = 0;
 	tok = "<>|";
+	if (str && str[i] && (str[i] == '"' || str[i] == '\''))
+		return (0);
 	while (str && str[i])
 	{	
 		j = 0;
@@ -115,21 +117,32 @@ int	scan_2_ouf(char **sdf)
 	i = 0;
 	while (sdf && sdf[i])
 	{
-		if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
+		if (sdf[i][0] && sdf[i][0] != '"' && sdf[i][0] != '\'')
+		{
+			if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
+			{
+				status = 2;
+				print_syntax_error(sdf[i + 1]);
+				return(free_tab(sdf), 0);
+			}
+			else if (is_syntax_tok(sdf[i]) && !sdf[i + 1])
+			{
+				status = 2;
+				print_syntax_error(sdf[i]);
+				return(free_tab(sdf), 0);
+			}
+		}
+		else if ((sdf[i][0] == '"' || sdf[i][0] == '\'')
+			&& (sdf[i][ft_strlen(sdf[i]) - 1] != '"' && sdf[i][ft_strlen(sdf[i]) - 1] != '\''))
 		{
 			status = 2;
-			print_syntax_error(sdf[i + 1]);
-			return(0);
+			ft_putstr_fd("minishell: syntax error, quotes not closed\n", 2);
+			return (free_tab(sdf), 0);
 		}
-		else if (is_syntax_tok(sdf[i]) && !sdf[i + 1])
-		{
-			status = 2;
-			print_syntax_error(sdf[i]);
-			return(0);
-		}
+			
 		i++;
 	}
-	return (1);
+	return (free_tab(sdf), 1);
 }
 
 char	**split_2_ouf(char *str, t_tks *tks)
