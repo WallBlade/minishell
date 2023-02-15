@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 17:04:09 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:43:38 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	count_elem(char *str, char c)
 	len = 0;
 	while (str && str[i])
 	{
-		if ((c == '<' || c == '>') && str[i + 1] &&
-			str[i] == c && str[i + 1] == c)
+		if ((c == '<' || c == '>') && str[i + 1]
+			&& str[i] == c && str[i + 1] == c)
 			i++;
 		else if (str[i] && str[i] == c)
 			len++;
@@ -68,11 +68,11 @@ int	is_token(char c)
 
 char	**lexer(char *prompt, char **env)
 {
-	t_tks		*tks;
-	char		*expanded;
-	char 		**sdf;
-	char		*cdo;
-	
+	t_tks	*tks;
+	char	*expanded;
+	char	**sdf;
+	char	*cdo;
+
 	tks = init_tokens(prompt);
 	init_active_tokens(&tks, prompt);
 	expanded = expand(prompt, env, tks);
@@ -88,4 +88,3 @@ char	**lexer(char *prompt, char **env)
 		free(expanded);
 	return (sdf);
 }
-

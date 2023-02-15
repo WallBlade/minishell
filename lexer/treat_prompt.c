@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 16:54:47 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:22:48 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,13 +147,13 @@ int	scan_2_ouf(char **sdf)
 		{
 			if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
 			{
-				status = 2;
+				g_status = 2;
 				print_syntax_error(sdf[i + 1]);
 				return(free_tab(sdf), 0);
 			}
 			else if ((is_syntax_tok(sdf[i]) && !sdf[i + 1]) || (rep_tok(sdf[i]) > 2))
 			{
-				status = 2;
+				g_status = 2;
 				print_syntax_error(sdf[i]);
 				return(free_tab(sdf), 0);
 			}
@@ -161,7 +161,7 @@ int	scan_2_ouf(char **sdf)
 		else if ((sdf[i][0] == '"' || sdf[i][0] == '\'')
 			&& (sdf[i][ft_strlen(sdf[i]) - 1] != '"' && sdf[i][ft_strlen(sdf[i]) - 1] != '\''))
 		{
-			status = 2;
+			g_status = 2;
 			ft_putstr_fd("minishell: syntax error, quotes not closed\n", 2);
 			return (free_tab(sdf), 0);
 		}

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 16:48:56 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:41:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_varname(char *prompt, int start, int end)
+char	*get_varname(char *prompt, int start, int end)
 {
-	char *varname;
-	int i;
+	char	*varname;
+	int		i;
 
 	i = 0;
 	varname = malloc(sizeof(char) * (end - start + 1));
@@ -31,27 +31,30 @@ char *get_varname(char *prompt, int start, int end)
 	return (varname);
 }
 
-int find_varname_env(char *var, char *env_var)
+int	find_varname_env(char *var, char *env_var)
 {
-	if (env_var && var && env_var[ft_strlen(var)] && env_var[ft_strlen(var)] == '=' 
+	if (env_var && var && env_var[ft_strlen(var)]
+		&& env_var[ft_strlen(var)] == '='
 		&& !ft_strncmp(var, env_var, ft_strlen(var)))
 		return (1);
 	else
 		return (0);
 }
 
-char *expand_err_code(char *prompt, int start, int end)
+char	*expand_err_code(char *prompt, int start, int end)
 {
-	int i;
-	int j;
-	char *expanded;
-	char *str_status;
+	int		i;
+	int		j;
+	int		len;
+	char	*expanded;
+	char	*str_status;
 
 	i = 0;
 	j = 0;
-	str_status = ft_itoa(status);
+	str_status = ft_itoa(g_status);
+	len = ft_strlen(str_status);
 	start++;
-	expanded = malloc(sizeof(char) * (ft_strlen(str_status) + (end - start) + 1));
+	expanded = malloc(sizeof(char) * (len + (end - start) + 1));
 	if (!expanded)
 		return (NULL);
 	while (str_status && str_status[j])
@@ -64,11 +67,11 @@ char *expand_err_code(char *prompt, int start, int end)
 	return (expanded);
 }
 
-char *get_var(char *prompt, char **env, int start, int end)
+char	*get_var(char *prompt, char **env, int start, int end)
 {
-	char *varname;
-	char *var;
-	int i;
+	char	*varname;
+	char	*var;
+	int		i;
 
 	varname = get_varname(prompt, start, end);
 	var = NULL;
@@ -90,13 +93,13 @@ char *get_var(char *prompt, char **env, int start, int end)
 	return (var);
 }
 
-int len_expand(char *prompt, t_tks *tks, char **env)
+int	len_expand(char *prompt, t_tks *tks, char **env)
 {
-	int i;
-	int j;
-	int len;
-	int start;
-	char *var;
+	int		i;
+	int		j;
+	int		len;
+	int		start;
+	char	*var;
 
 	i = 0;
 	j = 0;
@@ -122,9 +125,9 @@ int len_expand(char *prompt, t_tks *tks, char **env)
 	return (len);
 }
 
-t_expand *init_expand(char **env)
+t_expand	*init_expand(char **env)
 {
-	t_expand *exp;
+	t_expand	*exp;
 
 	exp = malloc(sizeof(t_expand));
 	if (!exp)
@@ -137,15 +140,15 @@ t_expand *init_expand(char **env)
 	return (exp);
 }
 
-char *expand(char *prompt, char **env, t_tks *tks)
+char	*expand(char *prompt, char **env, t_tks *tks)
 {
-	char *expanded;
-	int i;
-	int j;
-	int k;
-	int l;
-	int start;
-	char *var;
+	char	*expanded;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		start;
+	char	*var;
 
 	i = 0;
 	j = 0;

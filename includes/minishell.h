@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 17:58:39 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:59:16 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "lexer.h"
 # include "../libft/libft.h"
 
-extern int status;
+extern int g_status;
 
 /*-------------------------------Struct---------------------------------------*/
 
@@ -97,6 +97,8 @@ void		exec(t_cmdtab *tab, t_data *data);
 void    	redir_file(t_data *data, t_cmdtab *tab, int index);
 int			launch_builtin(t_cmdtab *tab, t_data *data);
 void		minishell(t_data *data, t_cmdtab *tab, int i);
+void		open_files(t_cmdtab *tab);
+
 /*-----------------------BUILT-INS------------------*/
 
 int 		len_tab(char **tab);
@@ -134,5 +136,10 @@ void	free_tks2(t_tks *tks);
 /*Parser*/
 void	free_cmdtab(t_cmdtab *tab);
 void	free_data_struct(t_data *data);
+
+/*-------------------SIGNALS ---------------------*/
+
+void	signal_nl(int num);
+void	child_signal(int num);
 
 #endif

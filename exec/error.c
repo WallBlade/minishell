@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 20:07:04 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:22:48 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ void cmd_error(char *cmd)
 
 void check_status(char *cmd, char *file)
 {
-    if (status == 127)
+    if (g_status == 127)
         cmd_error(cmd);
-    if (status == 126 && access(cmd, F_OK) == 0 && access(cmd, X_OK) == -1)
+    if (g_status == 126 && access(cmd, F_OK) == 0 && access(cmd, X_OK) == -1)
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(cmd, 2);
         ft_putstr_fd(": permission denied\n", 2);
     }
-    else if (status == 1)
+    else if (g_status == 1)
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(file, 2);
         ft_putstr_fd(": No such file or directory\n", 2);
     }
-    else if (status == 1 && open(file, O_RDWR) == -1)
+    else if (g_status == 1 && open(file, O_RDWR) == -1)
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(file, 2);
@@ -67,7 +67,7 @@ int	check_access(t_data *data, t_cmdtab *tab)
     if (access(tab->opt[0], F_OK) == 0
 		&& access(tab->opt[0], X_OK) == -1)
 		exit(126);
-	if (!tab->cmd && tab->opt[0]) /*Source problemes pipes consecutifs*/
+	if (!tab->cmd && tab->opt[0])
 		exit(127);
 	return (0);
 }

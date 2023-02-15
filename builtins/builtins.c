@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/14 15:53:44 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:22:48 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int    change_dir(char *path)
     success = chdir(path);
 	if (success == -1)
 	{
-		status = 2;
+		g_status = 2;
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);

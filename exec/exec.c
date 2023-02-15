@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/14 18:17:23 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:59:52 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int status;
+int g_status;
 
 t_data	*init_data_struct(t_cmdtab *tab, char **env)
 {
@@ -49,8 +49,8 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 	i = 0;
 	while (i < data->p_count)
 	{
-		waitpid(data->pid[i], &status, 0);
-		status = WEXITSTATUS(status);
+		waitpid(data->pid[i], &g_status, 0);
+		g_status = WEXITSTATUS(g_status);
 		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
 			tab->in.file = ft_strdup(tab->opt[0]);
         check_status(tab->opt[0], tab->in.file);
@@ -59,7 +59,7 @@ void	wait_all(t_data *data, t_cmdtab *tab)
     }
 }
 
-void	minishell(t_data *data, t_cmdtab *tab, int i)
+void	open_files(t_cmdtab *tab)
 {
 	if (tab->in.file)
 	{
@@ -74,7 +74,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 	{
 		if (!strcmp(tab->out.operator, ">"))
 		{
-			tab->out.fd = open(tab->out.file, O_RDWR| O_CREAT | O_TRUNC, 0664);
+			tab->out.fd = open(tab->out.file, O_RDWR | O_CREAT | O_TRUNC, 0664);
 			if (tab->out.fd < 0)
 				file_error(tab->in.file);
 		}
@@ -85,6 +85,11 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 				file_error(tab->in.file);
 		}
 	}
+}
+
+void	minishell(t_data *data, t_cmdtab *tab, int i)
+{
+	open_files(tab);
 	redir(data, tab, i);
 	if (is_builtin(tab))
 	{
@@ -113,6 +118,8 @@ void	exec(t_cmdtab *tab, t_data *data)
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
+		signal(SIGINT, child_signal);
+		signal(SIGQUIT, child_signal);
 		if (data->pid[i] == 0)
 		{
 			if (!check_access(data, tab))
@@ -139,7 +146,11 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     while (1)
     {
+		signal(SIGINT, signal_nl);
+		signal(SIGQUIT, SIG_IGN);
         prompt = readline("minishell> ");
+		if (!prompt)
+			break ;
         lex = lexer(prompt, env);
 		if (lex)
         {
@@ -152,7 +163,7 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		else if (is_builtin(tab) && data->p_count == 1)
+		else if (is_builtin(tab) && data->p_count >= 1)
 			launch_builtin(tab, data);
 		else
 			exec(tab, data);
@@ -160,10 +171,10 @@ int main(int argc, char **argv, char **envp)
 			free_tab(env);
 		env = ft_strdup_tab(data->env);
 		free_tab(lex);
-		free_cmdtab(tab);
+		// free_cmdtab(tab);
         add_history(prompt);
     }
     rl_clear_history();
 	free_tab(env);
-	return (status);
+	return (g_status);
 }
