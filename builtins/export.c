@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/14 18:12:58 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 23:35:57 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ int len_tab(char **tab)
     return (i);
 }
 
+int    existing_var(char **env, char *var_exp)
+{
+    int i;
+
+    i = 0;
+    while (env && env[i])
+    {
+        if (!ft_strncmp(var_exp, env[i], ft_strchr(env[i], '='))
+            && ft_strchr(var_exp, '=') == ft_strchr(env[i], '='))
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 char    **export(char **env, char *var_exp)
 {
     int     i;
@@ -31,6 +46,8 @@ char    **export(char **env, char *var_exp)
     exported = malloc(sizeof(char *) * (len_tab(env) + 2));
     if (!exported)
         return (NULL);
+    if (existing_var(env, var_exp))
+        env = unset(env, get_varname(var_exp, 0, ft_strchr(var_exp, '=')));
     while (env && env[i])
     {
         exported[i] = ft_strdup(env[i]);

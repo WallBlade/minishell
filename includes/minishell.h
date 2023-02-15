@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:59:16 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:30:34 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		open_files(t_cmdtab *tab);
 
 int 		len_tab(char **tab);
 char    	**export(char **env, char *var_exp);
+int    		existing_var(char **env, char *var_exp);
 void    	print_export(t_cmdtab *tab, char **env);
 char    	**converted_env(char **env);
 char		*ft_strdup_quote(char *env);

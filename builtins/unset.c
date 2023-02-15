@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 23:17:28 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 18:13:27 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/15 23:28:03 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char    **unset(char **env, char *varname)
         return (NULL);
     while (env && env[i])
     {
-        if (!ft_strncmp(varname, env[i], ft_strlen(varname)))
+        if (!ft_strncmp(varname, env[i], ft_strchr(env[i], '='))
+            && ft_strlen(varname) == ft_strchr(env[i], '='))
             free(env[i++]);
         if (env[i])
         {
@@ -35,6 +36,6 @@ char    **unset(char **env, char *varname)
     }
     unseted[j] = NULL;
 	if (env)
-		free_tab(env);
+		free(env);
     return (unseted);
 }

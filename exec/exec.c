@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/15 20:26:53 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:37:04 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 		waitpid(data->pid[i], &g_status, 0);
 		if (WIFSIGNALED(g_status) == 1)
 		{
-			printf("test\n");
+			// printf("test\n");
 			signal(SIGQUIT, SIG_IGN);
 			signal(SIGINT, SIG_IGN);
 		}
 		else
 		{
-			printf("test\n");
+			// printf("test\n");
 			signal(SIGINT, child_signal);
 			signal(SIGQUIT, child_signal);
 		}
