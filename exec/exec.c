@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/15 16:59:52 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:26:53 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 	while (i < data->p_count)
 	{
 		waitpid(data->pid[i], &g_status, 0);
+		if (WIFSIGNALED(g_status) == 1)
+		{
+			printf("test\n");
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGINT, SIG_IGN);
+		}
+		else
+		{
+			printf("test\n");
+			signal(SIGINT, child_signal);
+			signal(SIGQUIT, child_signal);
+		}
 		g_status = WEXITSTATUS(g_status);
 		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
 			tab->in.file = ft_strdup(tab->opt[0]);
@@ -118,8 +130,6 @@ void	exec(t_cmdtab *tab, t_data *data)
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
-		signal(SIGINT, child_signal);
-		signal(SIGQUIT, child_signal);
 		if (data->pid[i] == 0)
 		{
 			if (!check_access(data, tab))
@@ -150,8 +160,11 @@ int main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN);
         prompt = readline("minishell> ");
 		if (!prompt)
+		{
+			ft_putstr_fd("exit\n", 1);
 			break ;
-        lex = lexer(prompt, env);
+		}
+		lex = lexer(prompt, env);
 		if (lex)
         {
 			tab = parser(lex);
@@ -171,7 +184,7 @@ int main(int argc, char **argv, char **envp)
 			free_tab(env);
 		env = ft_strdup_tab(data->env);
 		free_tab(lex);
-		// free_cmdtab(tab);
+		free_cmdtab(tab);
         add_history(prompt);
     }
     rl_clear_history();
