@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:22:48 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:16:03 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int	scan_2_ouf(char **sdf)
 			if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
 			{
 				g_status = 2;
+				// write(1, "")
 				print_syntax_error(sdf[i + 1]);
 				return(free_tab(sdf), 0);
 			}

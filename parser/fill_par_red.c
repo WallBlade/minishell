@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/16 16:45:51 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 22:28:18 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void    fill_in(t_cmdtab **par, char **split)
             }
             waitpid(pid, 0, 0);
             (*par)->in.fd = open("temp", O_RDONLY, 0777);
-            
         }
         else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
         {

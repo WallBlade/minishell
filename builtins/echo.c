@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/13 18:47:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:12:30 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,29 @@
 
 int    is_there_n(char **cmd)
 {
-    int    i;
+    int	i;
+	int	j;
+	int	flag;
 
     i = 0;
-    while (cmd && cmd[i])
-    {
-        if (cmd[i + 1] && !ft_strcmp(cmd[i], "echo") 
-            && !ft_strcmp(cmd[i + 1], "-n"))
-            return (1);
-        i++;
-    }
-    return (0);
+	flag = i + 1;
+	while (cmd && cmd[i])
+	{
+		if (!ft_strncmp(cmd[i], "-n", 2))
+		{
+			j = 1;
+			while (cmd[i][j])
+			{
+				if (cmd[i][j] != 'n')
+					return(i + 1);
+				j++;
+			}
+		}
+		if (ft_strncmp(cmd[i], "-n", 2))
+			return(i + 1);
+		i++;
+	}
+	return (i + 1);
 }
 
 void    echo(char **cmd, int fd)
@@ -32,11 +44,11 @@ void    echo(char **cmd, int fd)
     int    i;
     int    flag;
 
-    flag = is_there_n(cmd);
-    if (flag == 0)
-        i = 1;
+    flag = is_there_n(cmd + 1);
+    if (flag == 1)
+        i = flag;
     else
-        i = 2;
+        i = flag;
     while (cmd && cmd[i])
     {
         ft_putstr_fd(cmd[i], fd);
@@ -44,6 +56,6 @@ void    echo(char **cmd, int fd)
             ft_putstr_fd(" ", fd);
         i++;
     }
-    if (flag == 0)
+    if (flag == 1)
         write(fd, "\n", 1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/16 16:50:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 22:29:11 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,14 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 	int     i;
 
 	i = 0;
-	while (i < data->p_count)
+	while (tab && waitpid(data->pid[i], &g_status, 0) > 0)
 	{
-		waitpid(data->pid[i], &g_status, 0);
-		if (WIFSIGNALED(g_status) == 1)
-		{
-			// printf("test\n");
-			signal(SIGQUIT, SIG_IGN);
-			signal(SIGINT, SIG_IGN);
-		}
-		else
-		{
-			// printf("test\n");
-			signal(SIGINT, child_signal);
-			signal(SIGQUIT, child_signal);
-		}
-		g_status = WEXITSTATUS(g_status);
+		if (WTERMSIG(g_status) == 2)
+			ft_putstr_fd("\n", 1);
+		else if (WTERMSIG(g_status) == 3)
+			ft_putstr_fd(" Quit (core dumped)\n", 1);
+		if (WIFEXITED(g_status))
+			g_status = WEXITSTATUS(g_status);
 		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
 			tab->in.file = ft_strdup(tab->opt[0]);
         check_status(tab->opt[0], tab->in.file);
@@ -130,6 +122,8 @@ void	exec(t_cmdtab *tab, t_data *data)
 		data->pid[i] = fork();
 		if (data->pid[i] < 0)
 			return ;
+		signal(SIGINT, child_signal);
+		signal(SIGQUIT, child_signal);
 		if (data->pid[i] == 0)
 		{
 			if (!check_access(data, tab))
@@ -139,6 +133,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 		i++;
 	}
 	close_pipes(data);
+	unlink("temp");
 	wait_all(data, tmp);
 }
 
@@ -160,10 +155,7 @@ int main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN);
         prompt = readline("minishell> ");
 		if (!prompt)
-		{
-			ft_putstr_fd("exit\n", 1);
 			break ;
-		}
 		lex = lexer(prompt, env);
 		if (lex)
         {
@@ -192,5 +184,6 @@ int main(int argc, char **argv, char **envp)
     }
     rl_clear_history();
 	free_tab(env);
+	ft_putstr_fd("exit\n", 2);
 	return (g_status);
 }

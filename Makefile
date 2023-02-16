@@ -10,7 +10,7 @@ CC = @cc
 
 RM = rm -rf
 
-CFLAGS = -g -I./includes
+CFLAGS = -Wall -Werror -Wextra -g -I./includes
 
 NAME = minishell
 

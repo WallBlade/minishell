@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/16 16:33:07 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:22:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void check_status(char *cmd, char *file)
         ft_putstr_fd(cmd, 2);
         ft_putstr_fd(": permission denied\n", 2);
     }
-    else if (g_status == 1)
+    else if (g_status == 1 && file)
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(file, 2);
         ft_putstr_fd(": No such file or directory\n", 2);
     }
-    else if (g_status == 1 && open(file, O_RDWR) == -1)
+    else if (g_status == 1 && open(file, O_RDWR) == -1 && file)
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(file, 2);
