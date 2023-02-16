@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/15 22:37:04 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:50:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,11 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		else if (is_builtin(tab) && data->p_count >= 1)
+		else if (is_builtin(tab) && data->p_count == 1)
+		{
+			open_files(tab);
 			launch_builtin(tab, data);
+		}
 		else
 			exec(tab, data);
 		if (env)

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/10 18:06:13 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:47:54 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ void	make_dup(int in, int out)
 void	redir(t_data *data, t_cmdtab *tab, int index)
 {
 	if (tab->in.fd > 0 && tab->opt[0])
-	{
 		make_dup(tab->in.fd, 1);
-		close(tab->in.fd);
-	}
 	if (tab->out.fd > 1 && tab->opt[0])
         make_dup(0, tab->out.fd);
-	if (index == 0 && data->p_count > 1)
-		make_dup(0, data->fd[index][1]);
-	else if (index > 0 && index < data->p_count - 1)
-		make_dup(data->fd[index - 1][0], data->fd[index][1]);
-	else if (index != 0 && index == data->p_count - 1)
-		make_dup(data->fd[index - 1][0], 1);
+	if (data->p_count > 1)
+	{
+		if (index == 0 && data->p_count > 1)
+			make_dup(0, data->fd[index][1]);
+		else if (index > 0 && index < data->p_count - 1)
+			make_dup(data->fd[index - 1][0], data->fd[index][1]);
+		else if (index != 0 && index == data->p_count - 1)
+			make_dup(data->fd[index - 1][0], 1);
+	}
 }

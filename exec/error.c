@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/15 16:22:48 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:33:07 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,24 @@ void check_status(char *cmd, char *file)
 
 int	check_access(t_data *data, t_cmdtab *tab)
 {
-	tab->cmd = get_abs_path(get_paths(data->env), tab->opt);
-	if (!data->env || !tab->cmd)
+	if (!is_builtin(tab))
 	{
-		if (access(tab->opt[0], X_OK) == 0)
+		tab->cmd = get_abs_path(get_paths(data->env), tab->opt);
+		if (!data->env || !tab->cmd)
 		{
-			tab->cmd = tab->opt[0];
-			data->is_abs = 1;
+			if (access(tab->opt[0], X_OK) == 0)
+			{
+				tab->cmd = tab->opt[0];
+				data->is_abs = 1;
+			}
 		}
+		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
+			file_error(tab->opt[0]);
+		if (access(tab->opt[0], F_OK) == 0
+			&& access(tab->opt[0], X_OK) == -1)
+			exit(126);
+		if (!tab->cmd && tab->opt[0])
+			exit(127);
 	}
-    if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
-        file_error(tab->opt[0]);
-    if (access(tab->opt[0], F_OK) == 0
-		&& access(tab->opt[0], X_OK) == -1)
-		exit(126);
-	if (!tab->cmd && tab->opt[0])
-		exit(127);
 	return (0);
 }

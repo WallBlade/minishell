@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:54:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:45:51 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void    fill_out(t_cmdtab **par, char **split)
     {
         if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", 2))
         {
-            (*par)->out.file = split[i + 1];
+            (*par)->out.file = ft_strdup(split[i + 1]);
             (*par)->out.operator = allocate_str(">>");
             if ((*par)->out.fd > 1)
                 close((*par)->out.fd);
         }
         else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
         {
-            (*par)->out.file = split[i + 1];
+            (*par)->out.file = ft_strdup(split[i + 1]);
             (*par)->out.operator = allocate_str(">");
             if ((*par)->out.fd > 1)
                 close((*par)->out.fd);

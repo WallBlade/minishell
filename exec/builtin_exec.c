@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:58:47 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:22:35 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	is_builtin(t_cmdtab *tab)
 
 int	launch_builtin(t_cmdtab *tab, t_data *data)
 {
-	open_files(tab);
 	if (tab && tab->opt && tab->opt[0])
 	{
 		if (!ft_strcmp(tab->opt[0], "echo"))
