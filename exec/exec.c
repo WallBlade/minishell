@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/17 15:29:45 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 19:05:36 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int main(int argc, char **argv, char **envp)
 			tab = parser(lex);
 			data = init_data_struct(tab, env);
 		}
-		// printer(tab);
+		printer(tab);
 		if (!lex)
 		{
 			add_history(prompt);
@@ -172,6 +172,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			open_files(tab);
 			launch_builtin(tab, data);
+			// check_status(tab->opt);
 		}
 		else
 			exec(tab, data);

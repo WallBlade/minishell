@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:15:04 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 15:30:32 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 18:59:26 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int error_export(char *var_exp)
 
 void    error_export_print(char *var_exp)
 {
-    g_status = 1;
     ft_putstr_fd("minishell: export: `", 2);
     ft_putstr_fd(var_exp, 2);
     ft_putstr_fd("': not a valid identifier\n", 2);
+    g_status = 1;
 }
