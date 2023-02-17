@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/16 20:12:30 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/17 10:20:56 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int    is_there_n(char **cmd)
 {
     int	i;
 	int	j;
-	int	flag;
 
     i = 0;
-	flag = i + 1;
 	while (cmd && cmd[i])
 	{
 		if (!ft_strncmp(cmd[i], "-n", 2))

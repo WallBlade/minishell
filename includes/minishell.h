@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/16 22:25:58 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:16:08 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void		open_files(t_cmdtab *tab);
 /*-----------------------BUILT-INS------------------*/
 
 int 		len_tab(char **tab);
-char    	**export(char **env, char *var_exp);
+char    	**export(char **env, char **var_exp);
+char    	**multi_export(char **env, char *var_exp);
+int 		is_inv_identif(char c);
 int    		existing_var(char **env, char *var_exp);
 void    	print_export(t_cmdtab *tab, char **env);
 char    	**converted_env(char **env);
@@ -127,6 +129,9 @@ void	check_status(char *cmd, char *file);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
 int		check_access(t_data *data, t_cmdtab *tab);
+int 	is_inv_identif(char c);
+int 	error_export(char *var_exp);
+void    error_export_print(char *var_exp);
 
 /*-------------------FREE---------------------*/
 

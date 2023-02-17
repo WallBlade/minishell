@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/16 17:27:23 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/17 10:52:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	launch_builtin(t_cmdtab *tab, t_data *data)
 		else if (!ft_strcmp(tab->opt[0], "export"))
 		{
 			if (tab->opt[1])
-				data->env = export(data->env, tab->opt[1]);
+				data->env = export(data->env, tab->opt);
 			else
 				print_export(tab, data->env);
 		}
