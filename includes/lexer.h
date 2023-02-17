@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/14 12:10:27 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:55:37 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
 int		is_token(char c);
 char	**lexer(char *prompt, char **env);
-int 	ft_tablen(char **tab);
 void    free_tab(char **tab);
 int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export2.c                                          :+:      :+:    :+:   */
+/*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 12:22:43 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:19:14 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char    **converted_env(char **env)
     char    **converted;
 
     i = 0;
-    converted = malloc(sizeof(char *) * (ft_tablen(env) + 1));
+    converted = malloc(sizeof(char *) * (len_tab(env) + 1));
     if (!converted)
         return (NULL);
     while (env && env[i])

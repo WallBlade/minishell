@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 13:16:08 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:15:11 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,14 @@ void    	env_print(char **env, int fd);
 int			is_there_n(char **cmd);
 void		echo(char **cmd, int fd);
 char		**ft_strdup_tab(char **tab);
+int 		is_numeric(char *str);
+void    	exit_bin(t_cmdtab *tab, t_data *data);
 
 /*-------------------UTILS------------------*/
 
 char	*allocate_str(char *str);
+int 	len_tab(char **tab);
+
 
 /*-------------------ERROR------------------*/
 

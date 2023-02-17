@@ -6,21 +6,11 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/17 14:04:55 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:54:52 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int len_tab(char **tab)
-{
-    int i;
-
-    i = 0;
-    while (tab && tab[i])
-        i++;
-    return (i);
-}
 
 int    existing_var(char **env, char *var_exp)
 {

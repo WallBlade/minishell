@@ -6,13 +6,13 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 19:31:06 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/07 20:30:34 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:23:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_tablen(char **tab)
+int len_tab(char **tab)
 {
     int i;
 
@@ -28,7 +28,7 @@ char    **ft_strdup_tab(char **tab)
     char    **dupl;
 
     i = 0;
-    dupl = malloc(sizeof(char *) * (ft_tablen(tab) + 1));
+    dupl = malloc(sizeof(char *) * (len_tab(tab) + 1));
     if (!dupl)
         return (NULL);
     while (tab && tab[i])
@@ -56,4 +56,30 @@ char	*allocate_str(char *str)
 	}
 	allocated[i] = '\0';
 	return (allocated);
+}
+
+int is_numeric(char *str)
+{
+    int     i;
+    int     j;
+    char    *nums;
+    int     count;
+
+    i = 0;
+    nums = allocate_str("0123456789");
+    count = 0;
+    while (str && str[i])
+    {
+        j = 0;
+        while (nums && nums[j])
+        {
+            if (str[i] == nums[j])
+                count++;
+            j++;
+        }
+        i++;
+    }
+    if (count == ft_strlen(str))
+        return (1);
+    return (0);
 }

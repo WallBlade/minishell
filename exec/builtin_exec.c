@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 10:52:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:20:08 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	is_builtin(t_cmdtab *tab)
 			return (1);
         else if (!ft_strcmp(tab->opt[0], "env"))
             return (1);
+		else if (!ft_strcmp(tab->opt[0], "exit"))
+			return (1);
 		else
 			return (0);
 	}
@@ -61,6 +63,8 @@ int	launch_builtin(t_cmdtab *tab, t_data *data)
             env_print(data->env, tab->out.fd);
         else if (!ft_strcmp(tab->opt[0], "unset") && tab->opt[1])
             data->env = unset(data->env, tab->opt[1]);
+		else if (!ft_strcmp(tab->opt[0], "exit"))
+			exit_bin(tab, data);
 	}
 	return (1);
 }
