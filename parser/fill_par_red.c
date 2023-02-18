@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/16 22:28:18 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:46:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void    fill_in(t_cmdtab **par, char **split)
     {
         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
         {
-            // if ((*par)->in.fd > 0)
-            //     close((*par)->in.fd);
             (*par)->in.file = allocate_str("temp");
             (*par)->in.operator = allocate_str("<<");
             pid = fork();
@@ -60,8 +58,6 @@ void    fill_in(t_cmdtab **par, char **split)
         {
             (*par)->in.file = ft_strdup(split[i + 1]);
             (*par)->in.operator = allocate_str("<");
-            // if ((*par)->in.fd > 0)
-            //     close((*par)->in.fd);
 		}
 	}
 }
@@ -87,6 +83,7 @@ void    fill_out(t_cmdtab **par, char **split)
             if ((*par)->out.fd > 1)
                 close((*par)->out.fd);
         }
+		open_files((*par));
 	}
 }
 

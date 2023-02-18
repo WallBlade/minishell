@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/17 10:20:56 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/18 16:15:34 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int    is_there_n(char **cmd)
 				j++;
 			}
 		}
-		if (ft_strncmp(cmd[i], "-n", 2))
+		else
 			return(i + 1);
 		i++;
 	}

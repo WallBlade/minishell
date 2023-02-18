@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/17 19:05:36 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/18 16:18:35 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	open_files(t_cmdtab *tab)
 		}
 		else if (!strcmp(tab->out.operator, ">>"))
 		{
-			tab->out.fd = open(tab->out.file, O_RDWR | O_APPEND | O_CREAT);
+			tab->out.fd = open(tab->out.file, O_RDWR | O_APPEND | O_CREAT, 0664);
 			if (tab->out.fd < 0)
 				file_error(tab->in.file);
 		}
@@ -93,7 +93,6 @@ void	open_files(t_cmdtab *tab)
 
 void	minishell(t_data *data, t_cmdtab *tab, int i)
 {
-	open_files(tab);
 	redir(data, tab, i);
 	if (is_builtin(tab))
 	{
@@ -168,7 +167,7 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		else if (is_builtin(tab) && data->p_count == 1)
+		else if (is_builtin(tab) && data->p_count == 1 && !check_access(data, tab))
 		{
 			open_files(tab);
 			launch_builtin(tab, data);
