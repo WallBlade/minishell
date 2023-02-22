@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/22 18:39:51 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:43:59 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_files(t_cmdtab *tab, char **spl)
 			else if (is_redir(spl[i]) == REDIR_OUT && spl[i + 1])
 				lst_addback_red(&tab->out, fill_out(REDIR_OUT, spl[i + 1]));
 			else if (is_redir(spl[i]) == APPEND && spl[i + 1])
-				lst_addback_red(&tab->in, fill_in(APPEND, spl[i + 1]));
+				lst_addback_red(&tab->out, fill_out(APPEND, spl[i + 1]));
 		}
 		// if (is_redir(spl[i]) == 4)
 		// 	init_hd();
@@ -65,17 +65,15 @@ t_file	*fill_in(int op, char *file)
 	in = malloc(sizeof(t_file));
 	if (!in)
 		return (NULL);
-	if (file)
-	{
+    in->op = op;
+    in->fd = 0;
+    if (file)
+    {
 		in->file = ft_strdup(file);
 		in->fd = open(in->file, O_RDONLY);
 	}
 	else
-	{
 		in->file = NULL;
-		in->fd = 0;
-	}
-	in->op = op;
 	in->next = NULL;
 	return (in);
 }

@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/22 17:17:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:38:30 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,28 @@ void	make_dup(int in, int out)
 	dup2(out, 1);
 }
 
-// void	close_fds(t_cmdtab *tab)
-// {
-	
-// }
+void	close_fds(t_cmdtab *tab)
+{
+	printf("alo ?\n");
+	while (tab && tab->in)
+	{
+		if (tab->in->fd)
+		{
+			printf("%s fd closed\n", tab->in->file);
+			close(tab->in->fd);
+		}
+		tab->in = tab->in->next;
+	}
+	while (tab && tab->out)
+	{
+		if (tab->out->fd)
+		{
+			printf("%s fd closed\n", tab->out->file);
+			close(tab->out->fd);
+		}
+		tab->out = tab->out->next;
+	}
+}
 
 void	redir(t_data *data, t_cmdtab *tab, int index)
 {
@@ -55,7 +73,7 @@ void	redir(t_data *data, t_cmdtab *tab, int index)
 		make_dup(tab->in->fd, 1);
 	if (tab->out && tab->out->fd > 1 && tab->opt[0])
 	{
-        make_dup(0, tab->out->fd);
+		make_dup(0, tab->out->fd);
 		close(tab->out->fd);
 	}
 	if (data->p_count > 1)

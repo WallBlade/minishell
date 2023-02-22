@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/22 17:48:28 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:19:27 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 		// if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
 		// 	tab->in->file = ft_strdup(tab->opt[0]);
         check_status(tab->opt[0]);
+        close_fds(tab);
         tab = tab->next;
         i++;
     }
@@ -99,7 +100,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 			if (!check_access(data, tab))
 				minishell(data, tab, i);
 		}
-		tab = tab->next;
+        tab = tab->next;
 		i++;
 	}
 	close_pipes(data);

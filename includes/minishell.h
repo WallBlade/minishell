@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/22 17:27:05 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:10:31 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,15 @@ void		close_pipes(t_data *data);
 void		make_dup(int in, int out);
 void		redir(t_data *data, t_cmdtab *tab, int index);
 void		exec(t_cmdtab *tab, t_data *data);
-void    	redir_file(t_data *data, t_cmdtab *tab, int index);
+void		redir_file(t_data *data, t_cmdtab *tab, int index);
 int			launch_builtin(t_cmdtab *tab, t_data *data);
 void		minishell(t_data *data, t_cmdtab *tab, int i);
 void		open_files(t_cmdtab *tab);
+void        close_fds(t_cmdtab *tab);
 
-/*-----------------------BUILT-INS------------------*/
+	/*-----------------------BUILT-INS------------------*/
 
-int 		len_tab(char **tab);
+	int len_tab(char **tab);
 char    	**export(char **env, char **var_exp);
 char    	**multi_export(char **env, char *var_exp);
 int 		is_inv_identif(char c);
