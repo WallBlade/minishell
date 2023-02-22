@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 17:19:14 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/21 18:37:36 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void    print_export(t_cmdtab *tab, char **env)
     env_export = converted_env(env);
     while (env_export && env_export[i])
     {
-        ft_putstr_fd("export ", tab->out.fd);
-        ft_putstr_fd(env_export[i], tab->out.fd);
-        ft_putstr_fd("\n", tab->out.fd);
+        ft_putstr_fd("export ", tab->out->fd);
+        ft_putstr_fd(env_export[i], tab->out->fd);
+        ft_putstr_fd("\n", tab->out->fd);
         i++;
     }
 	if (env_export)

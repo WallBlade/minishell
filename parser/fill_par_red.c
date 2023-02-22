@@ -6,96 +6,112 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 16:46:43 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:39:51 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	here_doc(char *split, int fd)
+int	fds_ok(t_cmdtab *tab)
 {
-    char    *prompt;
-      
-    prompt = NULL;
-    while (1)
-    {
-        prompt = readline(">");
-		if (!ft_strcmp(prompt, split))
-        {
-            close(fd);
-            exit(0);
-        }
-        ft_putstr_fd(prompt, fd);
-		ft_putstr_fd("\n", fd);
-    }
+	t_cmdtab	*cpy;
+
+	cpy = tab;
+	if (cpy && cpy->in)
+	{
+		while (cpy->in->next)
+			cpy->in = cpy->in->next;
+		if (cpy->in->fd && cpy->in->fd < 0)
+			return (0);
+	}
+	if (cpy && cpy->out)
+	{
+		while (cpy->out->next)
+			cpy->out = cpy->out->next;
+		if (cpy->out->fd && cpy->out->fd < 0)
+			return (0);
+	}
+	return (1);
 }
 
-void    fill_in(t_cmdtab **par, char **split)
+void	init_files(t_cmdtab *tab, char **spl)
 {
-    int i;
-    int pid;
+	int	i;
 
-    i = -1;
-    while (split && split[++i])
-    {
-        if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
-        {
-            (*par)->in.file = allocate_str("temp");
-            (*par)->in.operator = allocate_str("<<");
-            pid = fork();
-            if (pid == 0)
-            {
-                (*par)->in.fd = open("temp", O_WRONLY | O_CREAT, 0777);
-                here_doc(split[i + 1], (*par)->in.fd);
-                if ((*par)->in.fd > 0)
-                    close((*par)->in.fd);
-                exit(0);
-            }
-            waitpid(pid, 0, 0);
-            (*par)->in.fd = open("temp", O_RDONLY, 0777);
-        }
-        else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
-        {
-            (*par)->in.file = ft_strdup(split[i + 1]);
-            (*par)->in.operator = allocate_str("<");
+	i = 0;
+	while (spl[i])
+	{
+		if (fds_ok(tab))
+		{
+			if (is_redir(spl[i]) == REDIR_IN && spl[i + 1])
+				lst_addback_red(&tab->in, fill_in(REDIR_IN, spl[i + 1]));
+			else if (is_redir(spl[i]) == REDIR_OUT && spl[i + 1])
+				lst_addback_red(&tab->out, fill_out(REDIR_OUT, spl[i + 1]));
+			else if (is_redir(spl[i]) == APPEND && spl[i + 1])
+				lst_addback_red(&tab->in, fill_in(APPEND, spl[i + 1]));
 		}
+		// if (is_redir(spl[i]) == 4)
+		// 	init_hd();
+		i++;
 	}
+	throw_error(tab->in);
+	throw_error(tab->out);
 }
 
-void    fill_out(t_cmdtab **par, char **split)
+t_file	*fill_in(int op, char *file)
 {
-    int i;
-
-    i = -1;
-    while (split && split[++i])
-    {
-        if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">>", 2))
-        {
-            (*par)->out.file = ft_strdup(split[i + 1]);
-            (*par)->out.operator = allocate_str(">>");
-            if ((*par)->out.fd > 1)
-                close((*par)->out.fd);
-        }
-        else if (split[i] && split[i + 1] && !ft_strncmp(split[i], ">", ft_strlen(split[i])))
-        {
-            (*par)->out.file = ft_strdup(split[i + 1]);
-            (*par)->out.operator = allocate_str(">");
-            if ((*par)->out.fd > 1)
-                close((*par)->out.fd);
-        }
-		open_files((*par));
+	t_file	*in;
+	
+	in = malloc(sizeof(t_file));
+	if (!in)
+		return (NULL);
+	if (file)
+	{
+		in->file = ft_strdup(file);
+		in->fd = open(in->file, O_RDONLY);
 	}
+	else
+	{
+		in->file = NULL;
+		in->fd = 0;
+	}
+	in->op = op;
+	in->next = NULL;
+	return (in);
+}
+
+t_file	*fill_out(int op, char *file)
+{
+	t_file	*out;
+	
+	out = malloc(sizeof(t_file));
+	if (!out)
+		return (NULL);
+	out->op = op;
+	out->fd = 1;
+	if (file)
+	{
+		out->file = ft_strdup(file);
+		if (op == REDIR_OUT)
+			out->fd = open(out->file, O_RDWR | O_CREAT | O_TRUNC, 0664);
+		else if (op == APPEND)
+			out->fd = open(out->file, O_RDWR | O_APPEND | O_CREAT, 0664);
+	}
+	else
+		out->file = NULL;
+	out->next = NULL;
+	return(out);
 }
 
 int is_redir(char *arg)
 {
-    if (!ft_strncmp(arg, ">", ft_strlen(arg)))
-        return(1);
+    if (!ft_strncmp(arg, "<", ft_strlen(arg)))
+        return(REDIR_IN);
+    else if (!ft_strncmp(arg, ">", ft_strlen(arg)))
+        return (REDIR_OUT);
     else if (!ft_strncmp(arg, ">>", ft_strlen(arg)))
-        return (1);
-    else if (!ft_strncmp(arg, "<", ft_strlen(arg)))
-        return (1);
+        return (APPEND);
     else if (!ft_strncmp(arg, "<<", ft_strlen(arg)))
-        return (1);
+        return (HERE_DOC);
     return (0);
 }

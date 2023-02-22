@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 15:39:57 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:27:05 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,19 @@
 
 extern int g_status;
 
+# define REDIR_IN 1
+# define REDIR_OUT 2
+# define APPEND 3
+# define HERE_DOC 4
+
 /*-------------------------------Struct---------------------------------------*/
 
 typedef struct s_file
 {
 	char    *file;
-	char    *operator;
+	int		op;
 	int		fd;
+	struct s_file *next;
 }       t_file;
 
 typedef	struct s_data
@@ -50,10 +56,11 @@ typedef	struct s_data
 
 typedef struct s_cmdtab
 {
-	struct s_file in;
-	struct s_file out;
+	struct s_file *in;
+	struct s_file *out;
 	char    *cmd;
 	char    **opt;
+	int		fd;
 	struct s_cmdtab *next;
 }				t_cmdtab;
 
@@ -73,11 +80,12 @@ char 	*expand_err_code(char *prompt, int start, int end);
 
 /*----------------------PARSER---------------------*/
 
-t_cmdtab    *lstnew_par(char *pipe);
-void    	lst_addback_par(t_cmdtab **tab, t_cmdtab *new);
+t_cmdtab    *lstnew_cmd(char **spl);
+void    	lst_addback_cmd(t_cmdtab **tab, t_cmdtab *new);
+void		lst_addback_red(t_file **red, t_file *new);
 void		here_doc(char *split, int i);
-void    	fill_in(t_cmdtab **par, char **split);
-void    	fill_out(t_cmdtab **par, char **split);
+t_file		*fill_in(int op, char *file);
+t_file		*fill_out(int op, char *file);
 int 		is_redir(char *arg);
 char		**get_paths(char **env);
 int 		len_cmd(char **split);
@@ -85,7 +93,9 @@ char    	**get_opt(char **split);
 char    	*get_abs_path(char **paths, char **opt);
 t_cmdtab    *parser(char **lexer);
 void    	printer(t_cmdtab *tab);
+void		init_files(t_cmdtab *tab, char **spl);
 int			lstsize(t_cmdtab *lst);
+void		throw_error(t_file *f);
 
 /*---------------------EXEC-------------------------*/
 
@@ -129,7 +139,7 @@ int 	len_tab(char **tab);
 
 /*-------------------ERROR------------------*/
 
-void	check_status(char *cmd, char *file);
+void	check_status(char *cmd);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
 int		check_access(t_data *data, t_cmdtab *tab);

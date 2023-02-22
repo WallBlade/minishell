@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/01/08 13:09:08 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:13:35 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,37 @@ void    printer(t_cmdtab *tab)
             for (int i = 0; temp->opt[i]; i++)
                 printf("option_%d %s\n", i, temp->opt[i]);
         }
-        if (temp->in.file)
-            printf("%s\n", temp->in.file);
-        if (temp->in.operator)
-            printf("%s\n", temp->in.operator);
-        if (temp->out.file)
-            printf("%s\n", temp->out.file);
-        if (temp->out.operator)
-            printf("%s\n", temp->out.operator);
         temp = temp->next;
     }
 }
 
+void	throw_error(t_file *f)
+{
+	if (f && f->fd == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		if (access(f->file, F_OK | X_OK) == -1)
+			perror(f->file);
+		g_status = 1;
+	}
+}
+
 t_cmdtab    *parser(char **lexer)
 {
-    int         i;
-    t_cmdtab    *tab;
+	int			i;
+	char		**spl;
+	t_cmdtab	*tab;
 
-    i = 0;
-    tab = NULL;
-    while (lexer && lexer[i])
-    {
-        lst_addback_par(&tab, lstnew_par(lexer[i]));
-        i++;
-    }
-    return (tab);
+	i = 0;
+	tab = NULL;
+	spl = NULL;
+	while (lexer && lexer[i])
+	{
+		spl = NULL;
+		spl = split(lexer[i]);
+		lst_addback_cmd(&tab, lstnew_cmd(spl));
+		free_tab(spl);
+		i++;
+	}
+	return (tab);
 }

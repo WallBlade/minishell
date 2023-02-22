@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 18:00:59 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/21 18:38:11 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,10 @@ void	free_cmdtab(t_cmdtab *tab)
 
 	while (tab)
 	{
-		if (tab->in.file)
-			free(tab->in.file);
-		if (tab->in.operator)
-			free(tab->in.operator);
-		if (tab->out.file)
-			free(tab->out.file);
-		if (tab->out.operator)
-			free(tab->out.operator);
+		if (tab->in->file)
+			free(tab->in->file);
+		if (tab->out->file)
+			free(tab->out->file);
 		if (tab->opt)
 			free_tab(tab->opt);
 		if (tab->cmd)

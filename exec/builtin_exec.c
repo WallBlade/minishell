@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 16:17:21 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:58:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,18 @@ int	is_builtin(t_cmdtab *tab)
 
 int	launch_builtin(t_cmdtab *tab, t_data *data)
 {
+	int fd;
+
+	if (tab->out && tab->out->fd)
+		fd = tab->out->fd;
+	else
+		fd = 1;
 	if (tab && tab->opt && tab->opt[0])
 	{
 		if (!ft_strcmp(tab->opt[0], "echo"))
-			echo(tab->opt, tab->out.fd);
+			echo(tab->opt, fd);
 		else if (!ft_strcmp(tab->opt[0], "pwd"))
-			pwd(tab->out.fd);
+			pwd(fd);
 		else if (!ft_strcmp(tab->opt[0], "cd"))
 		{
 			if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
@@ -60,7 +66,7 @@ int	launch_builtin(t_cmdtab *tab, t_data *data)
 				print_export(tab, data->env);
 		}
         else if (!ft_strcmp(tab->opt[0], "env"))
-            env_print(data->env, tab->out.fd);
+            env_print(data->env, fd);
         else if (!ft_strcmp(tab->opt[0], "unset") && tab->opt[1])
             data->env = unset(data->env, tab->opt[1]);
 		else if (!ft_strcmp(tab->opt[0], "exit"))

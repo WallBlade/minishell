@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 15:51:47 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:17:59 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	make_dup(int in, int out)
 
 void	redir(t_data *data, t_cmdtab *tab, int index)
 {
-	if (tab->in.fd > 0 && tab->opt[0])
-		make_dup(tab->in.fd, 1);
-	if (tab->out.fd > 1 && tab->opt[0])
+	if (tab->in && tab->in->fd > 0 && tab->opt[0])
+		make_dup(tab->in->fd, 1);
+	if (tab->out && tab->out->fd > 1 && tab->opt[0])
 	{
-        make_dup(0, tab->out.fd);
-		close(tab->out.fd);
+        make_dup(0, tab->out->fd);
+		close(tab->out->fd);
 	}
 	if (data->p_count > 1)
 	{

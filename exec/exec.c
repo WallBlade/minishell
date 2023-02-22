@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/18 16:18:35 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:48:28 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,45 +50,17 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 	while (tab && waitpid(data->pid[i], &g_status, 0) > 0)
 	{
 		if (WTERMSIG(g_status) == 2)
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd("\n", 2);
 		else if (WTERMSIG(g_status) == 3)
-			ft_putstr_fd(" Quit (core dumped)\n", 1);
+			ft_putstr_fd(" Quit (core dumped)\n", 2);
 		if (WIFEXITED(g_status))
 			g_status = WEXITSTATUS(g_status);
-		if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
-			tab->in.file = ft_strdup(tab->opt[0]);
-        check_status(tab->opt[0], tab->in.file);
+		// if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
+		// 	tab->in->file = ft_strdup(tab->opt[0]);
+        check_status(tab->opt[0]);
         tab = tab->next;
         i++;
     }
-}
-
-void	open_files(t_cmdtab *tab)
-{
-	if (tab->in.file)
-	{
-		if (!ft_strcmp(tab->in.operator, "<"))
-		{
-			tab->in.fd = open(tab->in.file, O_RDONLY);
-			if (tab->in.fd < 0)
-				file_error(tab->in.file);
-		}
-	}
-	if (tab->out.file)
-	{
-		if (!strcmp(tab->out.operator, ">"))
-		{
-			tab->out.fd = open(tab->out.file, O_RDWR | O_CREAT | O_TRUNC, 0664);
-			if (tab->out.fd < 0)
-				file_error(tab->in.file);
-		}
-		else if (!strcmp(tab->out.operator, ">>"))
-		{
-			tab->out.fd = open(tab->out.file, O_RDWR | O_APPEND | O_CREAT, 0664);
-			if (tab->out.fd < 0)
-				file_error(tab->in.file);
-		}
-	}
 }
 
 void	minishell(t_data *data, t_cmdtab *tab, int i)
@@ -104,14 +76,13 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 	{
 		close_pipes(data);
 		execve(tab->cmd, tab->opt, data->env);
-		/*Appeler fonction free all au cas ou execve ne marche pas*/
 	}
 }
 
 void	exec(t_cmdtab *tab, t_data *data)
 {
-	int	i;
-    t_cmdtab *tmp;
+	int			i;
+    t_cmdtab	*tmp;
 
 	i = 0;
     tmp = tab;
@@ -161,25 +132,21 @@ int main(int argc, char **argv, char **envp)
 			tab = parser(lex);
 			data = init_data_struct(tab, env);
 		}
-		printer(tab);
+		// printer(tab);
 		if (!lex)
 		{
 			add_history(prompt);
 			continue ;
 		}
 		else if (is_builtin(tab) && data->p_count == 1 && !check_access(data, tab))
-		{
-			open_files(tab);
 			launch_builtin(tab, data);
-			// check_status(tab->opt);
-		}
-		else
+		else if (g_status != 1)
 			exec(tab, data);
 		if (env)
 			free_tab(env);
 		env = ft_strdup_tab(data->env);
-		free_tab(lex);
-		free_cmdtab(tab);
+		// free_tab(lex);
+		// free_cmdtab(tab);
         add_history(prompt);
     }
     rl_clear_history();
