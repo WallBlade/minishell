@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 19:31:06 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/17 17:23:55 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/23 19:27:18 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,27 @@ char	*allocate_str(char *str)
 	return (allocated);
 }
 
+int	numlen(int num)
+{
+	int	i;
+
+	i = 0;
+	if (num < 0)
+	{
+		i++;
+		num *= -1;
+	}
+	while (num > 0)
+	{
+		num /= 10;
+		i++;
+	}
+	return (i);
+}
+
 int is_numeric(char *str)
 {
-    int     i;
-    int     j;
-    char    *nums;
-    int     count;
-
-    i = 0;
-    nums = allocate_str("0123456789");
-    count = 0;
-    while (str && str[i])
-    {
-        j = 0;
-        while (nums && nums[j])
-        {
-            if (str[i] == nums[j])
-                count++;
-            j++;
-        }
-        i++;
-    }
-    if (count == ft_strlen(str))
-        return (1);
+	if (numlen(ft_atoi(str)) == ft_strlen(str))
+		return (1);
     return (0);
 }
