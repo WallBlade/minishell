@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/21 18:37:36 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:16:32 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,20 @@ char    **converted_env(char **env)
 
 void    print_export(t_cmdtab *tab, char **env)
 {
-    int i;
-    char    **env_export;
+    int 	i;
+	int		fd;
+    char	**env_export;
 
     i = 0;
+	fd = 1;
+	if (tab->out && tab->out->fd)
+		fd = tab->out->fd;
     env_export = converted_env(env);
     while (env_export && env_export[i])
     {
-        ft_putstr_fd("export ", tab->out->fd);
-        ft_putstr_fd(env_export[i], tab->out->fd);
-        ft_putstr_fd("\n", tab->out->fd);
+        ft_putstr_fd("export ", fd);
+        ft_putstr_fd(env_export[i], fd);
+        ft_putstr_fd("\n", fd);
         i++;
     }
 	if (env_export)
