@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/01/05 11:44:08 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:25:02 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	wdlen(char *str, int i)
 			len++;
 		return (len);
 	}
-	while (str[i] && str[i] != ' ' && str[i] != '\t')
+	while (str[i] && str[i] != ' ' && str[i] != '\t' && (str[i] != '"' && str[i] != '\''))
 	{
 		i++;
 		len++;
@@ -131,7 +131,7 @@ char	*fill_wrd(char *str, int *i)
 	}
 	else
 	{
-		while (str[k] && str[k] != ' ' && str[k] != '\t')
+		while (str[k] && str[k] != ' ' && str[k] != '\t' && (str[k] != '"' && str[k] != '\''))
 			ret[j++] = str[k++];
 		*i = k;
 	}

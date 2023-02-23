@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/23 16:00:13 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:03:18 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,15 +139,15 @@ int main(int argc, char **argv, char **envp)
 			data = init_data_struct(tab, env);
 		}
 		// printer(tab);
-		if (!lex)
-		{
-			add_history(prompt);
-			continue ;
-		}
-		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
-			launch_builtin(tab, data);
-		else
-			exec(tab, data);
+		// if (!lex)
+		// {
+		// 	add_history(prompt);
+		// 	continue ;
+		// }
+		// if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
+		// 	launch_builtin(tab, data);
+		// else
+		// 	exec(tab, data);
 		if (env)
 			free_tab(env);
 		env = ft_strdup_tab(data->env);
