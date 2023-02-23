@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/22 17:13:35 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:47:06 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    printer(t_cmdtab *tab)
 
 void	throw_error(t_file *f)
 {
-	if (f && f->fd == -1)
+	if (f && f->fd < 0)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		if (access(f->file, F_OK | X_OK) == -1)
@@ -58,5 +58,7 @@ t_cmdtab    *parser(char **lexer)
 		free_tab(spl);
 		i++;
 	}
+	// if (tab->in->fd && tab->out->fd)
+		// printf()
 	return (tab);
 }

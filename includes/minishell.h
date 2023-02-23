@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 00:10:31 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:47:50 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void        close_fds(t_cmdtab *tab);
 
 	/*-----------------------BUILT-INS------------------*/
 
-	int len_tab(char **tab);
+int 		len_tab(char **tab);
 char    	**export(char **env, char **var_exp);
 char    	**multi_export(char **env, char *var_exp);
 int 		is_inv_identif(char c);
@@ -141,6 +141,7 @@ int 	len_tab(char **tab);
 /*-------------------ERROR------------------*/
 
 void	check_status(char *cmd);
+int		check_redir(t_cmdtab *tab);
 void	cmd_error(char *cmd);
 void	file_error(char *file);
 int		check_access(t_data *data, t_cmdtab *tab);

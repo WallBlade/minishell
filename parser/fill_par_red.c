@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 00:43:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:45:37 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int	fds_ok(t_cmdtab *tab)
 {
-	t_cmdtab	*cpy;
+	t_file	*in;
+	t_file	*out;
 
-	cpy = tab;
-	if (cpy && cpy->in)
-	{
-		while (cpy->in->next)
-			cpy->in = cpy->in->next;
-		if (cpy->in->fd && cpy->in->fd < 0)
-			return (0);
-	}
-	if (cpy && cpy->out)
-	{
-		while (cpy->out->next)
-			cpy->out = cpy->out->next;
-		if (cpy->out->fd && cpy->out->fd < 0)
-			return (0);
-	}
+	in = NULL;
+	out = NULL;
+	if (tab && tab->in)
+		in = tab->in;
+	if (tab && tab->out)
+		out = tab->out;
+	while (in && in->next)
+		in = in->next;
+	if (in && in->fd && in->fd < 0)
+		return (0);
+	while (out && out->next)
+		out = out->next;
+	if (out && out->fd && out->fd < 0)
+		return (0);
 	return (1);
 }
 
@@ -54,8 +54,9 @@ void	init_files(t_cmdtab *tab, char **spl)
 		// 	init_hd();
 		i++;
 	}
+	close_fds(tab);
 	throw_error(tab->in);
-	throw_error(tab->out);
+	throw_error(tab->out);	
 }
 
 t_file	*fill_in(int op, char *file)

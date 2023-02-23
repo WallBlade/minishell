@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/23 00:19:27 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:00:13 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,23 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 
 void	minishell(t_data *data, t_cmdtab *tab, int i)
 {
-	redir(data, tab, i);
-	if (is_builtin(tab))
+	if (check_redir(tab))
 	{
-		close_pipes(data);
-		launch_builtin(tab, data);
-		exit(0);
+		redir(data, tab, i);
+		if (is_builtin(tab))
+		{
+			close_pipes(data);
+			launch_builtin(tab, data);
+			exit(0);
+		}
+		else
+		{
+			close_pipes(data);
+			execve(tab->cmd, tab->opt, data->env);
+		}
 	}
 	else
-	{
-		close_pipes(data);
-		execve(tab->cmd, tab->opt, data->env);
-	}
+		exit(1);
 }
 
 void	exec(t_cmdtab *tab, t_data *data)
@@ -139,9 +144,9 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		else if (is_builtin(tab) && data->p_count == 1 && !check_access(data, tab))
+		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
 			launch_builtin(tab, data);
-		else if (g_status != 1)
+		else
 			exec(tab, data);
 		if (env)
 			free_tab(env);

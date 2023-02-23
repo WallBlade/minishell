@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 00:38:30 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:49:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,16 @@ void	make_dup(int in, int out)
 
 void	close_fds(t_cmdtab *tab)
 {
-	printf("alo ?\n");
-	while (tab && tab->in)
+	while (tab->in && tab->in->next && tab->in->fd > 0)
 	{
-		if (tab->in->fd)
-		{
-			printf("%s fd closed\n", tab->in->file);
-			close(tab->in->fd);
-		}
+		close(tab->in->fd);
+		printf("file in: %s closed\n", tab->in->file);
 		tab->in = tab->in->next;
 	}
-	while (tab && tab->out)
+	while (tab->out && tab->out->next && tab->out->fd > 1)
 	{
-		if (tab->out->fd)
-		{
-			printf("%s fd closed\n", tab->out->file);
-			close(tab->out->fd);
-		}
+		close(tab->out->fd);
+		printf("file out: %s closed\n", tab->out->file);
 		tab->out = tab->out->next;
 	}
 }
