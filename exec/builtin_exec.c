@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 19:39:42 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/24 15:55:57 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ int	launch_builtin(t_cmdtab *tab, t_data *data)
 			pwd(fd);
 		else if (!ft_strcmp(tab->opt[0], "cd"))
 		{
-			if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
+			if (tab->opt[2])
+			{
+				ft_putstr_fd("cd: string not in pwd: ", 2);
+				ft_putstr_fd(tab->opt[1], 2);
+				ft_putstr_fd("\n", 2);
+				g_status = 1;
+			}
+			else if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
 				change_dir(getenv("HOME"));
 			else if (tab->opt[1])
 				change_dir(tab->opt[1]);

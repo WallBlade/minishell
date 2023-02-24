@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:45:23 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 15:10:27 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:50:45 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void    exit_bin(t_cmdtab *tab, t_data *data)
         }
         else if (is_numeric(tab->opt[1]) && len_tab(tab->opt) == 2)
         {
-            g_status = WEXITSTATUS(ft_atoi(tab->opt[1]));
+            g_status = ft_atoi(tab->opt[1]) % 256;
             exit(g_status);
         }
     }

@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/24 15:00:13 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/24 17:53:36 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,17 @@ void	here_doc(char *split, int fd)
     while (1)
     {
         prompt = readline(">");
+		if (g_status == 130)
+			break ;
+		else if (!prompt)
+		{
+			sig_unexpected_eof();
+			break ;
+		}
 		if (!ft_strcmp(prompt, split))
         {
             close(fd);
-            exit(0);
+            break ;
         }
         ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
@@ -33,15 +40,23 @@ void	here_doc(char *split, int fd)
 void	init_hd(char *split, char *hd_name, t_file *in)
 {
 	int		pid;
-
+	int		fd;
+	
 	pid = fork();
+	// signal(SIGINT, hd_sig_child);
 	if (pid == 0)
 	{
+		fd = dup(0);
+		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
 		here_doc(split, in->fd);
-		exit(1);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		exit(0);
 	}
 	waitpid(pid, 0, 0);
+	// dup2(fd, STDIN_FILENO);
+	// close(fd);
 	in->fd = open(hd_name, O_RDONLY);
 }
 

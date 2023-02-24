@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:36:37 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/16 22:28:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:48:27 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,22 @@ void	child_signal(int num)
 		g_status = 131;
 }
 
-// static void	handle_signal_hd(int signal, siginfo_t *info, void *context)
-// {
-// 	int	fd;
+void	hd_sig_child(int num)
+{
+	(void)num;
+	write(2, "\n", 1);
+	close(0);
+	g_status = 130;
+}
 
-// 	(void)info;
-// 	(void)context;
-// 	if (signal == SIGINT)
-// 	{
-// 		fd = open("/dev/null", O_RDONLY);
-// 		dup2(fd, STDIN_FILENO);
-// 		close(fd);
-// 		ft_putstr_fd("\n", 1);
-// 		g_status = 777;
-// 	}
-// 	if (signal == SIGQUIT)
-// 		ft_putstr_fd("\b\b  \b\b", 0);
-// }
+void	hd_sig_parent(int num)
+{
+	(void)num;
+	g_status = 130;
+}
 
-// void	here_doc_signal()
-// {
-// 	struct sigaction	s_sig;
-
-// 	s_sig.sa_sigaction = handle_signal_hd;
-// 	s_sig.sa_flags = SA_SIGINFO;
-// 	sigemptyset(&s_sig.sa_mask);
-// 	sigaction(SIGINT, &s_sig, 0);
-// 	sigaction(SIGQUIT, &s_sig, 0);
-// }
+void	sig_unexpected_eof(void)
+{
+	ft_putstr_fd("minishell: warning: here-document delimited by ", 2);
+	ft_putstr_fd("end-of-file (wanted `%s')\n", 2);
+}

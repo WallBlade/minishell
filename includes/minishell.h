@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 15:11:10 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/24 17:09:39 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void		throw_error(t_file *f);
 
 t_file		*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
 char		*ft_strjoin_hd(char *s1, char *s2);
+
 /*---------------------EXEC-------------------------*/
 
 void		init_pipes(t_data *data);
@@ -143,7 +144,6 @@ void    	exit_bin(t_cmdtab *tab, t_data *data);
 char	*allocate_str(char *str);
 int 	len_tab(char **tab);
 
-
 /*-------------------ERROR------------------*/
 
 void	check_status(char *cmd);
@@ -169,6 +169,8 @@ void	free_data_struct(t_data *data);
 
 void	signal_nl(int num);
 void	child_signal(int num);
-void	here_doc_signal();
+void	hd_sig_child(int num);
+void	hd_sig_parent(int num);
+void	sig_unexpected_eof(void);
 
 #endif
