@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/21 18:46:15 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:00:13 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	here_doc(char *split, int fd)
 {
     char    *prompt;
       
-    prompt = NULL;
+	prompt = NULL;
     while (1)
     {
         prompt = readline(">");
@@ -30,11 +30,43 @@ void	here_doc(char *split, int fd)
     }
 }
 
-// void	init_hd()
-// {
-	
-// }
+void	init_hd(char *split, char *hd_name, t_file *in)
+{
+	int		pid;
 
+	pid = fork();
+	if (pid == 0)
+	{
+		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
+		here_doc(split, in->fd);
+		exit(1);
+	}
+	waitpid(pid, 0, 0);
+	in->fd = open(hd_name, O_RDONLY);
+}
+
+t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)
+{
+	t_file	*in;
+	char	*hd_name;
+
+	hd_name = ft_strjoin_hd(ft_itoa(tab->index), allocate_str("_hd_"));
+	hd_name = ft_strjoin(hd_name, ft_itoa(count));
+	in = malloc(sizeof(t_file));
+	if (!in)
+		return (NULL);
+    in->op = op;
+	in->fd = 0;
+	if (eof)
+	{
+		in->file = ft_strdup(hd_name);
+		init_hd(eof, hd_name, in);
+	}
+	else
+		in->file = NULL;
+	in->next = NULL;
+	return (in);
+}
 // void	get_right_fd(t_cmdtab *tab)
 // {
 	

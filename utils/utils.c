@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 19:31:06 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 19:27:18 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/24 13:31:01 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,29 @@ int is_numeric(char *str)
 	if (numlen(ft_atoi(str)) == ft_strlen(str))
 		return (1);
     return (0);
+}
+
+char	*ft_strjoin_hd(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	size_t	len;
+	char	*dest;
+
+	if (!s1)
+		return (ft_strdup(s2));
+	len = ft_strlen(s1) + ft_strlen(s2);
+	dest = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (s1[++i])
+		dest[i] = s1[i];
+	while (s2[++j])
+		dest[i++] = s2[j];
+	dest[i] = '\0';
+	free(s1);
+	free(s2);
+	return (dest);
 }

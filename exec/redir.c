@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 17:12:13 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:03:20 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	close_fds(t_cmdtab *tab)
 	while (tab->in && tab->in->next && tab->in->fd > 0)
 	{
 		close(tab->in->fd);
-		printf("file in: %s closed\n", tab->in->file);
+		if (tab->in->op == HERE_DOC)
+			unlink(tab->in->file);
 		tab->in = tab->in->next;
 	}
 	while (tab->out && tab->out->next && tab->out->fd > 1)

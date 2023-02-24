@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 17:16:32 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:46:38 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char    *ft_strdup_quote(char *env)
     i = 0;
     j = 0;
     first = 1;
-    quote = malloc(sizeof(char) * (ft_strlen(env) + 3));
+    quote = ft_calloc(sizeof(char), (ft_strlen(env) + 3));
     if (!quote)
         return (NULL);
     while (env && env[i])

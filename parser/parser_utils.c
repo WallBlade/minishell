@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 16:44:51 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:19:15 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmdtab	*lstnew_cmd(char **spl)
+t_cmdtab	*lstnew_cmd(char **spl, int index)
 {
     t_cmdtab    *tab;
 
@@ -23,6 +23,7 @@ t_cmdtab	*lstnew_cmd(char **spl)
     tab->cmd = NULL;
 	tab->in = NULL;
 	tab->out = NULL;
+	tab->index = index;
 	init_files(tab, spl);
     tab->next = NULL;
     return (tab);

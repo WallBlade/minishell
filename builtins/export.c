@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/17 15:54:52 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/24 10:58:27 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char    **export(char **env, char **var_exp)
         return (NULL);
     while (env && var_exp && var_exp[j])
     {
-        if (!error_export(var_exp[j]))
+		if (!error_export(var_exp[j]))
         {
             exported = multi_export(env, var_exp[j]);
             g_status = 0;

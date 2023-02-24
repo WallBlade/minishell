@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 15:47:50 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:11:10 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_cmdtab
 	char    *cmd;
 	char    **opt;
 	int		fd;
+	int		index;
 	struct s_cmdtab *next;
 }				t_cmdtab;
 
@@ -80,7 +81,7 @@ char 	*expand_err_code(char *prompt, int start, int end);
 
 /*----------------------PARSER---------------------*/
 
-t_cmdtab    *lstnew_cmd(char **spl);
+t_cmdtab    *lstnew_cmd(char **spl, int index);
 void    	lst_addback_cmd(t_cmdtab **tab, t_cmdtab *new);
 void		lst_addback_red(t_file **red, t_file *new);
 void		here_doc(char *split, int i);
@@ -97,6 +98,10 @@ void		init_files(t_cmdtab *tab, char **spl);
 int			lstsize(t_cmdtab *lst);
 void		throw_error(t_file *f);
 
+/*---------------------HERE_DOC---------------------*/
+
+t_file		*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
+char		*ft_strjoin_hd(char *s1, char *s2);
 /*---------------------EXEC-------------------------*/
 
 void		init_pipes(t_data *data);
@@ -109,6 +114,7 @@ int			launch_builtin(t_cmdtab *tab, t_data *data);
 void		minishell(t_data *data, t_cmdtab *tab, int i);
 void		open_files(t_cmdtab *tab);
 void        close_fds(t_cmdtab *tab);
+void		close_final_fd(t_cmdtab *tab);
 
 	/*-----------------------BUILT-INS------------------*/
 
