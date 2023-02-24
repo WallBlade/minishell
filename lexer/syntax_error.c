@@ -6,11 +6,41 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:03:58 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:33:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:32:49 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	cwords_syn(char *str)
+{
+	int		i;
+	int		count;
+	char	c;
+
+	i = 0;
+	count = 0;
+	while (str && str[i])
+	{
+		if (str[i] && (str[i] == '"' || str[i] == '\''))
+		{
+			c = str[i++];
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+			i++;
+		}
+		else if (str[i] && (str[i] != ' ' && str[i] != '\t'))
+		{
+			count++;
+			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
+				i++;
+		}
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+			i++;
+	}
+	return (count);
+}
 
 int	wdlen_syn(char *str, int i)
 {
@@ -42,7 +72,7 @@ char	*fill_wrd_syn(char *str, int *i)
 
 	j = 0;
 	k = *i;
-	ret = malloc(sizeof(char) * (wdlen(str, k) + 1));
+	ret = malloc(sizeof(char) * (wdlen_syn(str, k) + 1));
 	if (!ret)
 		return (NULL);
 	if (str[k] && (str[k] == '"' || str[k] == '\''))
@@ -70,12 +100,12 @@ char	**split_syn(char *str)
 	int		j;
 	char	**spl;
 
-	spl = malloc(sizeof(char *) * (cwords(str) + 1));
+	spl = malloc(sizeof(char *) * (cwords_syn(str) + 1));
 	if (!spl)
 		return (NULL);
 	i = -1;
 	j = 0;
-	while (++i < cwords(str))
+	while (++i < cwords_syn(str))
 	{
 		while ((str[j] == ' ' || str[i] == '\t')
 			&& (str[j] != '"' && str[j] != '\''))

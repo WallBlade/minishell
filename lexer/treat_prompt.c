@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/18 15:09:02 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:47:03 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,10 @@ int	is_syntax_tok(char *str)
 	return (0);
 }
 
-void	print_syntax_error(char *tok)
+void	print_syntax_error(char tok)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-	ft_putstr_fd(tok, 2);
+	ft_putchar_fd(tok, 2);
 	ft_putstr_fd("\n", 2);
 }
 
@@ -148,13 +148,13 @@ int	scan_2_ouf(char **sdf)
 			if (sdf[i + 1] && is_syntax_tok(sdf[i]) && is_syntax_tok(sdf[i + 1]))
 			{
 				g_status = 2;
-				print_syntax_error(sdf[i + 1]);
+				print_syntax_error(sdf[i + 1][ft_strlen(sdf[i]) - 1]);
 				return(free_tab(sdf), 0);
 			}
 			else if ((is_syntax_tok(sdf[i]) && !sdf[i + 1]) || (rep_tok(sdf[i]) > 2))
 			{
 				g_status = 2;
-				print_syntax_error(sdf[i]);
+				print_syntax_error(sdf[i][ft_strlen(sdf[i]) - 1]);
 				return(free_tab(sdf), 0);
 			}
 		}
@@ -208,11 +208,9 @@ char	**split(char *str)
 	j = 0;
 	while (++i < cwords(str))
 	{
-		while ((str[j] == ' ' || str[i] == '\t')
-			&& (str[j] != '"' && str[j] != '\''))
+		while (str[j] == ' ' || str[j] == '\t')
 			j++;
-		if ((str[j] != ' ' && str[j] != '\t')
-			|| (str[j] == '"' || str[j] == '\''))
+		if (str[j] != ' ' && str[j] != '\t')
 		{
 			spl[i] = fill_wrd(str, &j);
 			if (!spl[i])

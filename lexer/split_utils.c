@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/23 19:25:02 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:29:39 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,20 @@ int	cwords(char *str)
 	count = 0;
 	while (str && str[i])
 	{
-		if (str[i] && (str[i] == '"' || str[i] == '\''))
-		{
-			c = str[i++];
-			count++;
-			while (str[i] && str[i] != c)
-				i++;
-			i++;
-		}
-		else if (str[i] && (str[i] != ' ' && str[i] != '\t'))
+		if (str[i] && (str[i] != ' ' && str[i] != '\t'))
 		{
 			count++;
 			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
+			{
+				if (str[i] && (str[i] == '"' || str[i] == '\''))
+				{
+					c = str[i++];
+					while (str[i] && str[i] != c)
+						i++;
+					i++;
+				}
 				i++;
+			}
 		}
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
@@ -95,18 +96,22 @@ int	wdlen(char *str, int i)
 	char	c;
 
 	len = 0;
-	if (str[i] && (str[i] == '"' || str[i] == '\''))
+	// printf("str = %s\ti = %d\n", str, i);
+	while (str[i] && (str[i] != ' ' && str[i] != '\t'))
 	{
-		c = str[i++];
-		while (str[i] && str[i++] != c)
-			len++;
-		return (len);
-	}
-	while (str[i] && str[i] != ' ' && str[i] != '\t' && (str[i] != '"' && str[i] != '\''))
-	{
+		if (str[i] && (str[i] == '"' || str[i] == '\''))
+		{
+			c = str[i++];
+			while (str[i] && str[i++] != c)
+				len++;
+		}
 		i++;
 		len++;
 	}
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	// printf("end_i = %d\n", i);
+	// printf("len = %d\n", len);
 	return (len);
 }
 
@@ -122,17 +127,16 @@ char	*fill_wrd(char *str, int *i)
 	ret = malloc(sizeof(char) * (wdlen(str, k) + 1));
 	if (!ret)
 		return (NULL);
-	if (str[k] && (str[k] == '"' || str[k] == '\''))
+	while (str[k] && str[k] != ' ' && str[k] != '\t')
 	{
-		c = str[k++];
-		while (str[k] && str[k] != c)
-			ret[j++] = str[k++];
-		*i = k + 1;
-	}
-	else
-	{
-		while (str[k] && str[k] != ' ' && str[k] != '\t' && (str[k] != '"' && str[k] != '\''))
-			ret[j++] = str[k++];
+		if (str[k] && (str[k] == '"' || str[k] == '\''))
+		{
+			c = str[k++];
+			while (str[k] && str[k] != c)
+				ret[j++] = str[k++];
+			k++;
+		}
+		ret[j++] = str[k++];
 		*i = k;
 	}
 	ret[j] = '\0';
