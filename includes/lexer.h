@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 20:01:07 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:51:06 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,12 @@ int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
 int		scan_2_ouf(char **sdf);
 char	**split_syn(char *str);
+
+/*----------SYNTAX ERROR----------------*/
+int	unclosed_quotes(char *prompt);
+int	is_unvalid(char c);
+int	unvalid_char(char *prompt, t_tks *tks);
+int	pipe_end(char *prompt, t_tks *tks);
+int	syntax_error(char *prompt, t_tks *tks);
 
 #endif

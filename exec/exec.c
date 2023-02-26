@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 21:34:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:56:48 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,12 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
-			launch_builtin(tab, data);
-		else if (tab && tab->opt && tab->opt[0] && data)
-			exec(tab, data);
-		if (env)
-			free_tab(env);
+		// if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
+		// 	launch_builtin(tab, data);
+		// else if (tab && tab->opt && tab->opt[0] && data)
+		// 	exec(tab, data);
+		// if (env)
+		// 	free_tab(env);
 		env = ft_strdup_tab(data->env);
 		// free_tab(lex);
 		// free_cmdtab(tab);

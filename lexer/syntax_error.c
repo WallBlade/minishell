@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:03:58 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 14:20:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:16:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,3 +120,4 @@ char	**split_syn(char *str)
 	spl[i] = 0;
 	return (spl);
 }
+
