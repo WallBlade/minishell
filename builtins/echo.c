@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/18 16:15:34 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/25 22:05:38 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ int    is_there_n(char **cmd)
 	return (i + 1);
 }
 
+int	ft_echo(char *str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (write(fd, &str[i], 1) < 0)
+		{
+			ft_putstr_fd("bash: echo: write error: No space left on device\n", 2);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void    echo(char **cmd, int fd)
 {
     int    i;
@@ -49,11 +66,14 @@ void    echo(char **cmd, int fd)
         i = flag;
     while (cmd && cmd[i])
     {
-        ft_putstr_fd(cmd[i], fd);
+		if (!ft_echo(cmd[i], fd))
+			break ;
         if (cmd[i + 1])
             ft_putstr_fd(" ", fd);
         i++;
     }
     if (flag == 1)
-        write(fd, "\n", 1);
+		write(fd, "\n", 1);
+	if (fd > 1)
+		close(fd);
 }

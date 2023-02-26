@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/24 17:53:36 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 17:20:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	here_doc(char *split, int fd)
 			break ;
 		else if (!prompt)
 		{
-			sig_unexpected_eof();
+			sig_unexpected_eof(split);
 			break ;
 		}
 		if (!ft_strcmp(prompt, split))
@@ -40,23 +40,17 @@ void	here_doc(char *split, int fd)
 void	init_hd(char *split, char *hd_name, t_file *in)
 {
 	int		pid;
-	int		fd;
 	
 	pid = fork();
-	// signal(SIGINT, hd_sig_child);
+	signal(SIGINT, hd_sig_parent);
 	if (pid == 0)
 	{
-		fd = dup(0);
 		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
 		here_doc(split, in->fd);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
 		exit(0);
 	}
 	waitpid(pid, 0, 0);
-	// dup2(fd, STDIN_FILENO);
-	// close(fd);
 	in->fd = open(hd_name, O_RDONLY);
 }
 

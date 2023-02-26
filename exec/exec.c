@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/24 15:17:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 21:34:14 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 			ft_putstr_fd(" Quit (core dumped)\n", 2);
 		if (WIFEXITED(g_status))
 			g_status = WEXITSTATUS(g_status);
-		// if (!get_paths(data->env) && !tab->cmd && tab->opt[0])
-		// 	tab->in->file = ft_strdup(tab->opt[0]);
         check_status(tab->opt[0]);
         close_fds(tab);
         tab = tab->next;
@@ -77,6 +75,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 		}
 		else
 		{
+			close_final_fd(tab);
 			close_pipes(data);
 			execve(tab->cmd, tab->opt, data->env);
 		}
@@ -101,10 +100,8 @@ void	exec(t_cmdtab *tab, t_data *data)
 		signal(SIGINT, child_signal);
 		signal(SIGQUIT, child_signal);
 		if (data->pid[i] == 0)
-		{
 			if (!check_access(data, tab))
 				minishell(data, tab, i);
-		}
 		close_final_fd(tab);
         tab = tab->next;
 		i++;

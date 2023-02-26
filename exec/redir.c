@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 15:03:20 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 21:57:53 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	close_fds(t_cmdtab *tab)
 	while (tab->out && tab->out->next && tab->out->fd > 1)
 	{
 		close(tab->out->fd);
-		printf("file out: %s closed\n", tab->out->file);
 		tab->out = tab->out->next;
 	}
 }

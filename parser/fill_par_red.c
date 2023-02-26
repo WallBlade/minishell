@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 13:53:40 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 17:04:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	init_files(t_cmdtab *tab, char **spl)
 	count = 0;
 	while (spl[i])
 	{
-		if (fds_ok(tab))
+		if (is_redir(spl[i]) == HERE_DOC && spl[i + 1])
+			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[i + 1], tab, count++));
+		else if (fds_ok(tab))
 		{
 			if (is_redir(spl[i]) == REDIR_IN && spl[i + 1])
 				lst_addback_red(&tab->in, fill_in(REDIR_IN, spl[i + 1]));
@@ -52,8 +54,6 @@ void	init_files(t_cmdtab *tab, char **spl)
 			else if (is_redir(spl[i]) == APPEND && spl[i + 1])
 				lst_addback_red(&tab->out, fill_out(APPEND, spl[i + 1]));
 		}
-		if (is_redir(spl[i]) == HERE_DOC && spl[i + 1])
-			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[i + 1], tab, count++));
 		i++;
 	}
 	close_fds(tab);

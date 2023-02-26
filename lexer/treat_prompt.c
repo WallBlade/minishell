@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 12:47:03 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/25 20:02:59 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	compute_new_len(char *prompt, t_tks *tks)
 	while (prompt && prompt[i])
 	{
 		if ((prompt[i] == '>' || prompt[i] == '<') && (prompt[i + 1] != '<' && prompt[i + 1] != '>')
-			&& (!in_quotes(tks->q, tks->dq, i)))
+			&& (!in_quotes(tks, prompt, i)))
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')
 				len++;
 		i++;
@@ -64,7 +64,7 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 	while (prompt[i])
 	{
 		if ((prompt[i] == '<' || prompt[i] == '>') && (prompt[i + 1] != '<' && prompt[i + 1] != '>')
-			&& (!in_quotes(tks->q, tks->dq, i)))
+			&& (!in_quotes(tks, prompt, i)))
 		{
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')
 			{

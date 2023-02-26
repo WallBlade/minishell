@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 12:46:28 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/25 17:26:35 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ char	**lexer(char *prompt, char **env)
 	init_active_tokens(&tks, prompt);
 	expanded = expand(prompt, env, tks);
 	cdo = clean_2_ouf(expanded, tks);
-	if (!scan_2_ouf(split_syn(cdo)))
-		return (NULL);
-	else
-		sdf = split_2_ouf(cdo, tks);
+	// if (!scan_2_ouf(split_syn(cdo)))
+	// 	return (NULL);
+	// else
+	sdf = split_2_ouf(cdo, tks);
 	if (cdo)
 		free(cdo);
 	free_tks(tks);

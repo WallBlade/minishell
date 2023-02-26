@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/14 16:34:52 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 20:02:06 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,24 @@ int	not_quotes(t_tks *tks, int i, char c)
 	return (1);
 }
 
-int	in_quotes(int *q, int *dq, int i)
+int	in_quotes(t_tks *tks, char *str, int i)
 {
-	if (between_squotes(q, i) || between_dquotes(dq, i))
+	int	q_len;
+	int	dq_len;
+	
+	q_len = count_elem(str, '\'');
+	dq_len = count_elem(str, '"');
+	if ((between_squotes(tks->q, q_len, i) || between_dquotes(tks->dq, dq_len, i)))
 		return (1);
 	return (0);
 }
 
-int	between_squotes(int *q, int i)
+int	between_squotes(int *q, int len, int i)
 {
 	int	j;
 
 	j = 0;
-	while (q && q[j] && q[j] >= 0 && q[j + 1])
+	while (q && j < len)
 	{
 		if (i > q[j] && i < q[j + 1])
 			return (1);
@@ -82,12 +87,12 @@ int	between_squotes(int *q, int i)
 	return (0);
 }
 
-int	between_dquotes(int *dq, int i)
+int	between_dquotes(int *dq, int len, int i)
 {
 	int	j;
 
 	j = 0;
-	while (dq && dq[j] && dq[j] >= 0 && dq[j + 1])
+	while (dq && j < len)
 	{
 		if (i > dq[j] && i < dq[j + 1])
 			return (1);

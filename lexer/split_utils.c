@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/24 12:29:39 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 00:01:42 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	cwords(char *str)
 					c = str[i++];
 					while (str[i] && str[i] != c)
 						i++;
-					i++;
 				}
 				i++;
 			}
@@ -96,22 +95,21 @@ int	wdlen(char *str, int i)
 	char	c;
 
 	len = 0;
-	// printf("str = %s\ti = %d\n", str, i);
 	while (str[i] && (str[i] != ' ' && str[i] != '\t'))
 	{
 		if (str[i] && (str[i] == '"' || str[i] == '\''))
 		{
-			c = str[i++];
+			if (str[i + 1])
+				c = str[i++];
 			while (str[i] && str[i++] != c)
 				len++;
 		}
 		i++;
+		if (i > ft_strlen(str))
+			break ;
 		len++;
 	}
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	// printf("end_i = %d\n", i);
-	// printf("len = %d\n", len);
+	printf("len = %d\n", len);
 	return (len);
 }
 
@@ -136,9 +134,11 @@ char	*fill_wrd(char *str, int *i)
 				ret[j++] = str[k++];
 			k++;
 		}
-		ret[j++] = str[k++];
+		if (str[k])
+			ret[j++] = str[k++];
 		*i = k;
 	}
 	ret[j] = '\0';
+	printf("ret = %s\n", ret);
 	return (ret);
 }

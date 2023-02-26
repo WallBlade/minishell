@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 17:09:39 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/25 17:15:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char 	*expand_err_code(char *prompt, int start, int end);
 t_cmdtab    *lstnew_cmd(char **spl, int index);
 void    	lst_addback_cmd(t_cmdtab **tab, t_cmdtab *new);
 void		lst_addback_red(t_file **red, t_file *new);
-void		here_doc(char *split, int i);
 t_file		*fill_in(int op, char *file);
 t_file		*fill_out(int op, char *file);
 int 		is_redir(char *arg);
@@ -102,6 +101,7 @@ void		throw_error(t_file *f);
 
 t_file		*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
 char		*ft_strjoin_hd(char *s1, char *s2);
+void		here_doc(char *split, int i);
 
 /*---------------------EXEC-------------------------*/
 
@@ -171,6 +171,6 @@ void	signal_nl(int num);
 void	child_signal(int num);
 void	hd_sig_child(int num);
 void	hd_sig_parent(int num);
-void	sig_unexpected_eof(void);
+void	sig_unexpected_eof(char *del);
 
 #endif
