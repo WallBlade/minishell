@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:03:58 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 11:32:49 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 14:20:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	cwords_syn(char *str)
 			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
 				i++;
 		}
-		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-			i++;
+		i++;
 	}
 	return (count);
 }

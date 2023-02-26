@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 17:15:01 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 14:02:14 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		throw_error(t_file *f);
 
 t_file		*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
 char		*ft_strjoin_hd(char *s1, char *s2);
-void		here_doc(char *split, int i);
+void		here_doc(char *split, t_file *in);
 
 /*---------------------EXEC-------------------------*/
 

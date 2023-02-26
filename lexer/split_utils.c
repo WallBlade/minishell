@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 00:01:42 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 13:55:57 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int	wdlen(char *str, int i)
 			break ;
 		len++;
 	}
-	printf("len = %d\n", len);
 	return (len);
 }
 
@@ -139,6 +138,5 @@ char	*fill_wrd(char *str, int *i)
 		*i = k;
 	}
 	ret[j] = '\0';
-	printf("ret = %s\n", ret);
 	return (ret);
 }
