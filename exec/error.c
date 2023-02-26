@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 18:45:58 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:14:51 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ int	check_access(t_data *data, t_cmdtab *tab)
 		}
 		if (access(tab->opt[0], F_OK) == 0
 			&& access(tab->opt[0], X_OK) == -1)
+		{
+			close_final_fd(tab);
+			close_pipes(data);
+			free_gc();
 			exit(126);
+		}
 		if (!tab->cmd && tab->opt[0])
 		{
 			close_final_fd(tab);

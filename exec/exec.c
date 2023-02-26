@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 18:42:42 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:13:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 		{
 			close_pipes(data);
 			launch_builtin(tab, data);
+			free_gc();
 			exit(0);
 		}
 		else
@@ -81,7 +82,12 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 		}
 	}
 	else
+	{
+		close_final_fd(tab);
+		close_pipes(data);
+		free_gc();
 		exit(1);
+	}
 }
 
 void	exec(t_cmdtab *tab, t_data *data)
@@ -119,7 +125,7 @@ int main(int argc, char **argv, char **envp)
 	char		**env;
 	
     tab = NULL;
-	env = ft_tabdup_env(envp);
+	env = ft_strdup_tab(envp);
 	(void)argc;
 	(void)argv;
     while (1)
@@ -145,14 +151,11 @@ int main(int argc, char **argv, char **envp)
 			launch_builtin(tab, data);
 		else if (tab && tab->opt && tab->opt[0] && data)
 			exec(tab, data);
-		if (env)
-			free_tab(env);
-		env = ft_tabdup_env(data->env);
+		env = ft_strdup_tab(data->env);
 		// free_gc();
         add_history(prompt);
     }
     rl_clear_history();
-	free_tab(env);
 	free_gc();
 	ft_putstr_fd("exit\n", 2);
 	return (g_status);

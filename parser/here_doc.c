@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:44:13 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	here_doc(char *split, t_file *in)
 		}
 		else if (!prompt)
 		{
+			unlink(in->file);
 			sig_unexpected_eof(split);
 			break ;
 		}
@@ -52,6 +53,7 @@ void	init_hd(char *split, char *hd_name, t_file *in)
 		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
 		here_doc(split, in);
+		free_gc();
 		exit(0);
 	}
 	waitpid(pid, 0, 0);

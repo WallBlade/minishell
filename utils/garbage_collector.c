@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 17:55:30 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 18:41:47 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:06:00 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	free_gc()
 	t_garbage	*tmp;
 
 	collect = (*singleton());
-	printf("test %p\n", collect);
 	while (collect)
 	{
 		free(collect->ptr);
