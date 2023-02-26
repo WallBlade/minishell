@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 16:56:48 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:42:42 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 	int		i;
 	
 	i = 0;
-	data = malloc(sizeof(t_data));
+	data = collect(sizeof(t_data));
 	if (!data)
 		return (NULL);
 	data->p_count = lstsize(tab);
-	data->pid = malloc(sizeof(int) * data->p_count);
+	data->pid = collect(sizeof(int) * data->p_count);
 	if (!data->pid)
 		return (NULL);
-	data->fd = malloc(sizeof(int *) * data->p_count);
+	data->fd = collect(sizeof(int *) * data->p_count);
 	if (!data->fd)
 		return (NULL);
 	while (i < data->p_count)
 	{
-		data->fd[i] = malloc(sizeof(int) * 2);
+		data->fd[i] = collect(sizeof(int) * 2);
 		if (!data->fd[i])
 			return (NULL);
 		i++;
@@ -119,7 +119,7 @@ int main(int argc, char **argv, char **envp)
 	char		**env;
 	
     tab = NULL;
-	env = ft_strdup_tab(envp);
+	env = ft_tabdup_env(envp);
 	(void)argc;
 	(void)argv;
     while (1)
@@ -141,19 +141,19 @@ int main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			continue ;
 		}
-		// if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
-		// 	launch_builtin(tab, data);
-		// else if (tab && tab->opt && tab->opt[0] && data)
-		// 	exec(tab, data);
-		// if (env)
-		// 	free_tab(env);
-		env = ft_strdup_tab(data->env);
-		// free_tab(lex);
-		// free_cmdtab(tab);
+		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
+			launch_builtin(tab, data);
+		else if (tab && tab->opt && tab->opt[0] && data)
+			exec(tab, data);
+		if (env)
+			free_tab(env);
+		env = ft_tabdup_env(data->env);
+		// free_gc();
         add_history(prompt);
     }
     rl_clear_history();
 	free_tab(env);
+	free_gc();
 	ft_putstr_fd("exit\n", 2);
 	return (g_status);
 }

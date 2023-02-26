@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 16:50:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:02:39 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,5 @@ char	**lexer(char *prompt, char **env)
 	// else
 	syntax_error(prompt, tks);	
 	sdf = split_2_ouf(cdo, tks);
-	if (cdo)
-		free(cdo);
-	free_tks(tks);
-	if (expanded)
-		free(expanded);
 	return (sdf);
 }

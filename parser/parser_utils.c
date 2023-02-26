@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/24 12:19:15 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmdtab	*lstnew_cmd(char **spl, int index)
 {
     t_cmdtab    *tab;
 
-    tab = malloc(sizeof(t_cmdtab));
+    tab = collect(sizeof(t_cmdtab));
     if (!tab)
         return (NULL);
     tab->opt = get_opt(spl);

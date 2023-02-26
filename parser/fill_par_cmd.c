@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/13 19:43:06 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:38:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char    **get_opt(char **split)
     
     i = 0;
     j = 0;
-    opt = malloc(sizeof(char *) * (len_cmd(split) + 1));
+    opt = collect(sizeof(char *) * (len_cmd(split) + 1));
     if (!opt)
         return (NULL);
     while (split && split[i])
@@ -94,7 +94,6 @@ char    *get_abs_path(char **paths, char **opt)
      	abs = ft_strjoin(ft_strdup(paths[i]), opt[0]);
 		if (access(abs, F_OK | X_OK) == 0)
 			break ;
-		free(abs);
 		abs = NULL;
 		i++;
     }

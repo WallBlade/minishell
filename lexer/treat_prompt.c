@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 20:02:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:03:42 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*fill_2_ouf(char *str, int len, int *k)
 	int		j;
 	char	*ret;
 
-	ret = malloc(sizeof(char) * (len + 1));
+	ret = collect(sizeof(char) * (len + 1));
 	if (!ret)
 		return (NULL);
 	j = 0;
@@ -58,7 +58,7 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 
 	i = 0;
 	j = 0;
-	clean = malloc(sizeof(char) * (compute_new_len(prompt, tks) + 1));
+	clean = collect(sizeof(char) * (compute_new_len(prompt, tks) + 1));
 	if (!clean)
 		return (NULL);
 	while (prompt[i])
@@ -149,13 +149,13 @@ int	scan_2_ouf(char **sdf)
 			{
 				g_status = 2;
 				print_syntax_error(sdf[i + 1][ft_strlen(sdf[i]) - 1]);
-				return(free_tab(sdf), 0);
+				return(0);
 			}
 			else if ((is_syntax_tok(sdf[i]) && !sdf[i + 1]) || (rep_tok(sdf[i]) > 2))
 			{
 				g_status = 2;
 				print_syntax_error(sdf[i][ft_strlen(sdf[i]) - 1]);
-				return(free_tab(sdf), 0);
+				return(0);
 			}
 		}
 		else if ((sdf[i][0] == '"' || sdf[i][0] == '\'')
@@ -163,12 +163,10 @@ int	scan_2_ouf(char **sdf)
 		{
 			g_status = 2;
 			ft_putstr_fd("minishell: syntax error, quotes not closed\n", 2);
-			return (free_tab(sdf), 0);
+			return (0);
 		}
 		i++;
 	}
-	if (sdf)
-		free_tab(sdf);
 	return (1);
 }
 
@@ -184,14 +182,12 @@ char	**split_2_ouf(char *str, t_tks *tks)
 	len = pipe_strlen(str, tks);
 	if (!len)
 		return (NULL);
-	sdf = malloc(sizeof(char *) * (count_pipes(str, tks) + 1));
+	sdf = collect(sizeof(char *) * (count_pipes(str, tks) + 1));
 	if (!sdf)
 		return (NULL);
 	while (++i < count_pipes(str, tks) && len && len[i])
 		sdf[i] = fill_2_ouf(str, len[i], &k);
 	sdf[i] = 0;
-	if (len)
-		free(len);
 	return (sdf);
 }
 
@@ -201,7 +197,7 @@ char	**split(char *str)
 	int		j;
 	char	**spl;
 
-	spl = malloc(sizeof(char *) * (cwords(str) + 1));
+	spl = collect(sizeof(char *) * (cwords(str) + 1));
 	if (!spl)
 		return (NULL);
 	i = -1;
@@ -214,7 +210,7 @@ char	**split(char *str)
 		{
 			spl[i] = fill_wrd(str, &j);
 			if (!spl[i])
-				return (free_tab(spl), NULL);
+				return (NULL);
 		}
 	}
 	spl[i] = 0;

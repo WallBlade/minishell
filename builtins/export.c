@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/24 10:58:27 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:00:49 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ char    **multi_export(char **env, char *var_exp)
 
     i = 0;
     if (!existing_var(env, var_exp))
-        exported = malloc(sizeof(char *) * (len_tab(env) + 2));
+        exported = collect(sizeof(char *) * (len_tab(env) + 2));
     else
-        exported = malloc(sizeof(char *) * (len_tab(env) + 1));
+        exported = collect(sizeof(char *) * (len_tab(env) + 1));
     if (!exported)
         return (NULL);
     if (existing_var(env, var_exp) == 1)
@@ -63,8 +63,6 @@ char    **multi_export(char **env, char *var_exp)
     if (existing_var(env, var_exp) != 2)
         exported[i++] = ft_strdup(var_exp);
     exported[i] = NULL;
-    if (env)
-        free_tab(env);
     return (exported);
 }
 
@@ -74,7 +72,7 @@ char    **export(char **env, char **var_exp)
     char    **exported;
 
     j = 1;
-    exported = malloc(sizeof(char *) * (len_tab(env) + len_tab(var_exp) + 1));
+    exported = collect(sizeof(char *) * (len_tab(env) + len_tab(var_exp) + 1));
     if (!exported)
         return (NULL);
     while (env && var_exp && var_exp[j])
@@ -92,7 +90,5 @@ char    **export(char **env, char **var_exp)
         }
         j++;
     }
-    if (env)
-        free_tab(env);
     return (exported);
 }

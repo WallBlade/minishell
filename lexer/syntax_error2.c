@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 15:54:43 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 17:23:16 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:03:07 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	is_unvalid(char c)
 			result = 1;
 		i++;
 	}
-	if (unvalid)
-		free(unvalid);
 	return (result);
 }
 

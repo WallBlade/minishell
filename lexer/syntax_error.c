@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:03:58 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 15:16:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:03:00 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*fill_wrd_syn(char *str, int *i)
 
 	j = 0;
 	k = *i;
-	ret = malloc(sizeof(char) * (wdlen_syn(str, k) + 1));
+	ret = collect(sizeof(char) * (wdlen_syn(str, k) + 1));
 	if (!ret)
 		return (NULL);
 	if (str[k] && (str[k] == '"' || str[k] == '\''))
@@ -99,7 +99,7 @@ char	**split_syn(char *str)
 	int		j;
 	char	**spl;
 
-	spl = malloc(sizeof(char *) * (cwords_syn(str) + 1));
+	spl = collect(sizeof(char *) * (cwords_syn(str) + 1));
 	if (!spl)
 		return (NULL);
 	i = -1;
@@ -114,7 +114,7 @@ char	**split_syn(char *str)
 		{
 			spl[i] = fill_wrd_syn(str, &j);
 			if (!spl[i])
-				return (free_tab(spl), NULL);
+				return (NULL);
 		}
 	}
 	spl[i] = 0;

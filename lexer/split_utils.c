@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 13:55:57 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	*pipe_strlen(char *str, t_tks *tks)
 	j = 0;
 	k = 0;
 	count = 0;
-	lens = malloc(sizeof(int) * (count_pipes(str, tks)));
+	lens = collect(sizeof(int) * (count_pipes(str, tks)));
 	if (!lens)
 		return (0);
 	while (str && str[i])
@@ -121,7 +121,7 @@ char	*fill_wrd(char *str, int *i)
 
 	j = 0;
 	k = *i;
-	ret = malloc(sizeof(char) * (wdlen(str, k) + 1));
+	ret = collect(sizeof(char) * (wdlen(str, k) + 1));
 	if (!ret)
 		return (NULL);
 	while (str[k] && str[k] != ' ' && str[k] != '\t')

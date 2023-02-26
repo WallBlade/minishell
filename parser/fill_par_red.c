@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 17:04:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_file	*fill_in(int op, char *file)
 {
 	t_file	*in;
 	
-	in = malloc(sizeof(t_file));
+	in = collect(sizeof(t_file));
 	if (!in)
 		return (NULL);
     in->op = op;
@@ -85,7 +85,7 @@ t_file	*fill_out(int op, char *file)
 {
 	t_file	*out;
 	
-	out = malloc(sizeof(t_file));
+	out = collect(sizeof(t_file));
 	if (!out)
 		return (NULL);
 	out->op = op;

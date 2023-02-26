@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:05:38 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 21:25:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:45:58 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	check_access(t_data *data, t_cmdtab *tab)
 		{
 			close_final_fd(tab);
 			close_pipes(data);
+			free_gc();
 			exit(127);
 		}
 	}

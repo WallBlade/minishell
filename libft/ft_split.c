@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:21:16 by smessal           #+#    #+#             */
-/*   Updated: 2022/12/15 17:18:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_split(char *s, char c)
 	size_t	j;
 	size_t	k;
 
-	big = (char **)malloc(sizeof(char *) * (ft_cwords(s, c) + 1));
+	big = (char **)collect(sizeof(char *) * (ft_cwords(s, c) + 1));
 	if (!big)
 		return (NULL);
 	i = 0;
@@ -63,7 +63,7 @@ char	**ft_split(char *s, char c)
 		k = 0;
 		while (s[i] && s[i] == c)
 			i++;
-		big[j] = malloc(sizeof(char) * (ft_wdlen(s, c, i) + 1));
+		big[j] = collect(sizeof(char) * (ft_wdlen(s, c, i) + 1));
 		if (!big[j])
 			return (NULL);
 		while (s[i] && (s[i] != c))

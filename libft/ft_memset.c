@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:05:45 by smessal           #+#    #+#             */
-/*   Updated: 2022/05/12 15:41:54 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*ft_memset(void *s, int c, size_t n)
 int main()
 {
 	int i = 0;
-	char *s = (char *)malloc(sizeof(char) * 40);
+	char *s = (char *)collect(sizeof(char) * 40);
 	s = ft_memset(s, 'b', 30);
 	while (i < 40)
 	{

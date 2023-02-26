@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:15:04 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/23 17:14:18 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:00:33 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int is_inv_identif(char c)
             return (1);
         i++;
     }
-    if (invalid)
-        free(invalid);
     return (0);
 }
 

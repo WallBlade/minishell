@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/15 16:41:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:02:26 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_varname(char *prompt, int start, int end)
 	int		i;
 
 	i = 0;
-	varname = malloc(sizeof(char) * (end - start + 1));
+	varname = collect(sizeof(char) * (end - start + 1));
 	if (!varname)
 		return (NULL);
 	while (prompt && prompt[start] && start < end)
@@ -54,7 +54,7 @@ char	*expand_err_code(char *prompt, int start, int end)
 	str_status = ft_itoa(g_status);
 	len = ft_strlen(str_status);
 	start++;
-	expanded = malloc(sizeof(char) * (len + (end - start) + 1));
+	expanded = collect(sizeof(char) * (len + (end - start) + 1));
 	if (!expanded)
 		return (NULL);
 	while (str_status && str_status[j])
@@ -62,8 +62,6 @@ char	*expand_err_code(char *prompt, int start, int end)
 	while (prompt && prompt[start] && start < end)
 		expanded[i++] = prompt[start++];
 	expanded[i] = '\0';
-	if (str_status)
-		free(str_status);
 	return (expanded);
 }
 
@@ -88,8 +86,6 @@ char	*get_var(char *prompt, char **env, int start, int end)
 			var = ft_strdup(&env[i][ft_strlen(varname) + 1]);
 		i++;
 	}
-	if (varname)
-		free(varname);
 	return (var);
 }
 
@@ -113,8 +109,6 @@ int	len_expand(char *prompt, t_tks *tks, char **env)
 				i++;
 			var = get_var(prompt, env, start, i);
 			len += ft_strlen(var);
-			if (var)
-				free(var);
 		}
 		else
 		{
@@ -129,7 +123,7 @@ t_expand	*init_expand(char **env)
 {
 	t_expand	*exp;
 
-	exp = malloc(sizeof(t_expand));
+	exp = collect(sizeof(t_expand));
 	if (!exp)
 		return (NULL);
 	exp->env = env;
@@ -155,7 +149,7 @@ char	*expand(char *prompt, char **env, t_tks *tks)
 	k = 0;
 	l = 0;
 	start = 0;
-	expanded = malloc(sizeof(char) * (len_expand(prompt, tks, env) + 1));
+	expanded = collect(sizeof(char) * (len_expand(prompt, tks, env) + 1));
 	if (!expanded)
 		return (NULL);
 	while (prompt && prompt[i])
@@ -169,8 +163,6 @@ char	*expand(char *prompt, char **env, t_tks *tks)
 			var = get_var(prompt, env, start, i);
 			while (var && var[k])
 				expanded[j++] = var[k++];
-			if (var)
-				free(var);
 		}
 		else
 			expanded[j++] = prompt[i++];

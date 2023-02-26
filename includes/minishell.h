@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 14:02:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:37:12 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ extern int g_status;
 # define HERE_DOC 4
 
 /*-------------------------------Struct---------------------------------------*/
+
+typedef struct s_garbage
+{
+	void	*ptr;
+	struct s_garbage *next;
+}		t_garbage;
 
 typedef struct s_file
 {
@@ -164,6 +170,15 @@ void	free_tks2(t_tks *tks);
 /*Parser*/
 void	free_cmdtab(t_cmdtab *tab);
 void	free_data_struct(t_data *data);
+
+t_garbage	**singleton(void);
+void		*collect(size_t size);
+void		free_gc();
+void		add_front(t_garbage **lst, void *ptr);
+char    	**ft_tabdup_env(char **tab);
+char		*ft_strdup_env(char *src);
+
+
 
 /*-------------------SIGNALS ---------------------*/
 

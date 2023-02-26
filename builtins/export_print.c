@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 21:52:16 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 18:10:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char    *ft_strdup_quote(char *env)
     i = 0;
     j = 0;
     first = 1;
-    quote = ft_calloc(sizeof(char), (ft_strlen(env) + 3));
+    quote = collect(sizeof(char) * (ft_strlen(env) + 3));
     if (!quote)
         return (NULL);
     while (env && env[i])
@@ -48,7 +48,7 @@ char    **converted_env(char **env)
     char    **converted;
 
     i = 0;
-    converted = malloc(sizeof(char *) * (len_tab(env) + 1));
+    converted = collect(sizeof(char *) * (len_tab(env) + 1));
     if (!converted)
         return (NULL);
     while (env && env[i])
@@ -78,8 +78,6 @@ void    print_export(t_cmdtab *tab, char **env)
         ft_putstr_fd("\n", fd);
         i++;
     }
-	if (env_export)
-		free_tab(env_export);
 	if (fd > 1)
 		close(fd);
 }

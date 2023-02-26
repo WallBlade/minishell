@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:40 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 19:40:52 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/26 17:58:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ t_tks	*init_tokens(char *str)
 {
 	t_tks	*tks;
 
-	tks = malloc(sizeof(t_tks));
+	tks = collect(sizeof(t_tks));
 	if (!tks)
 		return (NULL);
-	tks->q = malloc(sizeof(int) * (count_elem(str, '\'')));
-	tks->dq = malloc(sizeof(int) * (count_elem(str, '"')));
-	tks->q_on = malloc(sizeof(int) * (count_elem(str, '\'')));
-	tks->dq_on = malloc(sizeof(int) * (count_elem(str, '"')));
-	tks->p = malloc(sizeof(int) * (count_elem(str, '|')));
-	tks->in = malloc(sizeof(int) * count_elem(str, '<'));
-	tks->out = malloc(sizeof(int) * count_elem(str, '>'));
-	tks->ap = malloc(sizeof(int) * count_d_elem(str, ">>"));
-	tks->d_in = malloc(sizeof(int) * count_d_elem(str, "<<"));
-	tks->dol = malloc(sizeof(int) * count_elem(str, '$'));
-	tks->qst = malloc(sizeof(int) * count_elem(str, '?'));
+	tks->q = collect(sizeof(int) * (count_elem(str, '\'')));
+	tks->dq = collect(sizeof(int) * (count_elem(str, '"')));
+	tks->q_on = collect(sizeof(int) * (count_elem(str, '\'')));
+	tks->dq_on = collect(sizeof(int) * (count_elem(str, '"')));
+	tks->p = collect(sizeof(int) * (count_elem(str, '|')));
+	tks->in = collect(sizeof(int) * count_elem(str, '<'));
+	tks->out = collect(sizeof(int) * count_elem(str, '>'));
+	tks->ap = collect(sizeof(int) * count_d_elem(str, ">>"));
+	tks->d_in = collect(sizeof(int) * count_d_elem(str, "<<"));
+	tks->dol = collect(sizeof(int) * count_elem(str, '$'));
+	tks->qst = collect(sizeof(int) * count_elem(str, '?'));
 	tks->prompt = ft_strdup(str);
 	return (tks);
 }
