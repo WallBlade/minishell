@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 18:47:30 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 19:35:14 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_builtin(t_cmdtab *tab)
 		return (0);
 }
 
-char	*get_pwd(char *var, char **env)
+char	*get_pwd(char **env)
 {
 	int		i;
 	char	*pwd;
@@ -46,27 +46,33 @@ char	*get_pwd(char *var, char **env)
 	pwd = NULL;
 	while (env && env[i])
 	{
-		if (!ft_strncmp(env[i], var, ft_strlen(var)))
-			return (env[i]);
+		pwd = ft_strnstr(env[i], "PWD=", 4);
+		if (pwd)
+			break ;
 		i++;
 	}
-	return (pwd);
+	return (pwd + 4);
 }
 
 char	**prepare_pwd(char **env)
 {
 	char	**pwds;
 	char	*pwd;
+	char	*oldpwd;
 
-	pwds = collect(sizeof(char *) * 3);
+	pwds = collect(sizeof(char *) * 4);
 	if (!pwds)
 		return (NULL);
+	pwd = NULL;
+	oldpwd = NULL;
 	if (env)
 	{
+		oldpwd = get_pwd(env);
 		pwd = getcwd(NULL, 0);
-		pwds[0] = ft_strjoin("PWD=", pwd);
-		pwds[1] = ft_strjoin("OLDPWD", get_pwd("PWD", env));
-		pwds[2] = NULL;
+		pwds[0] = NULL;
+		pwds[1] = ft_strjoin("PWD=", ft_strdup(pwd));
+		pwds[2] = ft_strjoin("OLDPWD=", oldpwd);
+		pwds[3] = NULL;
 		if (pwd)
 			free(pwd);
 	}
@@ -87,11 +93,16 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 	{
 		change_dir(getenv("HOME"));
 		var_exp = prepare_pwd(data->env);
-		if (var_exp && var_exp[1] && var_exp[2])
+		if (var_exp)
 			data->env = export(data->env, var_exp);
 	}
 	else if (tab->opt[1])
+	{
 		change_dir(tab->opt[1]);
+		var_exp = prepare_pwd(data->env);
+		if (var_exp)
+			data->env = export(data->env, var_exp);
+	}
 }
 
 void	launch_export(t_cmdtab *tab, t_data *data)
