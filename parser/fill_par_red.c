@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:28:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:57:36 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,13 @@ t_file	*fill_out(int op, char *file)
 
 int	is_redir(char *arg)
 {
-	if (!ft_strncmp(arg, "<", ft_strlen(arg)))
+	if (!ft_strcmp(arg, "<"))
 		return (REDIR_IN);
-	else if (!ft_strncmp(arg, ">", ft_strlen(arg)))
+	else if (!ft_strcmp(arg, ">"))
 		return (REDIR_OUT);
-	else if (!ft_strncmp(arg, ">>", ft_strlen(arg)))
+	else if (!ft_strcmp(arg, ">>"))
 		return (APPEND);
-	else if (!ft_strncmp(arg, "<<", ft_strlen(arg)))
+	else if (!ft_strcmp(arg, "<<"))
 		return (HERE_DOC);
 	return (0);
 }

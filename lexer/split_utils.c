@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 15:45:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:50:46 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*fill_wrd(char *str, int *i)
 				ret[j++] = str[k++];
 			k++;
 		}
-		if (str[k] && str[k] != ' ' && str[k] != '\t')
+		if (str[k] && str[k] != ' ' && str[k] != '\t' && str[k] != '"' && str[k] != '\'')
 			ret[j++] = str[k++];
 		*i = k;
 	}
