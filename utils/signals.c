@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:36:37 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 16:54:58 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:36:06 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	hd_sig_parent(int num)
 
 void	sig_unexpected_eof(char *del)
 {
-	ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("minishell: warning: here-document ", 2);
+	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(del, 2);
 	ft_putstr_fd("')\n", 2);
 }

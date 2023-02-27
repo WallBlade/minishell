@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 12:03:52 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:28:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	init_files(t_cmdtab *tab, char **spl)
 	while (spl[i])
 	{
 		if (is_redir(spl[i]) == HERE_DOC && spl[i + 1])
-			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[i + 1], tab, count++));
+			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[i + 1],
+					tab, count++));
 		else if (fds_ok(tab))
 		{
 			if (is_redir(spl[i]) == REDIR_IN && spl[i + 1])
@@ -58,20 +59,20 @@ void	init_files(t_cmdtab *tab, char **spl)
 	}
 	close_fds(tab);
 	throw_error(tab->in);
-	throw_error(tab->out);	
+	throw_error(tab->out);
 }
 
 t_file	*fill_in(int op, char *file)
 {
 	t_file	*in;
-	
+
 	in = collect(sizeof(t_file));
 	if (!in)
 		return (NULL);
-    in->op = op;
-    in->fd = 0;
-    if (file)
-    {
+	in->op = op;
+	in->fd = 0;
+	if (file)
+	{
 		in->file = ft_strdup(file);
 		in->fd = open(in->file, O_RDONLY);
 	}
@@ -84,7 +85,7 @@ t_file	*fill_in(int op, char *file)
 t_file	*fill_out(int op, char *file)
 {
 	t_file	*out;
-	
+
 	out = collect(sizeof(t_file));
 	if (!out)
 		return (NULL);
@@ -101,18 +102,18 @@ t_file	*fill_out(int op, char *file)
 	else
 		out->file = NULL;
 	out->next = NULL;
-	return(out);
+	return (out);
 }
 
-int is_redir(char *arg)
+int	is_redir(char *arg)
 {
-    if (!ft_strncmp(arg, "<", ft_strlen(arg)))
-        return(REDIR_IN);
-    else if (!ft_strncmp(arg, ">", ft_strlen(arg)))
-        return (REDIR_OUT);
-    else if (!ft_strncmp(arg, ">>", ft_strlen(arg)))
-        return (APPEND);
-    else if (!ft_strncmp(arg, "<<", ft_strlen(arg)))
-        return (HERE_DOC);
-    return (0);
+	if (!ft_strncmp(arg, "<", ft_strlen(arg)))
+		return (REDIR_IN);
+	else if (!ft_strncmp(arg, ">", ft_strlen(arg)))
+		return (REDIR_OUT);
+	else if (!ft_strncmp(arg, ">>", ft_strlen(arg)))
+		return (APPEND);
+	else if (!ft_strncmp(arg, "<<", ft_strlen(arg)))
+		return (HERE_DOC);
+	return (0);
 }

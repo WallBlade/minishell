@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 13:07:05 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:31:20 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	here_doc(char *split, int fd)
 
 	prompt = NULL;
 	g_status = 0;
-    while (1)
+	while (1)
 	{
 		prompt = readline(">");
-		if (g_status == 130)
+		if (g_status == 130 || !ft_strcmp(prompt, split))
 		{
 			close(fd);
 			break ;
@@ -32,20 +32,15 @@ void	here_doc(char *split, int fd)
 			sig_unexpected_eof(split);
 			break ;
 		}
-		if (!ft_strcmp(prompt, split))
-        {
-			close(fd);
-            break ;
-        }
-        ft_putstr_fd(prompt, fd);
+		ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
-    }
+	}
 }
 
 void	init_hd(char *split, char *hd_name, t_file *in)
 {
 	int		pid;
-	
+
 	pid = fork();
 	signal(SIGINT, hd_sig_parent);
 	if (pid == 0)
@@ -73,7 +68,7 @@ t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)
 	in = collect(sizeof(t_file));
 	if (!in)
 		return (NULL);
-    in->op = op;
+	in->op = op;
 	in->fd = 0;
 	if (eof)
 	{

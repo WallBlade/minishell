@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 12:02:05 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:33:29 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    printer(t_cmdtab *tab)
+void	printer(t_cmdtab *tab)
 {
-    t_cmdtab    *temp;
+	t_cmdtab	*temp;
 
-    temp = tab;
-    while (temp)
-    {
-        if (temp->cmd)
-            printf("abs_path: %s\n", temp->cmd);
-        if (temp->opt)
-        {
-            for (int i = 0; temp->opt[i]; i++)
-                printf("option_%d %s\n", i, temp->opt[i]);
-        }
-        temp = temp->next;
-    }
+	temp = tab;
+	while (temp)
+	{
+		if (temp->cmd)
+			printf("abs_path: %s\n", temp->cmd);
+		if (temp->opt)
+		{
+			for (int i = 0; temp->opt[i]; i++)
+				printf("option_%d %s\n", i, temp->opt[i]);
+		}
+		temp = temp->next;
+	}
 }
 
 void	throw_error(t_file *f)
@@ -41,7 +41,7 @@ void	throw_error(t_file *f)
 	}
 }
 
-t_cmdtab    *parser(char **lexer)
+t_cmdtab	*parser(char **lexer)
 {
 	int			i;
 	char		**spl;

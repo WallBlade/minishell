@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 17:55:30 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 19:06:00 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:35:02 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	lstsize_garb(t_garbage *lst)
 void	add_front(t_garbage **lst, void *ptr)
 {
 	t_garbage	*collect;
-	
+
 	collect = malloc(sizeof(t_garbage));
 	if (!collect)
 		return ;
@@ -54,9 +54,8 @@ void	add_front(t_garbage **lst, void *ptr)
 	return ;
 }
 
-void	free_gc()
+void	free_gc(void)
 {
-	//int			len;
 	t_garbage	*collect;
 	t_garbage	*tmp;
 
@@ -66,18 +65,7 @@ void	free_gc()
 		free(collect->ptr);
 		collect->ptr = NULL;
 		tmp = collect;
- 		collect = collect->next;
+		collect = collect->next;
 		free(tmp);
 	}
-	/*
-	len = lstsize_garb(collect);
-	while (len > 0)
-	{
-		tmp = collect->next;
-		free(collect->ptr);
-		free(collect);
-		collect = tmp;
-		len--;
-	}
-	*/
 }

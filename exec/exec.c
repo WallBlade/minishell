@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 14:06:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:45:19 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,29 @@ void	wait_all(t_data *data, t_cmdtab *tab)
     }
 }
 
+void	minishell_exec(t_data *data, t_cmdtab *tab)
+{
+	if (is_builtin(tab))
+	{
+		close_pipes(data);
+		launch_builtin(tab, data);
+		free_gc();
+		exit(0);
+	}
+	else
+	{
+		close_final_fd(tab);
+		close_pipes(data);
+		execve(tab->cmd, tab->opt, data->env);
+	}
+}
+
 void	minishell(t_data *data, t_cmdtab *tab, int i)
 {
 	if (check_redir(tab))
 	{
 		redir(data, tab, i);
-		if (is_builtin(tab))
-		{
-			close_pipes(data);
-			launch_builtin(tab, data);
-			free_gc();
-			exit(0);
-		}
-		else
-		{
-			close_final_fd(tab);
-			close_pipes(data);
-			execve(tab->cmd, tab->opt, data->env);
-		}
+		minishell_exec(data, tab);
 	}
 	else
 	{
@@ -119,6 +124,23 @@ void	exec(t_cmdtab *tab, t_data *data)
 	wait_all(data, tmp);
 }
 
+void	init_par_data(char **lex, t_cmdtab **tab, t_data **data, char **env)
+{
+	if (lex)
+		*tab = parser(lex);
+	if (tab)
+		*data = init_data_struct(*tab, env);
+}
+
+void	exec_final(t_cmdtab *tab, t_data *data)
+{
+	if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
+		launch_builtin(tab, data);
+	else if (tab->opt && tab->opt[0] && data)
+		exec(tab, data);
+	close_final_fd(tab);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char        *prompt;
@@ -139,24 +161,15 @@ int main(int argc, char **argv, char **envp)
         prompt = readline("minishell> ");
 		if (!prompt)
 			break ;
+		add_history(prompt);
 		lex = lexer(prompt, env);
-		if (lex)
-			tab = parser(lex);
-		if (tab)
-			data = init_data_struct(tab, env);
+		init_par_data(lex, &tab, &data, env);
 		// printer(tab);
 		if (!lex || !tab || !data)
-		{
-			add_history(prompt);
 			continue ;
-		}
-		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
-			launch_builtin(tab, data);
-		else if (tab->opt && tab->opt[0] && data)
-			exec(tab, data);
-		close_final_fd(tab);
+		exec_final(tab, data);
 		env = ft_strdup_tab(data->env);
-        add_history(prompt);
+
     }
     rl_clear_history();
 	free_gc();
