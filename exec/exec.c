@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 17:12:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:29:42 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,12 +161,13 @@ int main(int argc, char **argv, char **envp)
         prompt = readline("minishell> ");
 		if (!prompt)
 			break ;
+		if (prompt[0])
+			add_history(prompt);
 		lex = lexer(prompt, env);
 		init_par_data(lex, &tab, &data, env);
-		if (!lex || !tab || !data || !prompt[0])
+		if (!lex || !tab || !data)
 			continue ;
 		exec_final(tab, data);
-		add_history(prompt);
 		env = ft_strdup_tab(data->env);
 
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:15:47 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 17:00:18 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:13:43 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	consecutive_pipes(char *prompt, t_tks *tks)
 		if (prompt[i] == '|' && !in_quotes(tks, prompt, i))
 		{
 			i++;
+			while (prompt[i] && (prompt[i] == ' ' || prompt[i] == '\t'))
+				i++;
 			if (prompt[i] && prompt[i] == '|')
 				return (1);
 		}
@@ -72,7 +74,7 @@ int	syntax_err_redir(char **split)
 	{
 		if (is_redir(split[i]))
 		{
-			if (!split[i + 1])
+			if (!split[i + 1] || is_redir(split[i + 1]))
 			{
 				g_status = 2;
 				ft_putstr_fd("minishell: syntax error ", 2);

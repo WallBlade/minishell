@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:13:18 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:47:50 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:32:03 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,13 @@ void	active_d_tokens(char *line, t_tks *tks, char *dc)
 		if (!ft_strncmp(&line[i], dc, 2) && (not_quotes(tks, i, '"'))
 			&& (not_quotes(tks, i, '\'')))
 		{
-			fill_tks(&tks, k, 1, j);
-			j++;
+			fill_tks(&tks, k, 1, j++);
+			i++;
 		}
 		else if (!ft_strncmp(&line[i], dc, 2))
 		{
-			fill_tks(&tks, k, 0, j);
-			j++;
+			fill_tks(&tks, k, 0, j++);
+			i++;
 		}
 	}
 }

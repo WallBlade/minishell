@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:49:53 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:52:33 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	launch_cd(t_cmdtab *tab)
 {
 	if (tab->opt[1] && tab->opt[2])
 	{
-		ft_putstr_fd("cd: string not in pwd: ", 2);
-		ft_putstr_fd(tab->opt[1], 2);
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		g_status = 1;
 	}
 	else if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
