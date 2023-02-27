@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 11:57:22 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:37:29 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,14 @@ void	init_active_tokens(t_tks **tks, char *line);
 
 /*----------------------EXPAND---------------------*/
 
-char	*get_varname(char *prompt, int start, int end);
-int		find_varname_env(char *var, char *env_var);
-char	*get_var(char *prompt, char **env, int start, int end);
-int		len_expand(char *prompt, t_tks *tks, char **env);
-char	*expand(char *prompt, char **env, t_tks *tks);
-char 	*expand_err_code(char *prompt, int start, int end);
+char		*get_varname(char *prompt, int start, int end);
+int			find_varname_env(char *var, char *env_var);
+char		*get_var(char *prompt, char **env, int start, int end);
+int			len_expand(char *prompt, t_tks *tks, char **env);
+char		*expand(char *prompt, char **env, t_tks *tks);
+char 		*expand_err_code(char *prompt, int start, int end);
+t_expand	*init_expand(char **env);
+int			no_expand_hd(char *prompt, int dol, t_tks *tks);
 
 /*----------------------PARSER---------------------*/
 
@@ -134,6 +136,7 @@ void    	print_export(t_cmdtab *tab, char **env);
 char    	**converted_env(char **env);
 char		*ft_strdup_quote(char *env);
 int			is_builtin(t_cmdtab *tab);
+char		**init_unseted(char **env, char *varname);
 char    	**unset(char **env, char *varname);
 void    	env_print(char **env, int fd);
 void		pwd(int fd);

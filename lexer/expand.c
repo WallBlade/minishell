@@ -3,116 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:04:13 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:02:26 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:58:11 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_varname(char *prompt, int start, int end)
-{
-	char	*varname;
-	int		i;
-
-	i = 0;
-	varname = collect(sizeof(char) * (end - start + 1));
-	if (!varname)
-		return (NULL);
-	while (prompt && prompt[start] && start < end)
-	{
-		varname[i] = prompt[start];
-		i++;
-		start++;
-	}
-	varname[i] = '\0';
-	return (varname);
-}
-
-int	find_varname_env(char *var, char *env_var)
-{
-	if (env_var && var && env_var[ft_strlen(var)]
-		&& env_var[ft_strlen(var)] == '='
-		&& !ft_strncmp(var, env_var, ft_strlen(var)))
-		return (1);
-	else
-		return (0);
-}
-
-char	*expand_err_code(char *prompt, int start, int end)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*expanded;
-	char	*str_status;
-
-	i = 0;
-	j = 0;
-	str_status = ft_itoa(g_status);
-	len = ft_strlen(str_status);
-	start++;
-	expanded = collect(sizeof(char) * (len + (end - start) + 1));
-	if (!expanded)
-		return (NULL);
-	while (str_status && str_status[j])
-		expanded[i++] = str_status[j++];
-	while (prompt && prompt[start] && start < end)
-		expanded[i++] = prompt[start++];
-	expanded[i] = '\0';
-	return (expanded);
-}
-
-char	*get_var(char *prompt, char **env, int start, int end)
-{
-	char	*varname;
-	char	*var;
-	int		i;
-
-	varname = get_varname(prompt, start, end);
-	var = NULL;
-	if (prompt[start] == '?')
-		var = expand_err_code(prompt, start, end);
-	else if (!varname[0] && start == end)
-		var = allocate_str("$");
-	else if (!varname[0])
-		var = allocate_str("\n");
-	i = 0;
-	while (env && env[i] && varname && varname[0])
-	{
-		if (find_varname_env(varname, env[i]))
-			var = ft_strdup(&env[i][ft_strlen(varname) + 1]);
-		i++;
-	}
-	return (var);
-}
-
 int	len_expand(char *prompt, t_tks *tks, char **env)
 {
-	int		i;
-	int		j;
-	int		len;
-	int		start;
-	char	*var;
+	t_expand	*id;
+	int			len;
 
-	i = 0;
-	j = 0;
+	id = init_expand(env);
 	len = 0;
-	while (prompt && prompt[i])
+	while (prompt && prompt[id->i])
 	{
-		if (prompt[i] == '$' && tks->dol[j++])
+		if (prompt[id->i] == '$' && tks->dol[id->j++]
+			&& no_expand_hd(prompt, id->i, tks))
 		{
-			start = ++i;
-			while (prompt[i] && prompt[i] != ' ' && !is_token(prompt[i]))
-				i++;
-			var = get_var(prompt, env, start, i);
-			len += ft_strlen(var);
+			id->start = ++id->i;
+			while (prompt[id->i] && prompt[id->i] != ' '
+				&& !is_token(prompt[id->i]))
+				id->i++;
+			id->var = get_var(prompt, env, id->start, id->i);
+			len += ft_strlen(id->var);
 		}
 		else
 		{
-			i++;
+			id->i++;
 			len++;
 		}
 	}
@@ -131,42 +52,52 @@ t_expand	*init_expand(char **env)
 	exp->j = 0;
 	exp->k = 0;
 	exp->l = 0;
+	exp->var = NULL;
+	exp->start = 0;
 	return (exp);
 }
 
-char	*expand(char *prompt, char **env, t_tks *tks)
+int	no_expand_hd(char *prompt, int dol, t_tks *tks)
 {
-	char	*expanded;
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-	int		start;
-	char	*var;
+	if (dol > 0)
+		dol--;
+	while (prompt && prompt[dol] && dol > 0)
+	{
+		if (prompt[dol] == '<' && prompt[dol - 1] && prompt[dol - 1] == '<'
+			&& (!in_quotes(tks, prompt, dol)))
+			return (0);
+		else if (prompt[dol] != ' ' && prompt[dol] != '\t')
+			return (1);
+		dol--;
+	}
+	return (1);
+}
 
-	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
-	start = 0;
-	expanded = collect(sizeof(char) * (len_expand(prompt, tks, env) + 1));
+char	*expand(char *pro, char **env, t_tks *tks)
+{
+	char		*expanded;
+	t_expand	*id;
+
+	id = init_expand(env);
+	expanded = collect(sizeof(char) * (len_expand(pro, tks, env) + 1));
 	if (!expanded)
 		return (NULL);
-	while (prompt && prompt[i])
+	while (pro && pro[id->i])
 	{
-		k = 0;
-		if (prompt[i] == '$' && tks->dol[l++])
+		id->k = 0;
+		if (pro[id->i] == '$' && tks->dol[id->l++]
+			&& no_expand_hd(pro, id->i, tks))
 		{
-			start = ++i;
-			while (prompt[i] && prompt[i] != ' ' && !is_token(prompt[i]))
-				i++;
-			var = get_var(prompt, env, start, i);
-			while (var && var[k])
-				expanded[j++] = var[k++];
+			id->start = ++id->i;
+			while (pro[id->i] && pro[id->i] != ' ' && !is_token(pro[id->i]))
+				id->i++;
+			id->var = get_var(pro, env, id->start, id->i);
+			while (id->var && id->var[id->k])
+				expanded[id->j++] = id->var[id->k++];
 		}
 		else
-			expanded[j++] = prompt[i++];
+			expanded[id->j++] = pro[id->i++];
 	}
-	expanded[j] = '\0';
+	expanded[id->j] = '\0';
 	return (expanded);
 }

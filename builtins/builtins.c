@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 12:07:02 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:22:38 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	pwd(int fd)
 
 	pwd = getcwd(NULL, 0);
 	ft_putstr_fd(pwd, fd);
- 	ft_putstr_fd("\n", fd);
+	ft_putstr_fd("\n", fd);
 	if (pwd)
 		free (pwd);
 	if (fd > 1)
@@ -26,11 +26,11 @@ void	pwd(int fd)
 	g_status = 0;
 }
 
-int    change_dir(char *path)
+int	change_dir(char *path)
 {
-    int success;
+	int	success;
 
-    success = chdir(path);
+	success = chdir(path);
 	if (success == -1)
 	{
 		g_status = 1;
@@ -40,23 +40,23 @@ int    change_dir(char *path)
 	}
 	else
 		g_status = 0;
-	return(success);
+	return (success);
 }
 
-void    env_print(char **env, int fd)
+void	env_print(char **env, int fd)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (env && env[i])
-    {
-      if (ft_strnstr(env[i], "=", ft_strlen(env[i])))
-      {
-        ft_putstr_fd(env[i], fd);
-		write(fd, "\n", 1);
-      }
-      i++;
-    }
+	i = 0;
+	while (env && env[i])
+	{
+		if (ft_strnstr(env[i], "=", ft_strlen(env[i])))
+		{
+			ft_putstr_fd(env[i], fd);
+			write(fd, "\n", 1);
+		}
+		i++;
+	}
 	if (fd > 1)
 		close(fd);
 	g_status = 0;

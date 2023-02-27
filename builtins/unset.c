@@ -6,40 +6,51 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 23:17:28 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 12:10:43 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:36:13 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    **unset(char **env, char *varname)
+char	**init_unseted(char **env, char *varname)
 {
-    int     i;
-    int     j;
-    char    **unseted;
+	char	**unseted;
 
-    i = 0;
-    j = 0;
 	if (existing_var(env, varname))
-    	unseted = collect(sizeof(char *) * (len_tab(env)));
+		unseted = collect(sizeof(char *) * (len_tab(env)));
 	else
 		unseted = collect(sizeof(char *) * (len_tab(env) + 1));
-    if (!unseted)
-        return (NULL);
-    while (env && env[i])
-    {
-        if (!ft_strncmp(varname, env[i], ft_strchr(env[i], '='))
-            && ft_strlen(varname) == ft_strchr(env[i], '='))
-            i++;
-		else if (!ft_strchr(env[i], '=') && ft_strlen(varname) == ft_strlen(env[i]))
-			i++;
-        if (env[i])
-        {
-            unseted[j++] = ft_strdup(env[i]);
-            i++;
-        }
-    }
-    unseted[j] = NULL;
 	g_status = 0;
-    return (unseted);
+	if (!unseted)
+		return (NULL);
+	return (unseted);
+}
+
+char	**unset(char **env, char *varname)
+{
+	int		i;
+	int		j;
+	char	**unseted;
+
+	i = 0;
+	j = 0;
+	unseted = init_unseted(env, varname);
+	if (!unseted)
+		return (NULL);
+	while (env && env[i])
+	{
+		if (!ft_strncmp(varname, env[i], ft_strchr(env[i], '='))
+			&& ft_strlen(varname) == ft_strchr(env[i], '='))
+			i++;
+		else if (!ft_strchr(env[i], '=')
+			&& ft_strlen(varname) == ft_strlen(env[i]))
+			i++;
+		if (env[i])
+		{
+			unseted[j++] = ft_strdup(env[i]);
+			i++;
+		}
+	}
+	unseted[j] = NULL;
+	return (unseted);
 }

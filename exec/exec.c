@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 12:03:31 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:36:37 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,8 @@ int main(int argc, char **argv, char **envp)
 		signal(SIGINT, signal_nl);
 		signal(SIGQUIT, SIG_IGN);
         prompt = readline("minishell> ");
-		printf("prompt = %s\n", prompt);
 		if (!prompt)
 		{
-			printf("ca passe\n");
 			break ;
 		}
 		lex = lexer(prompt, env);

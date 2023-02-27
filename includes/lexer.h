@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:55:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef	struct s_expand
 	int		j;
 	int		k;
 	int		l;
+	char	*var;
 	char	**env;
 }				t_expand;
 

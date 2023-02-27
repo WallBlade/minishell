@@ -6,18 +6,18 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 12:09:25 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:24:39 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int    is_there_n(char **cmd)
+int	is_there_n(char **cmd)
 {
-    int	i;
+	int	i;
 	int	j;
 
-    i = 0;
+	i = 0;
 	while (cmd && cmd[i])
 	{
 		if (!ft_strncmp(cmd[i], "-n", 2))
@@ -26,12 +26,12 @@ int    is_there_n(char **cmd)
 			while (cmd[i][j])
 			{
 				if (cmd[i][j] != 'n')
-					return(i + 1);
+					return (i + 1);
 				j++;
 			}
 		}
 		else
-			return(i + 1);
+			return (i + 1);
 		i++;
 	}
 	return (i + 1);
@@ -47,7 +47,8 @@ int	ft_echo(char *str, int fd)
 		if (write(fd, &str[i], 1) < 0)
 		{
 			g_status = 1;
-			ft_putstr_fd("bash: echo: write error: No space left on device\n", 2);
+			ft_putstr_fd("bash: echo: write error: No space left on device\n",
+				2);
 			return (0);
 		}
 		i++;
@@ -55,26 +56,26 @@ int	ft_echo(char *str, int fd)
 	return (1);
 }
 
-void    echo(char **cmd, int fd)
+void	echo(char **cmd, int fd)
 {
-    int    i;
-    int    flag;
+	int	i;
+	int	flag;
 
 	g_status = 0;
-    flag = is_there_n(cmd + 1);
-    if (flag == 1)
-        i = flag;
-    else
-        i = flag;
-    while (cmd && cmd[i])
-    {
+	flag = is_there_n(cmd + 1);
+	if (flag == 1)
+		i = flag;
+	else
+		i = flag;
+	while (cmd && cmd[i])
+	{
 		if (!ft_echo(cmd[i], fd))
 			break ;
-        if (cmd[i + 1])
-            ft_putstr_fd(" ", fd);
-        i++;
-    }
-    if (flag == 1)
+		if (cmd[i + 1])
+			ft_putstr_fd(" ", fd);
+		i++;
+	}
+	if (flag == 1)
 		write(fd, "\n", 1);
 	if (fd > 1)
 		close(fd);
