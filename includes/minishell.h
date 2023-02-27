@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 10:50:23 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 11:57:22 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ void		init_files(t_cmdtab *tab, char **spl);
 int			lstsize(t_cmdtab *lst);
 void		throw_error(t_file *f);
 
-/*---------------------HERE_DOC---------------------*/
+/*---------------------HERE_DOC-------------------*/
 
 t_file		*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
 char		*ft_strjoin_hd(char *s1, char *s2);
-void		here_doc(char *split, t_file *in);
+void		here_doc(char *split, int fd);
 
 /*---------------------EXEC-------------------------*/
 
@@ -123,7 +123,7 @@ void		open_files(t_cmdtab *tab);
 void        close_fds(t_cmdtab *tab);
 void		close_final_fd(t_cmdtab *tab);
 
-	/*-----------------------BUILT-INS------------------*/
+/*-----------------------BUILT-INS------------------*/
 
 int 		len_tab(char **tab);
 char    	**export(char **env, char **var_exp);

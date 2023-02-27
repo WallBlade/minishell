@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 10:53:59 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:03:31 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int main(int argc, char **argv, char **envp)
 	char		**env;
 	
     tab = NULL;
+	prompt = NULL;
 	env = ft_strdup_tab(envp);
 	(void)argc;
 	(void)argv;
@@ -133,28 +134,26 @@ int main(int argc, char **argv, char **envp)
 		signal(SIGINT, signal_nl);
 		signal(SIGQUIT, SIG_IGN);
         prompt = readline("minishell> ");
+		printf("prompt = %s\n", prompt);
 		if (!prompt)
+		{
+			printf("ca passe\n");
 			break ;
+		}
 		lex = lexer(prompt, env);
 		if (lex)
-        {
 			tab = parser(lex);
-			if (!tab)
-			{
-				add_history(prompt);
-				continue ;
-			}
+		if (tab)
 			data = init_data_struct(tab, env);
-		}
 		// printer(tab);
-		if (!lex)
+		if (!lex || !tab || !data)
 		{
 			add_history(prompt);
 			continue ;
 		}
 		if (is_builtin(tab) && data->p_count == 1 && check_redir(tab))
 			launch_builtin(tab, data);
-		else if (tab && tab->opt && tab->opt[0] && data)
+		else if (tab->opt && tab->opt[0] && data)
 			exec(tab, data);
 		env = ft_strdup_tab(data->env);
 		// free_gc();

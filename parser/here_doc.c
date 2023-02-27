@@ -6,13 +6,13 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 11:06:33 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:58:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	here_doc(char *split, t_file *in)
+void	here_doc(char *split, int fd)
 {
 	char	*prompt;
 
@@ -23,8 +23,7 @@ void	here_doc(char *split, t_file *in)
 		prompt = readline(">");
 		if (g_status == 130)
 		{
-			unlink(in->file);
-			close(in->fd);
+			close(fd);
 			break ;
 		}
 		else if (!prompt)
@@ -34,11 +33,11 @@ void	here_doc(char *split, t_file *in)
 		}
 		if (!ft_strcmp(prompt, split))
         {
-			close(in->fd);
+			close(fd);
             break ;
         }
-        ft_putstr_fd(prompt, in->fd);
-		ft_putstr_fd("\n", in->fd);
+        ft_putstr_fd(prompt, fd);
+		ft_putstr_fd("\n", fd);
     }
 }
 
@@ -52,13 +51,15 @@ void	init_hd(char *split, char *hd_name, t_file *in)
 	{
 		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
-		here_doc(split, in);
+		here_doc(split, in->fd);
 		free_gc();
 		exit(0);
 	}
 	waitpid(pid, 0, 0);
 	if (g_status != 130)
 		in->fd = open(hd_name, O_RDONLY);
+	else
+		unlink(hd_name);
 }
 
 t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)
