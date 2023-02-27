@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 15:31:20 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 19:46:23 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	here_doc(char *split, int fd)
 	while (1)
 	{
 		prompt = readline(">");
-		if (g_status == 130 || !ft_strcmp(prompt, split))
-		{
-			close(fd);
-			break ;
-		}
-		else if (!prompt)
+		if (!prompt)
 		{
 			close(fd);
 			sig_unexpected_eof(split);
+			break ;
+		}
+		else if (g_status == 130 || !ft_strcmp(prompt, split))
+		{
+			close(fd);
 			break ;
 		}
 		ft_putstr_fd(prompt, fd);

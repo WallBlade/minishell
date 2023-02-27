@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 19:35:14 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 20:00:39 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,14 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 	char	**var_exp;
 
 	var_exp = NULL;
-	if (tab->opt[1] && tab->opt[2])
+	char *str;
+	str = getcwd(0,0);
+	if (!str)
+	{
+		ft_putstr_fd("minishell: cd: You are nowhere\n", 2);
+		g_status = 1;
+	}
+	else if (tab->opt[1] && tab->opt[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		g_status = 1;
@@ -103,6 +110,7 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 		if (var_exp)
 			data->env = export(data->env, var_exp);
 	}
+	free(str);
 }
 
 void	launch_export(t_cmdtab *tab, t_data *data)
