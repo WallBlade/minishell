@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:03:42 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:13:38 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ char	**split(char *str)
 	int		j;
 	char	**spl;
 
+	spl = NULL;
 	spl = collect(sizeof(char *) * (cwords(str) + 1));
 	if (!spl)
 		return (NULL);

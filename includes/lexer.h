@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 16:51:06 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 10:50:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int		*pipe_strlen(char *str, t_tks *tks);
 int		cwords(char *str);
 int		wdlen(char *str, int i);
 char	*fill_wrd(char *str, int *i);
-char	**split(char *str);
 char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
 int		is_token(char c);
@@ -78,5 +77,6 @@ int	is_unvalid(char c);
 int	unvalid_char(char *prompt, t_tks *tks);
 int	pipe_end(char *prompt, t_tks *tks);
 int	syntax_error(char *prompt, t_tks *tks);
+int	syntax_err_redir(char **split);
 
 #endif

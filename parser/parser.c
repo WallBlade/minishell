@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:03:59 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:54:32 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_cmdtab    *parser(char **lexer)
 	{
 		spl = NULL;
 		spl = split(lexer[i]);
+		if (!syntax_err_redir(spl))
+			return (NULL);
 		lst_addback_cmd(&tab, lstnew_cmd(spl, i));
 		i++;
 	}

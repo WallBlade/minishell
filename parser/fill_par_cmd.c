@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:38:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:09:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char    **get_paths(char **env)
 
     i = 0;
     env_path = NULL;
-    while (env[i])
+    while (env && env[i])
     {
         path_var = ft_strnstr(env[i], "PATH=", 6);
         if (path_var)
@@ -64,21 +64,25 @@ char    **get_opt(char **split)
     
     i = 0;
     j = 0;
-    opt = collect(sizeof(char *) * (len_cmd(split) + 1));
-    if (!opt)
-        return (NULL);
-    while (split && split[i])
-    {
-        if (is_redir(split[i]))
-            i += 2;
-        else if (split[i])
-        {
-            opt[j] = ft_strdup(split[i]);
-            j++;
-            i++;
-        }
-    }
-    opt[j] = NULL;
+	opt = NULL;
+	if (split)
+	{
+		opt = collect(sizeof(char *) * (len_cmd(split) + 1));
+		if (!opt)
+			return (NULL);
+		while (split && split[i])
+		{
+			if (is_redir(split[i]))
+				i += 2;
+			else if (split[i])
+			{
+				opt[j] = ft_strdup(split[i]);
+				j++;
+				i++;
+			}
+		}
+		opt[j] = NULL;
+	}
     return (opt);
 }
 
