@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 18:14:55 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 19:09:31 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_status;
+int	g_status;
 
 t_data	*init_data_struct(t_cmdtab *tab, char **env)
 {
 	t_data	*data;
 	int		i;
-	
+
 	i = 0;
 	data = collect(sizeof(t_data));
 	if (!data)
@@ -44,7 +44,7 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 
 void	wait_all(t_data *data, t_cmdtab *tab)
 {
-	int     i;
+	int	i;
 
 	i = 0;
 	while (tab && waitpid(data->pid[i], &g_status, 0) > 0)
@@ -58,11 +58,11 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 			ft_putstr_fd(" Quit (core dumped)\n", 2);
 		if (WIFEXITED(g_status))
 			g_status = WEXITSTATUS(g_status);
-        check_status(tab->opt[0]);
-        close_fds(tab);
-        tab = tab->next;
-        i++;
-    }
+		check_status(tab->opt[0]);
+		close_fds(tab);
+		tab = tab->next;
+		i++;
+	}
 }
 
 void	minishell_exec(t_data *data, t_cmdtab *tab)
@@ -101,10 +101,10 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 void	exec(t_cmdtab *tab, t_data *data)
 {
 	int			i;
-    t_cmdtab	*tmp;
+	t_cmdtab	*tmp;
 
 	i = 0;
-    tmp = tab;
+	tmp = tab;
 	init_pipes(data);
 	while (tab && i < data->p_count)
 	{
@@ -117,7 +117,7 @@ void	exec(t_cmdtab *tab, t_data *data)
 			if (!check_access(data, tab))
 				minishell(data, tab, i);
 		close_final_fd(tab);
-        tab = tab->next;
+		tab = tab->next;
 		i++;
 	}
 	close_pipes(data);
@@ -141,42 +141,37 @@ void	exec_final(t_cmdtab *tab, t_data *data)
 	close_final_fd(tab);
 }
 
-void    printer(t_cmdtab *tab)
+void	printer(t_cmdtab *tab)
 {
-    t_cmdtab    *temp;
+	t_cmdtab	*temp;
 
-    temp = tab;
-    while (temp)
-    {
-        if (temp->cmd)
-            printf("abs_path: %s\n", temp->cmd);
-        if (temp->opt)
-        {
-            for (int i = 0; temp->opt[i]; i++)
-                printf("option_%d %s\n", i, temp->opt[i]);
-        }
-        temp = temp->next;
-    }
+	temp = tab;
+	while (temp)
+	{
+		if (temp->cmd)
+			printf("abs_path: %s\n", temp->cmd);
+		if (temp->opt)
+		{
+			for (int i = 0; temp->opt[i]; i++)
+				printf("option_%d %s\n", i, temp->opt[i]);
+		}
+		temp = temp->next;
+	}
 }
 
-int main(int argc, char **argv, char **envp)
+void	mini_loop(char **env)
 {
-	char        *prompt;
-    char        **lex;
-    t_cmdtab    *tab;
+	char		*prompt;
+	char		**lex;
+	t_cmdtab	*tab;
 	t_data		*data;
-	char		**env;
-	
-    tab = NULL;
-	prompt = NULL;
-	env = ft_strdup_tab(envp);
-	(void)argc;
-	(void)argv;
-    while (1)
-    {
+
+	tab = NULL;
+	while (1)
+	{
 		signal(SIGINT, signal_nl);
 		signal(SIGQUIT, SIG_IGN);
-        prompt = readline("minishell> ");
+		prompt = readline("minishell> ");
 		if (!prompt)
 			break ;
 		if (prompt[0])
@@ -188,9 +183,23 @@ int main(int argc, char **argv, char **envp)
 		printer(tab);
 		exec_final(tab, data);
 		env = ft_strdup_tab(data->env);
+	}
+}
 
-    }
-    rl_clear_history();
+int	main(int argc, char **argv, char **envp)
+{
+	char		**env;
+
+	if (!isatty(STDIN_FILENO))
+	{
+		ft_putstr_fd("Fuck off !\n", 2);
+		exit(2);
+	}
+	env = ft_strdup_tab(envp);
+	(void)argc;
+	(void)argv;
+	mini_loop(env);
+	rl_clear_history();
 	free_gc();
 	ft_putstr_fd("exit\n", 2);
 	return (g_status);
