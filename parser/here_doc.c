@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 11:58:56 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:07:05 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	here_doc(char *split, int fd)
 		}
 		else if (!prompt)
 		{
+			close(fd);
 			sig_unexpected_eof(split);
 			break ;
 		}
