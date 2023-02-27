@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 12:55:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 18:28:54 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_tks
 	char	*prompt;
 }				t_tks;
 
-typedef	struct s_expand
+typedef struct s_expand
 {
 	int		start;
 	int		i;
@@ -42,7 +42,7 @@ typedef	struct s_expand
 
 void	get_squotes(char *line, int *q);
 void	get_dquotes(char *line, int *dq);
-int		not_quotes(t_tks *tks,int i, char c);
+int		not_quotes(t_tks *tks, int i, char c);
 void	fill_tks(t_tks **tks, char c, int active, int j);
 void	conditions_quotes(int *dominant, int *tab, int index);
 void	conditions_dquotes(int *dominant, int *tab, int index);
@@ -66,18 +66,18 @@ char	**split_2_ouf(char *str, t_tks *tks);
 char	*clean_2_ouf(char *prompt, t_tks *tks);
 int		is_token(char c);
 char	**lexer(char *prompt, char **env);
-void    free_tab(char **tab);
+void	free_tab(char **tab);
 int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
 int		scan_2_ouf(char **sdf);
 char	**split_syn(char *str);
 
 /*----------SYNTAX ERROR----------------*/
-int	unclosed_quotes(char *prompt);
-int	is_unvalid(char c);
-int	unvalid_char(char *prompt, t_tks *tks);
-int	pipe_end(char *prompt, t_tks *tks);
-int	syntax_error(char *prompt, t_tks *tks);
-int	syntax_err_redir(char **split);
+int		unclosed_quotes(char *prompt);
+int		is_unvalid(char c);
+int		unvalid_char(char *prompt, t_tks *tks);
+int		pipe_end(char *prompt, t_tks *tks);
+int		syntax_error(char *prompt, t_tks *tks);
+int		syntax_err_redir(char **split);
 
 #endif
