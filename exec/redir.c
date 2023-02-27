@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 11:12:18 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:16:19 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	close_pipes(t_data *data)
 
 void	make_dup(int in, int out)
 {
-	dup2(in, 0);
-	dup2(out, 1);
+	if (dup2(in, 0) < 0)
+		perror("");
+	if (dup2(out, 1) < 0)
+		perror("");
 }
 
 void	close_fds(t_cmdtab *tab)

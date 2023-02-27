@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:33:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 17:12:24 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	printer(t_cmdtab *tab)
-{
-	t_cmdtab	*temp;
-
-	temp = tab;
-	while (temp)
-	{
-		if (temp->cmd)
-			printf("abs_path: %s\n", temp->cmd);
-		if (temp->opt)
-		{
-			for (int i = 0; temp->opt[i]; i++)
-				printf("option_%d %s\n", i, temp->opt[i]);
-		}
-		temp = temp->next;
-	}
-}
 
 void	throw_error(t_file *f)
 {

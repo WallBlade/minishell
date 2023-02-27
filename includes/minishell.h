@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:48:27 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:12:44 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int 		len_cmd(char **split);
 char    	**get_opt(char **split);
 char    	*get_abs_path(char **paths, char **opt);
 t_cmdtab    *parser(char **lexer);
-void    	printer(t_cmdtab *tab);
 void		init_files(t_cmdtab *tab, char **spl);
 int			lstsize(t_cmdtab *lst);
 void		throw_error(t_file *f);
