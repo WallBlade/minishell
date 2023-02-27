@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:17 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/25 22:05:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:09:25 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	ft_echo(char *str, int fd)
 	{
 		if (write(fd, &str[i], 1) < 0)
 		{
+			g_status = 1;
 			ft_putstr_fd("bash: echo: write error: No space left on device\n", 2);
 			return (0);
 		}
@@ -59,6 +60,7 @@ void    echo(char **cmd, int fd)
     int    i;
     int    flag;
 
+	g_status = 0;
     flag = is_there_n(cmd + 1);
     if (flag == 1)
         i = flag;

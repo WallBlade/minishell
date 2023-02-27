@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:22:12 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:10:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:09:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void    print_export(t_cmdtab *tab, char **env)
         ft_putstr_fd("\n", fd);
         i++;
     }
+	g_status = 0;
 	if (fd > 1)
 		close(fd);
 }

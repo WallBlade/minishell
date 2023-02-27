@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 10:46:11 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:02:37 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,18 @@ char	**lexer(char *prompt, char **env)
 	init_active_tokens(&tks, prompt);
 	expanded = expand(prompt, env, tks);
 	cdo = clean_2_ouf(expanded, tks);
-	if (syntax_error(prompt, tks))
+	if (syntax_error(prompt, tks) == 1)
+	{
+		g_status = 2;
+		ft_putstr_fd("minishell: syntax error near unexpected token 'la-bas'\n", 2);
 		return (NULL);
+	}
+	if (syntax_error(prompt, tks) == 2)
+	{
+		g_status = 127;
+		ft_putstr_fd("minishell: Brain not found\n", 2);
+		return (NULL);
+	}
 	sdf = split_2_ouf(cdo, tks);
 	return (sdf);
 }

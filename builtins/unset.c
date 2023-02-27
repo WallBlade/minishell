@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 23:17:28 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/26 18:01:09 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:10:43 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ char    **unset(char **env, char *varname)
         }
     }
     unseted[j] = NULL;
+	g_status = 0;
     return (unseted);
 }

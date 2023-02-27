@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 20:02:06 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:34:08 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,19 @@ int	between_dquotes(int *dq, int len, int i)
 
 void	fill_tks(t_tks **tks, char c, int active, int j)
 {
-	if (c == '|')
+	if (c == '|' && (*tks)->p)
 		(*tks)->p[j] = active;
-	else if (c == '<')
+	else if (c == '<' && (*tks)->in)
 		(*tks)->in[j] = active;
-	else if (c == '>')
+	else if (c == '>' && (*tks)->out)
 		(*tks)->out[j] = active;
-	else if (c == '$')
+	else if (c == '$' && (*tks)->dol)
 		(*tks)->dol[j] = active;
-	else if (c == '?')
+	else if (c == '?' && (*tks)->qst)
 		(*tks)->qst[j] = active;
-	else if (c == 1)
+	else if (c == 1 && (*tks)->ap)
 		(*tks)->ap[j] = active;
-	else if (c == 2)
+	else if (c == 2 && (*tks)->d_in)
 		(*tks)->d_in[j] = active;
 }
 
@@ -131,14 +131,22 @@ void	active_s_tokens(char *line, t_tks *tks, char c)
 		if (line[i] == c && (not_quotes(tks, i, '"') && 
 			not_quotes(tks, i, '\'')))
 		{
-			fill_tks(&tks, c, 1, j);
-			j++;
+			if (line[i + 1] && line[i + 1] == c)
+				i++;
+			else
+				fill_tks(&tks, c, 1, j++);
 		}
 		else if (line[i] == c)
 		{
-			fill_tks(&tks, c, 0, j);
-			j++;
+			if (line[i + 1] && line[i + 1] == c)
+				i++;
+			else
+			{
+				fill_tks(&tks, c, 0, j);
+				j++;
+			}
 		}
-		i++;
+		if (line[i])
+			i++;
 	}
 }

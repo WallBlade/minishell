@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 15:54:43 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 10:55:47 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:01:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,37 +153,24 @@ int	empty_string(char *expanded)
 			return (0);
 		i++;
 	}
-	return (1);
+	if (ft_strlen(expanded) > 1)
+		return (1);
+	else
+		return (0);
 }
 
 int	syntax_error(char *prompt, t_tks *tks)
 {
 	if (unclosed_quotes(prompt))
-	{
-		ft_putstr_fd("Unclosed quotes\n", 2);
 		return (1);
-	}
 	else if (unvalid_char(prompt, tks))
-	{
-		ft_putstr_fd("Unvalid char\n", 2);
 		return (1);
-	}
 	else if (pipe_end(prompt, tks))
-	{
-		ft_putstr_fd("Pipe not followed by command\n", 2);
 		return (1);
-	}
 	else if (consecutive_pipes(prompt, tks) || consecutive_redir(prompt, tks))
-	{
-		ft_putstr_fd("Consecutive pipes or redirections\n", 2);
 		return (1);
-	}
 	else if (empty_string(prompt))
-	{
-		g_status = 127;
-		ft_putstr_fd("minishell: Brain not found\n", 2);
-		return (1);
-	}
+		return (2);
 	return (0);
 }
 
