@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 19:13:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:17:09 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int main(int argc, char **argv, char **envp)
 			tab = parser(lex);
 			data = init_data_struct(tab, env);
 		}
-		// printer(tab);
+		printer(tab);
 		if (!lex)
 		{
 			add_history(prompt);
