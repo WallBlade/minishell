@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 17:29:42 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 18:14:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,24 @@ void	exec_final(t_cmdtab *tab, t_data *data)
 	close_final_fd(tab);
 }
 
+void    printer(t_cmdtab *tab)
+{
+    t_cmdtab    *temp;
+
+    temp = tab;
+    while (temp)
+    {
+        if (temp->cmd)
+            printf("abs_path: %s\n", temp->cmd);
+        if (temp->opt)
+        {
+            for (int i = 0; temp->opt[i]; i++)
+                printf("option_%d %s\n", i, temp->opt[i]);
+        }
+        temp = temp->next;
+    }
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char        *prompt;
@@ -167,6 +185,7 @@ int main(int argc, char **argv, char **envp)
 		init_par_data(lex, &tab, &data, env);
 		if (!lex || !tab || !data)
 			continue ;
+		printer(tab);
 		exec_final(tab, data);
 		env = ft_strdup_tab(data->env);
 

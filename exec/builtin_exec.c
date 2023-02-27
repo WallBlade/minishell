@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 16:52:33 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 18:47:30 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,59 @@ int	is_builtin(t_cmdtab *tab)
 		return (0);
 }
 
-void	launch_cd(t_cmdtab *tab)
+char	*get_pwd(char *var, char **env)
 {
+	int		i;
+	char	*pwd;
+
+	i = 0;
+	pwd = NULL;
+	while (env && env[i])
+	{
+		if (!ft_strncmp(env[i], var, ft_strlen(var)))
+			return (env[i]);
+		i++;
+	}
+	return (pwd);
+}
+
+char	**prepare_pwd(char **env)
+{
+	char	**pwds;
+	char	*pwd;
+
+	pwds = collect(sizeof(char *) * 3);
+	if (!pwds)
+		return (NULL);
+	if (env)
+	{
+		pwd = getcwd(NULL, 0);
+		pwds[0] = ft_strjoin("PWD=", pwd);
+		pwds[1] = ft_strjoin("OLDPWD", get_pwd("PWD", env));
+		pwds[2] = NULL;
+		if (pwd)
+			free(pwd);
+	}
+	return (pwds);
+}
+
+void	launch_cd(t_cmdtab *tab, t_data *data)
+{
+	char	**var_exp;
+
+	var_exp = NULL;
 	if (tab->opt[1] && tab->opt[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		g_status = 1;
 	}
 	else if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
+	{
 		change_dir(getenv("HOME"));
+		var_exp = prepare_pwd(data->env);
+		if (var_exp && var_exp[1] && var_exp[2])
+			data->env = export(data->env, var_exp);
+	}
 	else if (tab->opt[1])
 		change_dir(tab->opt[1]);
 }
@@ -73,7 +117,7 @@ int	launch_builtin(t_cmdtab *tab, t_data *data)
 		else if (!ft_strcmp(tab->opt[0], "pwd"))
 			pwd(fd);
 		else if (!ft_strcmp(tab->opt[0], "cd"))
-			launch_cd(tab);
+			launch_cd(tab, data);
 		else if (!ft_strcmp(tab->opt[0], "export"))
 			launch_export(tab, data);
 		else if (!ft_strcmp(tab->opt[0], "env"))
