@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 13:37:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 15:48:27 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ char 		*expand_err_code(char *prompt, int start, int end);
 t_expand	*init_expand(char **env);
 int			no_expand_hd(char *prompt, int dol, t_tks *tks);
 
+/*----------------------LEXER---------------------*/
+
+char	*fill_2_ouf(char *str, int len, int *k);
+void	fill_tks(t_tks **tks, char c, int active, int j);
+
 /*----------------------PARSER---------------------*/
 
 t_cmdtab    *lstnew_cmd(char **spl, int index);
@@ -163,6 +168,7 @@ int		check_access(t_data *data, t_cmdtab *tab);
 int 	is_inv_identif(char c);
 int 	error_export(char *var_exp);
 void    error_export_print(char *var_exp);
+int	consecutive_redir(char *prompt, t_tks *tks);
 
 /*-------------------FREE---------------------*/
 

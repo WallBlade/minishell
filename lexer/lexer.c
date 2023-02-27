@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 12:02:37 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:57:34 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	**lexer(char *prompt, char **env)
 	if (syntax_error(prompt, tks) == 1)
 	{
 		g_status = 2;
-		ft_putstr_fd("minishell: syntax error near unexpected token 'la-bas'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token", 2);
+		ft_putstr_fd(" 'la-bas'\n", 2);
 		return (NULL);
 	}
 	if (syntax_error(prompt, tks) == 2)
