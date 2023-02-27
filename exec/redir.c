@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/25 21:57:53 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:52:51 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	close_fds(t_cmdtab *tab)
 	while (tab->in && tab->in->next && tab->in->fd > 0)
 	{
 		close(tab->in->fd);
-		if (tab->in->op == HERE_DOC)
+		if (tab->in->op == HERE_DOC && g_status != 130)
 			unlink(tab->in->file);
 		tab->in = tab->in->next;
 	}

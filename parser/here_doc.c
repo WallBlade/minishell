@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/26 19:44:13 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/27 11:06:33 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	here_doc(char *split, t_file *in)
 {
-    char    *prompt;
-      
+	char	*prompt;
+
 	prompt = NULL;
+	g_status = 0;
     while (1)
-    {
-        prompt = readline(">");
+	{
+		prompt = readline(">");
 		if (g_status == 130)
 		{
-			close(in->fd);
 			unlink(in->file);
+			close(in->fd);
 			break ;
 		}
 		else if (!prompt)
 		{
-			unlink(in->file);
 			sig_unexpected_eof(split);
 			break ;
 		}
@@ -83,39 +83,3 @@ t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)
 	in->next = NULL;
 	return (in);
 }
-// void	get_right_fd(t_cmdtab *tab)
-// {
-	
-// }
-
-// void    fill_in(t_cmdtab **par, char **split)
-// {
-//     int i;
-//     int pid;
-
-//     i = -1;
-//     while (split && split[++i])
-//     {
-//         if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<<"))
-//         {
-//             (*par)->in.file = allocate_str("temp");
-//             (*par)->in.operator = allocate_str("<<");
-//             pid = fork();
-//             if (pid == 0)
-//             {
-//                 (*par)->in.fd = open("temp", O_WRONLY | O_CREAT, 0777);
-//                 here_doc(split[i + 1], (*par)->in.fd);
-//                 if ((*par)->in.fd > 0)
-//                     close((*par)->in.fd);
-//                 exit(0);
-//             }
-//             waitpid(pid, 0, 0);
-//             (*par)->in.fd = open("temp", O_RDONLY, 0777);
-//         }
-//         else if (split[i] && split[i + 1] && !ft_strcmp(split[i], "<"))
-//         {
-//             (*par)->in.file = ft_strdup(split[i + 1]);
-//             (*par)->in.operator = allocate_str("<");
-// 		}
-// 	}
-// }
