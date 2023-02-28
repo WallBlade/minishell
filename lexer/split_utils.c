@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 16:50:46 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:23:23 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	cwords(char *str)
 {
 	int		i;
 	int		count;
+	char	c;
 
 	i = 0;
 	count = 0;
@@ -71,12 +72,19 @@ int	cwords(char *str)
 		if (str[i] && (str[i] != ' ' && str[i] != '\t'))
 		{
 			count++;
+			if (str[i] && (str[i] == '"' || str[i] == '\t'))
+			{
+				c = str[i++];
+				while (str[i] && str[i] != c)
+					i++;
+			}
 			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
 				i++;
 		}
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 	}
+	printf("count = %d\n", count);
 	return (count);
 }
 
