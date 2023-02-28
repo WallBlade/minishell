@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 15:40:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:48:38 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,8 @@ char	**prepare_pwd(char **env)
 	return (pwds);
 }
 
-void	launch_cd(t_cmdtab *tab, t_data *data)
+void	conditions_cd(t_cmdtab *tab, t_data *data, char *str, char **var_exp)
 {
-	char	**var_exp;
-	char	*str;
-
-	var_exp = NULL;
-	str = getcwd(0, 0);
 	if (!str)
 	{
 		ft_putstr_fd("minishell: cd: You are nowhere\n", 2);
@@ -110,5 +105,15 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 		if (var_exp)
 			data->env = export(data->env, var_exp);
 	}
+}
+
+void	launch_cd(t_cmdtab *tab, t_data *data)
+{
+	char	**var_exp;
+	char	*str;
+
+	var_exp = NULL;
+	str = getcwd(0, 0);
+	conditions_cd(tab, data, str, var_exp);
 	free(str);
 }

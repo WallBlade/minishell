@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 21:03:41 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:48:47 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:42:18 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	in_quotes(t_tks *tks, char *str, int i)
-{
-	int	q_len;
-	int	dq_len;
-
-	q_len = count_elem(str, '\'');
-	dq_len = count_elem(str, '"');
-	if ((between_squotes(tks->q, q_len, i))
-		|| (between_dquotes(tks->dq, dq_len, i)))
-		return (1);
-	return (0);
-}
 
 int	between_squotes(int *q, int len, int i)
 {
@@ -71,34 +58,42 @@ void	fill_tks(t_tks **tks, char c, int active, int j)
 		(*tks)->d_in[j] = active;
 }
 
+t_actok	*init_actok(void)
+{
+	t_actok	*tok;
+
+	tok = collect(sizeof(t_actok));
+	if (!tok)
+		return (NULL);
+	tok->i = 0;
+	tok->j = 0;
+	return (tok);
+}
+
 void	active_s_tokens(char *line, t_tks *tks, char c)
 {
-	int	i;
-	int	j;
+	t_actok	*ind;
 
-	i = 0;
-	j = 0;
-	while (line && line[i])
+	ind = NULL;
+	ind = init_actok();
+	while (line && line[ind->i])
 	{
-		if (line[i] == c && (not_quotes(tks, i, '"'))
-			&& not_quotes(tks, i, '\''))
+		if (line[ind->i] == c && (not_quotes(tks, ind->i, '"'))
+			&& not_quotes(tks, ind->i, '\''))
 		{
-			if (line[i + 1] && line[i + 1] == c)
-				i++;
+			if (line[ind->i + 1] && line[ind->i + 1] == c)
+				ind->i++;
 			else
-				fill_tks(&tks, c, 1, j++);
+				fill_tks(&tks, c, 1, ind->j++);
 		}
-		else if (line[i] == c)
+		else if (line[ind->i] == c)
 		{
-			if (line[i + 1] && line[i + 1] == c)
-				i++;
+			if (line[ind->i + 1] && line[ind->i + 1] == c)
+				ind->i++;
 			else
-			{
-				fill_tks(&tks, c, 0, j);
-				j++;
-			}
+				fill_tks(&tks, c, 0, ind->j++);
 		}
-		if (line[i])
-			i++;
+		if (line[ind->i])
+			ind->i++;
 	}
 }

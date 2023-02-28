@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:39:15 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 15:48:06 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:42:22 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,17 @@ void	active_dol_token(char *line, t_tks *tks)
 		}
 		i++;
 	}
+}
+
+int	in_quotes(t_tks *tks, char *str, int i)
+{
+	int	q_len;
+	int	dq_len;
+
+	q_len = count_elem(str, '\'');
+	dq_len = count_elem(str, '"');
+	if ((between_squotes(tks->q, q_len, i))
+		|| (between_dquotes(tks->dq, dq_len, i)))
+		return (1);
+	return (0);
 }

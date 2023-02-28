@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 15:33:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:53:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	mini_loop(char **env)
 		init_par_data(lex, &tab, &data, env);
 		if (!lex || !tab || !data)
 			continue ;
+		printer(tab);
 		exec_final(tab, data);
 		env = ft_strdup_tab(data->env);
 	}
