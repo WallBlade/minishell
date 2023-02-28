@@ -3,33 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 15:54:55 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:37:40 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	hd_conditions(char *prompt, char *split, int fd)
+int	hd_conditions(char *prompt, char *split)
 {
 	if (g_status == 130)
-	{
-		close(fd);
 		return (0);
-	}
 	if (!prompt)
 	{
-		close(fd);
 		sig_unexpected_eof(split);
 		return (0);
 	}
 	if (!ft_strcmp(prompt, split))
-	{
-		close(fd);
 		return (0);
-	}
 	return (1);
 }
 
@@ -42,14 +35,17 @@ void	here_doc(char *split, int fd)
 	while (1)
 	{
 		prompt = readline(">");
-		if (!hd_conditions(prompt, split, fd))
+		if (!hd_conditions(prompt, split))
+		{
+			close(fd);
 			break ;
+		}
 		ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
 	}
 }
 
-void	init_hd(char *split, char *hd_name, t_file *in)
+void	init_hd(char *split, char *hd_name, t_file *in, t_cmdtab *tab)
 {
 	int		pid;
 
@@ -60,6 +56,11 @@ void	init_hd(char *split, char *hd_name, t_file *in)
 		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
 		here_doc(split, in->fd);
+		close(in->fd);
+		// close_fds(tab);
+		// close_final_fd(tab);
+		close_fds_hd(tab);
+		close_final_fd(tab);
 		free_gc();
 		exit(0);
 	}
@@ -85,7 +86,7 @@ t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)
 	if (eof)
 	{
 		in->file = ft_strdup(hd_name);
-		init_hd(eof, hd_name, in);
+		init_hd(eof, hd_name, in, tab);
 	}
 	else
 		in->file = NULL;

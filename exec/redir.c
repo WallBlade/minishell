@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:10:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 17:16:19 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:45:41 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	make_dup(int in, int out)
 
 void	close_fds(t_cmdtab *tab)
 {
+	
 	while (tab->in && tab->in->next && tab->in->fd > 0)
 	{
+		printf("parent_IN\n");
 		close(tab->in->fd);
 		if (tab->in->op == HERE_DOC && g_status != 130)
 			unlink(tab->in->file);
@@ -57,6 +59,7 @@ void	close_fds(t_cmdtab *tab)
 	}
 	while (tab->out && tab->out->next && tab->out->fd > 1)
 	{
+		printf("parent_out\n");
 		close(tab->out->fd);
 		tab->out = tab->out->next;
 	}

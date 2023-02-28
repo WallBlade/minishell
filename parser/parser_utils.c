@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:32:04 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 18:24:53 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_cmdtab	*lstnew_cmd(char **spl, int index)
 	tab->in = NULL;
 	tab->out = NULL;
 	tab->index = index;
-	init_files(tab, spl);
+	tab->prev = NULL;
+	// init_files(tab, spl);
 	tab->next = NULL;
 	return (tab);
 }
@@ -45,6 +46,7 @@ void	lst_addback_cmd(t_cmdtab **tab, t_cmdtab *new)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
+	new->prev = temp;
 }
 
 void	lst_addback_red(t_file **red, t_file *new)

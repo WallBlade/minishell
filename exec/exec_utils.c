@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:52 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 15:33:42 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:46:39 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 		if (WIFEXITED(g_status))
 			g_status = WEXITSTATUS(g_status);
 		check_status(tab->opt[0]);
-		close_fds(tab);
+		close_final_fd(tab);
 		tab = tab->next;
 		i++;
 	}

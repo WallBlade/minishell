@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_par_red.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 22:33:29 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 16:57:36 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:41:47 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_files(t_cmdtab *tab, char **spl)
 
 	i = 0;
 	count = 0;
-	while (spl[i])
+	while (spl && spl[i])
 	{
 		if (is_redir(spl[i]) == HERE_DOC && spl[i + 1])
 			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[i + 1],
