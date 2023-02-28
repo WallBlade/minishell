@@ -6,13 +6,13 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:38:07 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 20:07:12 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:29:41 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	numlen(int num)
+int	numlen(long long int num)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ int	numlen(int num)
 
 int	is_numeric(char *str)
 {
-	if (numlen(ft_atoi(str)) == ft_strlen(str))
+	if (numlen(ft_atol(str)) == ft_strlen(str))
 		return (1);
 	return (0);
 }
@@ -76,4 +76,26 @@ char	*ft_strjoin_hd(char *s1, char *s2)
 		dest[i++] = s2[j];
 	dest[i] = '\0';
 	return (dest);
+}
+
+long long int	ft_atol(const char *nptr)
+{
+	long long int	i;
+	long long int	neg;
+	long long int	result;
+
+	i = 0;
+	neg = 1;
+	result = 0;
+	while (nptr[i] && (nptr[i] == ' ' || (nptr[i] >= 7 && nptr[i] <= 13)))
+		i++;
+	if (nptr[i] && (nptr[i] == '+' || nptr[i] == '-'))
+	{
+		if (nptr[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (nptr[i] && (nptr[i] >= '0' && nptr[i] <= '9'))
+		result = result * 10 + (nptr[i++] - '0');
+	return (result * neg);
 }
