@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 18:37:40 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 19:54:46 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,7 @@ void	init_hd(char *split, char *hd_name, t_file *in, t_cmdtab *tab)
 		signal(SIGINT, hd_sig_child);
 		in->fd = open(hd_name, O_WRONLY | O_CREAT, 0777);
 		here_doc(split, in->fd);
-		close(in->fd);
-		// close_fds(tab);
-		// close_final_fd(tab);
 		close_fds_hd(tab);
-		close_final_fd(tab);
 		free_gc();
 		exit(0);
 	}
@@ -68,7 +64,10 @@ void	init_hd(char *split, char *hd_name, t_file *in, t_cmdtab *tab)
 	if (g_status != 130)
 		in->fd = open(hd_name, O_RDONLY);
 	else
+	{
+		close_fds_hd(tab);
 		unlink(hd_name);
+	}
 }
 
 t_file	*fill_hd(int op, char *eof, t_cmdtab *tab, int count)

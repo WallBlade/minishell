@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 18:22:38 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 20:02:50 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ void	fill_files(t_cmdtab **tab, char **lexer)
 	}
 }
 
+t_cmdtab	*lstlast(t_cmdtab *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
 t_cmdtab	*parser(char **lexer)
 {
 	int			i;
@@ -64,6 +73,6 @@ t_cmdtab	*parser(char **lexer)
 	if (lexer && tab)
 		fill_files(&tab, lexer);
 	if (g_status == 130)
-		return (NULL);
+		return (close_final_fd(lstlast(tab)), NULL);
 	return (tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:38:07 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 16:22:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 20:07:12 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	is_char_num(char c)
 	int		i;
 
 	i = 0;
-	printf("test\n");
 	nums = allocate_str("0123456789");
 	if (!nums)
 		return (0);
