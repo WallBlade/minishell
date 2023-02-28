@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:09:16 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 20:02:33 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:03:06 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	close_fds_hd(t_cmdtab *tab)
 		while (temp->in)
 		{
 			close(temp->in->fd);
-			if (temp->in->op == HERE_DOC)
+			if (temp->in->op == HERE_DOC && temp->in->file)
 				unlink(temp->in->file);
 			temp->in = temp->in->next;
 		}

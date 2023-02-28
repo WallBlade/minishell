@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:33:27 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 18:24:53 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 21:06:40 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_cmdtab	*lstnew_cmd(char **spl, int index)
 	tab->out = NULL;
 	tab->index = index;
 	tab->prev = NULL;
-	// init_files(tab, spl);
 	tab->next = NULL;
 	return (tab);
 }

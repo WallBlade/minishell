@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:52 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 18:46:39 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 21:01:25 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 	return (data);
 }
 
+void	close_all_fds(t_cmdtab *tab)
+{
+	t_cmdtab	*temp;
+
+	temp = tab;
+	while (temp)
+	{
+		while (temp->in)
+		{
+			close(temp->in->fd);
+			if (temp->in->op == HERE_DOC && temp->in->file)
+				unlink(temp->in->file);
+			temp->in = temp->in->next;
+		}
+		while (temp->out && temp->out->fd > 1)
+		{
+			close(temp->out->fd);
+			temp->out = temp->out->next;
+		}
+		temp = temp->next;
+	}
+}
+
 void	init_par_data(char **lex, t_cmdtab **tab, t_data **data, char **env)
 {
 	if (lex)
@@ -54,7 +77,7 @@ void	exec_final(t_cmdtab *tab, t_data *data)
 		launch_builtin(tab, data);
 	else if (tab->opt && tab->opt[0] && data)
 		exec(tab, data);
-	close_final_fd(tab);
+	close_all_fds(tab);
 }
 
 void	wait_all(t_data *data, t_cmdtab *tab)
