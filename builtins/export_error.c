@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:15:04 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 19:58:13 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:26:28 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_inv_identif(char c)
 	int		i;
 
 	i = 0;
-	invalid = allocate_str(".?+/<>*");
+	invalid = allocate_str(".!?+/<>*");
 	while (invalid && invalid[i])
 	{
 		if (c == invalid[i])
@@ -31,10 +31,14 @@ int	is_inv_identif(char c)
 int	error_export(char *var_exp)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (var_exp && var_exp[i] && var_exp[i] != '=')
 	{
+		j = 0;
+		if (is_char_num(var_exp[j]))
+			return (1);
 		if (is_inv_identif(var_exp[i]))
 			return (1);
 		i++;

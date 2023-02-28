@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 16:11:03 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:21:26 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		launch_cd(t_cmdtab *tab, t_data *data);
 
 char		*allocate_str(char *str);
 int			len_tab(char **tab);
-
+int			is_char_num(char c);
 /*-------------------ERROR------------------*/
 
 void		check_status(char *cmd);

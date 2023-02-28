@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:38:07 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:38:29 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:22:05 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,25 @@ int	is_numeric(char *str)
 {
 	if (numlen(ft_atoi(str)) == ft_strlen(str))
 		return (1);
+	return (0);
+}
+
+int	is_char_num(char c)
+{
+	char	*nums;
+	int		i;
+
+	i = 0;
+	printf("test\n");
+	nums = allocate_str("0123456789");
+	if (!nums)
+		return (0);
+	while (nums && nums[i])
+	{
+		if (c == nums[i])
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
