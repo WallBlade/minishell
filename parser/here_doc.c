@@ -6,11 +6,32 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 19:46:23 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:54:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	hd_conditions(char *prompt, char *split, int fd)
+{
+	if (g_status == 130)
+	{
+		close(fd);
+		return (0);
+	}
+	if (!prompt)
+	{
+		close(fd);
+		sig_unexpected_eof(split);
+		return (0);
+	}
+	if (!ft_strcmp(prompt, split))
+	{
+		close(fd);
+		return (0);
+	}
+	return (1);
+}
 
 void	here_doc(char *split, int fd)
 {
@@ -21,17 +42,8 @@ void	here_doc(char *split, int fd)
 	while (1)
 	{
 		prompt = readline(">");
-		if (!prompt)
-		{
-			close(fd);
-			sig_unexpected_eof(split);
+		if (!hd_conditions(prompt, split, fd))
 			break ;
-		}
-		else if (g_status == 130 || !ft_strcmp(prompt, split))
-		{
-			close(fd);
-			break ;
-		}
 		ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
 	}
