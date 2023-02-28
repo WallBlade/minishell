@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 20:00:39 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:40:38 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ char	**prepare_pwd(char **env)
 void	launch_cd(t_cmdtab *tab, t_data *data)
 {
 	char	**var_exp;
+	char	*str;
 
 	var_exp = NULL;
-	char *str;
-	str = getcwd(0,0);
+	str = getcwd(0, 0);
 	if (!str)
 	{
 		ft_putstr_fd("minishell: cd: You are nowhere\n", 2);
@@ -111,40 +111,4 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 			data->env = export(data->env, var_exp);
 	}
 	free(str);
-}
-
-void	launch_export(t_cmdtab *tab, t_data *data)
-{
-	if (tab->opt[1])
-		data->env = export(data->env, tab->opt);
-	else
-		print_export(tab, data->env);
-}
-
-int	launch_builtin(t_cmdtab *tab, t_data *data)
-{
-	int	fd;
-
-	if (tab->out && tab->out->fd)
-		fd = tab->out->fd;
-	else
-		fd = 1;
-	if (tab && tab->opt && tab->opt[0])
-	{
-		if (!ft_strcmp(tab->opt[0], "echo"))
-			echo(tab->opt, fd);
-		else if (!ft_strcmp(tab->opt[0], "pwd"))
-			pwd(fd);
-		else if (!ft_strcmp(tab->opt[0], "cd"))
-			launch_cd(tab, data);
-		else if (!ft_strcmp(tab->opt[0], "export"))
-			launch_export(tab, data);
-		else if (!ft_strcmp(tab->opt[0], "env"))
-			env_print(data->env, fd);
-		else if (!ft_strcmp(tab->opt[0], "unset") && tab->opt[1])
-			data->env = unset(data->env, tab->opt[1]);
-		else if (!ft_strcmp(tab->opt[0], "exit"))
-			exit_bin(tab, data);
-	}
-	return (1);
 }

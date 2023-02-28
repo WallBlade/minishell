@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 18:27:49 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:42:10 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,12 @@ void		minishell(t_data *data, t_cmdtab *tab, int i);
 void		open_files(t_cmdtab *tab);
 void		close_fds(t_cmdtab *tab);
 void		close_final_fd(t_cmdtab *tab);
+t_data		*init_data_struct(t_cmdtab *tab, char **env);
+void		init_par_data(char **lex, t_cmdtab **tab, t_data **data, char **env);
+void		exec_final(t_cmdtab *tab, t_data *data);
+void		wait_all(t_data *data, t_cmdtab *tab);
 
-/*-----------------------BUILT-INS------------------*/
+/*-------------------BUILT-INS------------------*/
 
 int			len_tab(char **tab);
 char		**export(char **env, char **var_exp);
@@ -151,6 +155,7 @@ void		echo(char **cmd, int fd);
 char		**ft_strdup_tab(char **tab);
 int			is_numeric(char *str);
 void		exit_bin(t_cmdtab *tab, t_data *data);
+void		launch_cd(t_cmdtab *tab, t_data *data);
 
 /*-------------------UTILS------------------*/
 
