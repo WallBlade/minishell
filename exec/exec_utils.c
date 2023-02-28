@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:52 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 21:01:25 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 22:08:26 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_data	*init_data_struct(t_cmdtab *tab, char **env)
 			return (NULL);
 		i++;
 	}
+	data->env = NULL;
 	if (env)
 		data->env = ft_strdup_tab(env);
 	return (data);

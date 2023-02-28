@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 20:28:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:26:50 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <readline/history.h>
 # include "lexer.h"
 # include "../libft/libft.h"
+# include <limits.h>
 
 extern int	g_status;
 

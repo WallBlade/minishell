@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 15:48:38 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 22:13:37 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ char	*get_pwd(char **env)
 			break ;
 		i++;
 	}
-	return (pwd + 4);
+	if (pwd)
+		return (pwd + 4);
+	else
+		return (NULL);
 }
 
 char	**prepare_pwd(char **env)
@@ -65,7 +68,7 @@ char	**prepare_pwd(char **env)
 		return (NULL);
 	pwd = NULL;
 	oldpwd = NULL;
-	if (env)
+	if (env && env[0])
 	{
 		oldpwd = get_pwd(env);
 		pwd = getcwd(NULL, 0);
@@ -79,14 +82,11 @@ char	**prepare_pwd(char **env)
 	return (pwds);
 }
 
-void	conditions_cd(t_cmdtab *tab, t_data *data, char *str, char **var_exp)
+void	conditions_cd(t_cmdtab *tab, t_data *data, char **var_exp)
 {
-	if (!str)
-	{
-		ft_putstr_fd("minishell: cd: You are nowhere\n", 2);
-		g_status = 1;
-	}
-	else if (tab->opt[1] && tab->opt[2])
+	(void)data;
+	(void)var_exp;
+	if (tab->opt[1] && tab->opt[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		g_status = 1;
@@ -114,6 +114,23 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 
 	var_exp = NULL;
 	str = getcwd(0, 0);
-	conditions_cd(tab, data, str, var_exp);
-	free(str);
+	if (!str)
+	{
+		if (!tab->opt[1] || !ft_strcmp(tab->opt[1], "~"))
+		{
+			change_dir(getenv("HOME"));
+			var_exp = prepare_pwd(data->env);
+			if (var_exp)
+				data->env = export(data->env, var_exp);
+		}
+		else
+		{
+			ft_putstr_fd("minishell: cd: You are nowhere\n", 2);
+			g_status = 1;
+		}
+	}
+	else
+		conditions_cd(tab, data, var_exp);
+	if (str)
+		free(str);
 }

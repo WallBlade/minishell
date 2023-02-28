@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 16:28:20 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 22:17:55 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,16 @@ int	cwords(char *str)
 		if (str[i] && (str[i] != ' ' && str[i] != '\t'))
 		{
 			count++;
-			if (str[i] && (str[i] == '"' || str[i] == '\t'))
-			{
-				c = str[i++];
-				while (str[i] && str[i] != c)
-					i++;
-			}
 			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
+			{
+				if (str[i] && (str[i] == '"' || str[i] == '\t'))
+				{
+					c = str[i++];
+					while (str[i] && str[i] != c)
+						i++;
+				}
 				i++;
+			}
 		}
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:38:07 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 20:29:41 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:29:17 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	numlen(long long int num)
 	int	i;
 
 	i = 0;
+	if (num == LONG_MIN)
+		return (20);
 	if (num < 0)
 	{
 		i++;

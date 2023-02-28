@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:15:04 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 16:26:28 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 21:50:49 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_inv_identif(char c)
 	int		i;
 
 	i = 0;
-	invalid = allocate_str(".!?+/<>*");
+	invalid = allocate_str(".!?+/<>*-");
 	while (invalid && invalid[i])
 	{
 		if (c == invalid[i])
