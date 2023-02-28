@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 16:26:47 by smessal          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:28:20 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	wdlen(char *str, int i)
 	return (len);
 }
 
-char	*fill_wrd(char *str, int *i)
+char	*fill_wrd(char *s, int *i)
 {
 	int		j;
 	int		k;
@@ -121,20 +121,20 @@ char	*fill_wrd(char *str, int *i)
 
 	j = 0;
 	k = *i;
-	ret = collect(sizeof(char) * (wdlen(str, k) + 1));
+	ret = collect(sizeof(char) * (wdlen(s, k) + 1));
 	if (!ret)
 		return (NULL);
-	while (str[k] && str[k] != ' ' && str[k] != '\t')
+	while (s[k] && s[k] != ' ' && s[k] != '\t')
 	{
-		if (str[k] && (str[k] == '"' || str[k] == '\''))
+		if (s[k] && (s[k] == '"' || s[k] == '\''))
 		{
-			c = str[k++];
-			while (str[k] && str[k] != c)
-				ret[j++] = str[k++];
+			c = s[k++];
+			while (s[k] && s[k] != c)
+				ret[j++] = s[k++];
 			k++;
 		}
-		if (str[k] && str[k] != ' ' && str[k] != '\t' && str[k] != '"' && str[k] != '\'')
-			ret[j++] = str[k++];
+		if (s[k] && s[k] != ' ' && s[k] != '\t' && s[k] != '"' && s[k] != '\'')
+			ret[j++] = s[k++];
 		*i = k;
 	}
 	ret[j] = '\0';
