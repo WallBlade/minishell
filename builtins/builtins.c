@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/27 13:22:38 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:01:00 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	pwd(int fd)
 	if (pwd)
 		free (pwd);
 	if (fd > 1)
-		close(fd);
+		if (close(fd) == -1)
+			perror("");
 	g_status = 0;
 }
 

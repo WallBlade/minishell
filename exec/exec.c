@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 21:03:18 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:38:24 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	minishell_exec(t_data *data, t_cmdtab *tab)
 	{
 		close_final_fd(tab);
 		close_pipes(data);
-		execve(tab->cmd, tab->opt, data->env);
+		if (execve(tab->cmd, tab->opt, data->env) == -1)
+		{
+			free_gc();
+			exit(0);
+		}
 	}
 }
 

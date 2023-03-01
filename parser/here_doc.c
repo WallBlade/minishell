@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 20:42:26 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:43:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	init_hd(char *split, char *hd_name, t_file *in, t_cmdtab *tab)
 	int		pid;
 
 	pid = fork();
+	if (pid < 0)
+		return ;
 	signal(SIGINT, hd_sig_parent);
 	if (pid == 0)
 	{

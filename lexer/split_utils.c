@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:40:46 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 22:17:55 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:50:31 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,17 @@ int	*pipe_strlen(char *str, t_tks *tks)
 	return (lens);
 }
 
-int	cwords(char *str)
+void	cwords(char *str, int *count)
 {
 	int		i;
-	int		count;
 	char	c;
 
 	i = 0;
-	count = 0;
 	while (str && str[i])
 	{
 		if (str[i] && (str[i] != ' ' && str[i] != '\t'))
 		{
-			count++;
+			*count += 1;
 			while (str[i] && (str[i] != ' ' && str[i] != '\t'))
 			{
 				if (str[i] && (str[i] == '"' || str[i] == '\t'))
@@ -86,7 +84,6 @@ int	cwords(char *str)
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 	}
-	return (count);
 }
 
 int	wdlen(char *str, int i)

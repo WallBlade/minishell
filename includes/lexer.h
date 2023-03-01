@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 15:35:05 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:50:26 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		between_dquotes(int *dq, int len, int i);
 int		in_quotes(t_tks *tks, char *str, int i);
 int		count_pipes(char *str, t_tks *tks);
 int		*pipe_strlen(char *str, t_tks *tks);
-int		cwords(char *str);
+void	cwords(char *str, int *count);
 int		wdlen(char *str, int i);
 char	*fill_wrd(char *str, int *i);
 char	**split_2_ouf(char *str, t_tks *tks);

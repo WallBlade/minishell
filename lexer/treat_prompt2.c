@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_prompt2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:37:51 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 15:57:10 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:08:38 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,14 @@ char	**split_2_ouf(char *str, t_tks *tks)
 	return (sdf);
 }
 
-char	**split(char *str)
+int	split_loop(char *str, char **spl, int count)
 {
-	int		i;
-	int		j;
-	char	**spl;
-
-	spl = NULL;
-	spl = collect(sizeof(char *) * (cwords(str) + 1));
-	if (!spl)
-		return (NULL);
+	int	i;
+	int	j;
+	
 	i = -1;
 	j = 0;
-	while (++i < cwords(str))
+	while (++i < count)
 	{
 		while (str[j] == ' ' || str[j] == '\t')
 			j++;
@@ -85,9 +80,25 @@ char	**split(char *str)
 		{
 			spl[i] = fill_wrd(str, &j);
 			if (!spl[i])
-				return (NULL);
+				return (0);
 		}
 	}
 	spl[i] = 0;
+	return (1);
+}
+
+char	**split(char *str)
+{
+	int		count;
+	char	**spl;
+
+	spl = NULL;
+	count = 0;
+	cwords(str, &count);
+	spl = collect(sizeof(char *) * (count + 1));
+	if (!spl)
+		return (NULL);
+	if (!split_loop(str, spl, count))
+		return (NULL);
 	return (spl);
 }
