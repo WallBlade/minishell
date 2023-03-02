@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/02/28 16:26:42 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/02 18:07:08 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ char	**export(char **env, char **var_exp)
 	{
 		if (!error_export(var_exp[j]))
 		{
-			exported = multi_export(env, var_exp[j]);
-			g_status = 0;
+            exported = multi_export(env, var_exp[j]);
+            g_status = 0;
 			env = ft_strdup_tab(exported);
 		}
 		else

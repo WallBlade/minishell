@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 15:54:43 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:16:09 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:05:52 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ int	is_unvalid(char c)
 
 int	unvalid_char(char *prompt, t_tks *tks)
 {
-	char	*unvalid;
 	int		i;
 
 	i = 0;
-	unvalid = allocate_str(";\\(){}&");
 	while (prompt && prompt[i])
 	{
 		if (is_unvalid(prompt[i]) && !in_quotes(tks, prompt, i))
