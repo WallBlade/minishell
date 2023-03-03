@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:31:52 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/01 12:31:13 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 18:47:34 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	wait_all(t_data *data, t_cmdtab *tab)
 			g_status = 130;
 		}
 		else if (WTERMSIG(g_status) == 3)
+		{
 			ft_putstr_fd(" Quit (core dumped)\n", 2);
+			g_status = 131;
+		}
 		if (WIFEXITED(g_status))
 			g_status = WEXITSTATUS(g_status);
 		check_status(tab->opt[0]);

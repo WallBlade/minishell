@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/02 18:25:36 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:02:39 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	conditions_cd(t_cmdtab *tab, t_data *data, char **var_exp)
 {
 	(void)data;
 	(void)var_exp;
-    if (tab->opt[1] && tab->opt[2])
-    {
+	if (tab->opt[1] && tab->opt[2])
+	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		g_status = 1;
 	}
@@ -101,12 +101,12 @@ void	conditions_cd(t_cmdtab *tab, t_data *data, char **var_exp)
 	else if (tab->opt[1])
 	{
 		if (change_dir(tab->opt[1]) != -1)
-        {
-            var_exp = prepare_pwd(data->env);
-            if (var_exp)
-                data->env = export(data->env, var_exp);
-        }
-    }
+		{
+			var_exp = prepare_pwd(data->env);
+			if (var_exp)
+				data->env = export(data->env, var_exp);
+		}
+	}
 }
 
 void	launch_cd(t_cmdtab *tab, t_data *data)
@@ -126,12 +126,7 @@ void	launch_cd(t_cmdtab *tab, t_data *data)
 				data->env = export(data->env, var_exp);
 		}
 		else
-		{
-            ft_putstr_fd("chdir: error retrieving current directory: ", 2);
-            ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-            ft_putstr_fd("No such file or directory\n", 2);
-            g_status = 1;
-		}
+			getcwd_error("chdir");
 	}
 	else
 		conditions_cd(tab, data, var_exp);

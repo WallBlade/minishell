@@ -6,11 +6,34 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 20:02:50 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 19:03:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	detect_hd(char **lexer, t_cmdtab *tab)
+{
+	int			i;
+	int			count;
+	char		**spl;
+	t_cmdtab	*tmp;
+
+	i = 0;
+	count = 0;
+	spl = NULL;
+	tmp = tab;
+	while (lexer && lexer[i] && tmp)
+	{
+		spl = NULL;
+		spl = split(lexer[i]);
+		if (!detect_hd_loop(spl, tab, &count))
+			return (0);
+		i++;
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 void	throw_error(t_file *f)
 {
@@ -32,13 +55,17 @@ void	fill_files(t_cmdtab **tab, char **lexer)
 	temp = *tab;
 	i = 0;
 	spl = NULL;
-	while (lexer && lexer[i] && temp)
+	if (detect_hd(lexer, temp))
 	{
-		spl = NULL;
-		spl = split(lexer[i]);
-		init_files(temp, spl);
-		i++;
-		temp = temp->next;
+		while (lexer && lexer[i] && temp)
+		{
+			spl = NULL;
+			spl = split(lexer[i]);
+			if (g_status != 130)
+				init_files(temp, spl);
+			i++;
+			temp = temp->next;
+		}
 	}
 }
 

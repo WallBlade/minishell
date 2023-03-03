@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 21:26:50 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/03 19:17:58 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void			throw_error(t_file *f);
 t_file			*fill_hd(int op, char *eof, t_cmdtab *tab, int count);
 char			*ft_strjoin_hd(char *s1, char *s2);
 void			here_doc(char *split, int fd);
+int				detect_hd(char **spl, t_cmdtab *tab);
+int				detect_hd_loop(char **spl, t_cmdtab *tab, int *count);
 
 /*---------------------EXEC-------------------------*/
 
@@ -160,6 +162,7 @@ char			**ft_strdup_tab(char **tab);
 int				is_numeric(char *str);
 void			exit_bin(t_cmdtab *tab, t_data *data);
 void			launch_cd(t_cmdtab *tab, t_data *data);
+void			getcwd_error(char *error);
 
 /*-------------------UTILS------------------*/
 
@@ -167,6 +170,7 @@ char			*allocate_str(char *str);
 int				len_tab(char **tab);
 int				is_char_num(char c);
 long long int	ft_atol(const char *nptr);
+
 /*-------------------ERROR------------------*/
 
 void			check_status(char *cmd);
@@ -194,6 +198,6 @@ void			signal_nl(int num);
 void			child_signal(int num);
 void			hd_sig_child(int num);
 void			hd_sig_parent(int num);
-void			sig_unexpected_eof(char *del);
+void			sig_unexpected_eof(char *del, int line);
 
 #endif

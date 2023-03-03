@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:46:20 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/02 14:56:24 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:53:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	**get_paths(char **env)
 		i++;
 	}
 	i = -1;
-	while (env_path && env_path[++i] && env_path[i][ft_strlen(env_path[i]) - 1] != '/')
+	while (env_path && env_path[++i]
+		&& env_path[i][ft_strlen(env_path[i]) - 1] != '/')
 		env_path[i] = ft_strjoin(env_path[i], "/");
 	return (env_path);
 }
@@ -83,9 +84,9 @@ char	**get_opt(char **split)
 	return (opt);
 }
 
-int check_abs(char *str)
+int	check_abs(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (access(str, X_OK) == 0)

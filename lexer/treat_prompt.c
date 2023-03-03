@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 15:38:26 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 19:30:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	compute_new_len(char *prompt, t_tks *tks)
 			if (!in_quotes(tks, prompt, i))
 				if (prompt[i + 1] && prompt[i + 1] != ' '
 					&& prompt[i + 1] != '\t')
-				len++;
+				len += 2;
 		}
 		i++;
 		len++;
@@ -73,14 +73,14 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 		{
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')
 			{
+				clean[j++] = ' ';
 				clean[j++] = prompt[i++];
 				clean[j++] = ' ';
 			}
 		}
 		clean[j++] = prompt[i++];
 	}
-	clean[j] = '\0';
-	return (clean);
+	return (clean[j] = '\0', clean);
 }
 
 int	rep_tok(char *str)

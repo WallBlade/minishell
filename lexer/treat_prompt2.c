@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:37:51 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/01 13:08:38 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:52:01 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	split_loop(char *str, char **spl, int count)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
 	j = 0;
 	while (++i < count)

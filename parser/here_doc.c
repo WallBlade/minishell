@@ -6,19 +6,19 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:49:53 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/01 12:43:01 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 19:43:26 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	hd_conditions(char *prompt, char *split)
+int	hd_conditions(char *prompt, char *split, int line)
 {
 	if (g_status == 130)
 		return (0);
 	if (!prompt)
 	{
-		sig_unexpected_eof(split);
+		sig_unexpected_eof(split, line);
 		return (0);
 	}
 	if (!ft_strcmp(prompt, split))
@@ -28,20 +28,25 @@ int	hd_conditions(char *prompt, char *split)
 
 void	here_doc(char *split, int fd)
 {
+	int		line;
 	char	*prompt;
 
 	prompt = NULL;
 	g_status = 0;
+	line = 0;
 	while (1)
 	{
 		prompt = readline(">");
-		if (!hd_conditions(prompt, split))
+		if (!hd_conditions(prompt, split, line))
 		{
+			free(prompt);
 			close(fd);
 			break ;
 		}
 		ft_putstr_fd(prompt, fd);
 		ft_putstr_fd("\n", fd);
+		free(prompt);
+		line++;
 	}
 }
 

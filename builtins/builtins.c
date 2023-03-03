@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:18:57 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/02 18:25:14 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 19:39:28 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ void	pwd(int fd)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-    if (!pwd)
-    {
-        ft_putstr_fd("pwd: error retrieving current directory: ", 2);
-        ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-        ft_putstr_fd("No such file or directory\n", 2);
-        g_status = 1;
-        return ;
-    }
+	if (!pwd)
+	{
+		getcwd_error("pwd");
+		g_status = 1;
+		return ;
+	}
 	ft_putstr_fd(pwd, fd);
 	ft_putstr_fd("\n", fd);
 	if (pwd)
@@ -69,4 +67,12 @@ void	env_print(char **env, int fd)
 	if (fd > 1)
 		close(fd);
 	g_status = 0;
+}
+
+void	getcwd_error(char *error)
+{
+	ft_putstr_fd(error, 2);
+	ft_putstr_fd(": error retrieving current directory: ", 2);
+	ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+	ft_putstr_fd("No such file or directory\n", 2);
 }

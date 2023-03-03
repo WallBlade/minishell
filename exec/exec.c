@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/02 18:01:06 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:08:28 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ void	mini_loop(char **env)
 		init_par_data(lex, &tab, &data, env);
 		if (!lex || !tab || !data)
 			continue ;
+		free(prompt);
 		exec_final(tab, data);
 		env = ft_strdup_tab(data->env);
-        free(prompt);
 	}
 }
 

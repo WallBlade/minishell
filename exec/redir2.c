@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:09:16 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/28 21:03:06 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/03 15:49:46 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	close_fds_hd(t_cmdtab *tab)
 	temp = tab;
 	while (temp)
 	{
-		while (temp->in)
+		while (temp->in && temp->in->fd > 0)
 		{
 			close(temp->in->fd);
 			if (temp->in->op == HERE_DOC && temp->in->file)
@@ -47,4 +47,27 @@ void	close_fds_hd(t_cmdtab *tab)
 		}
 		temp = temp->prev;
 	}
+}
+
+int	detect_hd_loop(char **spl, t_cmdtab *tab, int *count)
+{
+	int	j;
+	int	c;
+
+	j = 0;
+	c = *count;
+	while (spl && spl[j])
+	{
+		if (is_redir(spl[j]) == HERE_DOC && spl[j + 1])
+		{
+			lst_addback_red(&tab->in, fill_hd(HERE_DOC, spl[j + 1],
+					tab, c));
+			*count += 1;
+			c = *count;
+			if (g_status == 130)
+				return (0);
+		}
+		j++;
+	}
+	return (1);
 }
