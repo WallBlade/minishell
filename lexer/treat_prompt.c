@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:01:19 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 19:30:43 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:10:03 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	compute_new_len(char *prompt, t_tks *tks)
 			if (!in_quotes(tks, prompt, i))
 				if (prompt[i + 1] && prompt[i + 1] != ' '
 					&& prompt[i + 1] != '\t')
-				len += 2;
+				len++;
 		}
 		i++;
 		len++;
@@ -73,14 +73,36 @@ char	*clean_2_ouf(char *prompt, t_tks *tks)
 		{
 			if (prompt[i + 1] && prompt[i + 1] != ' ' && prompt[i + 1] != '\t')
 			{
-				clean[j++] = ' ';
 				clean[j++] = prompt[i++];
 				clean[j++] = ' ';
 			}
 		}
 		clean[j++] = prompt[i++];
 	}
-	return (clean[j] = '\0', clean);
+	clean[j] = '\0';
+	return (clean);
+}
+
+int	last_len(char *final, t_tks *tks)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (final && final[i])
+	{
+		if (final[i] && i > 0 && !in_quotes(tks, final, i))
+		{
+			if (final[i] && final[i] == '>' && final[i + 1] == '<')
+				len++;
+			else if (final[i] && final[i] == '<' && final[i + 1] == '>')
+				len++;
+		}
+		len++;
+		i++;
+	}
+	return (len);
 }
 
 int	rep_tok(char *str)

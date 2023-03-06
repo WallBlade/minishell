@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:31:31 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 19:17:58 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:47:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 extern int	g_status;
 
+# define EXPAND_CHAR "' \"$=,:.*!?-#@%="
 # define REDIR_IN 1
 # define REDIR_OUT 2
 # define APPEND 3
@@ -110,6 +111,7 @@ t_cmdtab		*parser(char **lexer);
 void			init_files(t_cmdtab *tab, char **spl);
 int				lstsize(t_cmdtab *lst);
 void			throw_error(t_file *f);
+t_cmdtab		*lstlast(t_cmdtab *lst);
 
 /*---------------------HERE_DOC-------------------*/
 

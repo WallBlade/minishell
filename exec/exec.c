@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 11:49:27 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/03 14:08:28 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:34:55 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	minishell_exec(t_data *data, t_cmdtab *tab)
 
 void	minishell(t_data *data, t_cmdtab *tab, int i)
 {
+	t_cmdtab	*last;
+
+	last = lstlast(tab);
 	if (check_redir(tab))
 	{
 		redir(data, tab, i);
@@ -44,7 +47,7 @@ void	minishell(t_data *data, t_cmdtab *tab, int i)
 	}
 	else
 	{
-		close_final_fd(tab);
+		close_fds_hd(last);
 		close_pipes(data);
 		free_gc();
 		exit(1);

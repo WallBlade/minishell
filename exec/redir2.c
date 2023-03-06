@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:09:16 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 15:49:46 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:13:13 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	close_final_fd(t_cmdtab *tab)
 			unlink(tab->in->file);
 	}
 	if (tab->out && tab->out->file && tab->out->fd > 1)
-	{
 		close(tab->out->fd);
-	}
 }
 
 void	close_fds_hd(t_cmdtab *tab)

@@ -1,0 +1,16 @@
+builtins
+cc
+exec
+in
+includes
+lexer
+libft
+libft.a
+Makefile
+minishell
+minishell.pdf
+oout
+out
+parser
+rl_supp
+utils

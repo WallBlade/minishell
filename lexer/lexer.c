@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:39:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 19:42:57 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:10:27 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	is_token(char c)
 	int		i;
 
 	i = 0;
-	tok = "<>|\"'$.+";
+	tok = "<>|\"'$.+[]' \"$=,:.*!?-#@%=";
 	while (tok[i])
 	{
 		if (tok[i] == c)
@@ -76,7 +76,6 @@ char	**lexer(char *prompt, char **env)
 	tks = init_tokens(prompt);
 	init_active_tokens(&tks, prompt);
 	expanded = expand(prompt, env, tks);
-	cdo = clean_2_ouf(expanded, tks);
 	if (syntax_error(prompt, tks) == 1)
 	{
 		g_status = 2;
@@ -89,6 +88,7 @@ char	**lexer(char *prompt, char **env)
 		ft_putstr_fd("minishell: Command not found\n", 2);
 		return (NULL);
 	}
+	cdo = final_treat(prompt_2_ouf(clean_2_ouf(expanded, tks), tks), tks);
 	sdf = split_2_ouf(cdo, tks);
 	return (sdf);
 }

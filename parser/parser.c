@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 11:42:00 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 19:03:56 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:01:43 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	detect_hd(char **lexer, t_cmdtab *tab)
 	{
 		spl = NULL;
 		spl = split(lexer[i]);
-		if (!detect_hd_loop(spl, tab, &count))
+		if (!detect_hd_loop(spl, tmp, &count))
 			return (0);
 		i++;
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:05:18 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/01 12:50:26 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:46:56 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,12 @@ int		count_elem(char *str, char c);
 int		count_d_elem(char *str, char *sub);
 int		scan_2_ouf(char **sdf);
 char	**split_syn(char *str);
+char	*prompt_2_ouf(char *clean, t_tks *tks);
+int		last_len(char *final, t_tks *tks);
+char	*final_treat(char *final, t_tks *tks);
 
 /*----------SYNTAX ERROR----------------*/
+
 int		unclosed_quotes(char *prompt);
 int		is_unvalid(char c);
 int		unvalid_char(char *prompt, t_tks *tks);

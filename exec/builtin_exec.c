@@ -6,7 +6,7 @@
 /*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:33:24 by smessal           #+#    #+#             */
-/*   Updated: 2023/03/03 14:02:39 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:15:16 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,17 @@ char	**prepare_pwd(char **env)
 	{
 		oldpwd = get_pwd(env);
 		pwd = getcwd(NULL, 0);
-		pwds[0] = NULL;
-		pwds[1] = ft_strjoin("PWD=", ft_strdup(pwd));
-		pwds[2] = ft_strjoin("OLDPWD=", oldpwd);
-		pwds[3] = NULL;
-		if (pwd)
-			free(pwd);
+		if (oldpwd && pwd)
+		{
+			pwds[0] = NULL;
+			pwds[1] = ft_strjoin("PWD=", ft_strdup(pwd));
+			pwds[2] = ft_strjoin("OLDPWD=", oldpwd);
+			pwds[3] = NULL;
+		}
+		else
+			return (free(pwd), NULL);
 	}
-	return (pwds);
+	return (free(pwd), pwds);
 }
 
 void	conditions_cd(t_cmdtab *tab, t_data *data, char **var_exp)
