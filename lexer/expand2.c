@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:48:34 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 12:49:25 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/06 20:03:47 by zel-kass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	*get_varname(char *prompt, int start, int end)
 
 int	find_varname_env(char *var, char *env_var)
 {
-	if (env_var && var && env_var[ft_strlen(var)]
-		&& env_var[ft_strlen(var)] == '='
-		&& !ft_strncmp(var, env_var, ft_strlen(var)))
+	if (env_var && var && !ft_strncmp(var, env_var, ft_strlen(var))
+		&& ft_strchr(env_var, '=') == ft_strlen(var))
 		return (1);
 	else
 		return (0);
