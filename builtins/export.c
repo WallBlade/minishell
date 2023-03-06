@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:19:32 by zel-kass          #+#    #+#             */
-/*   Updated: 2023/03/03 13:51:39 by zel-kass         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:48:28 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	cond_exist_var(char **env, char *var_exp)
+{
+	int	i;
+
+	i = 0;
+	while (env && env[i] && var_exp)
+	{
+		if (!ft_strchr(var_exp, '=') && ft_strchr(env[i], '='))
+		{
+			if (!ft_strncmp(var_exp, env[i], ft_strchr(env[i], '='))
+				&& (ft_strlen(var_exp) == ft_strchr(env[i], '=')))
+				return (2);
+		}
+		else if (!ft_strchr(env[i], '=') && ft_strchr(var_exp, '='))
+		{
+			if (!ft_strncmp(var_exp, env[i], ft_strchr(var_exp, '='))
+				&& ft_strlen(env[i]) == ft_strchr(var_exp, '='))
+				return (1);
+		}
+		else if (!ft_strchr(env[i], '=') && !ft_strchr(var_exp, '='))
+		{
+			if (!ft_strcmp(var_exp, env[i]))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	existing_var(char **env, char *var_exp)
 {
@@ -24,21 +53,8 @@ int	existing_var(char **env, char *var_exp)
 			return (1);
 		i++;
 	}
-	i = 0;
-	while (env && env[i])
-	{
-		if (!ft_strchr(var_exp, '=') || !ft_strchr(env[i], '='))
-		{
-			if (!ft_strchr(env[i], '=')
-				&& !ft_strncmp(env[i], var_exp, ft_strlen(env[i])))
-				return (1);
-			else if (ft_strchr(env[i], '=')
-				&& !ft_strncmp(env[i], var_exp, ft_strchr(env[i], '=')))
-				return (2);
-		}
-		i++;
-	}
-	return (0);
+	i = cond_exist_var(env, var_exp);
+	return (i);
 }
 
 char	**multi_export(char **env, char *var_exp)

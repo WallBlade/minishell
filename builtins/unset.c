@@ -6,7 +6,7 @@
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 23:17:28 by smessal           #+#    #+#             */
-/*   Updated: 2023/02/27 13:36:13 by smessal          ###   ########.fr       */
+/*   Updated: 2023/03/06 16:49:17 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**init_unseted(char **env, char *varname)
 {
 	char	**unseted;
 
-	if (existing_var(env, varname))
+	if (existing_var(env, varname) && varname[ft_strlen(varname) - 1] != '=')
 		unseted = collect(sizeof(char *) * (len_tab(env)));
 	else
 		unseted = collect(sizeof(char *) * (len_tab(env) + 1));
